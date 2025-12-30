@@ -1,0 +1,304 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "A experiência de ver uma apresentação PowerPoint com múltiplos videos (sem áudio) e texto combinados de forma dinâmica de acordo com feedback do utilizador pode ser considerada...",
+      "answers": [
+        { "text": "Multimédia, mas não Multisensorial", "value": "++" },
+        { "text": "Multimédia, e Multisensorial", "value": "--" },
+        { "text": "Multisensorial, mas não Multimédia", "value": "+" },
+        { "text": "Nem Multisensorial, nem Multimédia", "value": "-" }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Tipicamente o conhecimento de uma vida de uma pessoa é, maioritariamente, adequirido através de...",
+      "answers": [
+        { "text": "olfato", "value": "+" },
+        { "text": "tato", "value": "-" },
+        { "text": "audição", "value": "++" },
+        { "text": "visão", "value": "-" }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Num sistema de comunicação de voz num jogo em que todos os participantes podem enviar mensagens, faz sentido usar compressão...",
+      "answers": [
+        { "text": "simétrica", "value": "++" },
+        { "text": "assimétrica", "value": "+" },
+        { "text": "kilométrica", "value": "--" },
+        { "text": "é irrelevante se é simétrica ou assimétrica", "value": "-" }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "No standard DCI um conteúdo 2K...",
+      "answers": [
+        { "text": "apenas pode ser reproduzido em sistemas 2K", "value": "+" },
+        { "text": "apenas pode ser reproduzido em sistemas 4K", "value": "-" },
+        { "text": "pode ser reproduzido em sistemas 2K e 4K", "value": "++" },
+        { "text": "o DCI não suporta 2K", "value": "--" }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "O que significa 4K nos sistemas de televisão digital?",
+      "answers": [
+        { "text": "uma resolução de aproximadamente 3840x2160", "value": "++" },
+        { "text": "um tipo de codec", "value": "-" },
+        { "text": "um formato de áudio HD", "value": "+" },
+        { "text": "um protocolo de streaming", "value": "--" }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Na compressão por entropia tipicamente os dados são tratados usando...",
+      "answers": [
+        { "text": "transformadas", "value": "+" },
+        { "text": "condensadores", "value": "--" },
+        { "text": "quantificações", "value": "-" },
+        { "text": "estatística", "value": "++" }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "A codificação de música é uma situação em que é útil utilizar codificação...",
+      "answers": [
+        { "text": "linear", "value": "++" },
+        { "text": "logarítmica", "value": "+" },
+        { "text": "elicoidal", "value": "--" },
+        { "text": "sinosoidal", "value": "-" }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "Porque razão um sistema e-ink não é adequado para vídeo?",
+      "answers": [
+        { "text": "não suporta cores vibrantes", "value": "+" },
+        { "text": "alto consumo de energia", "value": "-" },
+        { "text": "taxa de refrescamento lenta", "value": "++" },
+        { "text": "incompatibilidade com streaming", "value": "--" }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "A gama dinâmica de um sistema é, por definição:",
+      "answers": [
+        { "text": "a diferença entre a frequência mais baixa e a mais alta", "value": "-" },
+        { "text": "o número de bits", "value": "+" },
+        { "text": "a diferença entre a amplitude mais baixa e a mais alta", "value": "++" },
+        { "text": "a capacidade de armazenamento", "value": "--" }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "O sistema MPEG3 é útil para comprimir",
+      "answers": [
+        { "text": "texto", "value": "-" },
+        { "text": "audio", "value": "+" },
+        { "text": "dados genéricos", "value": "--" },
+        { "text": "nenhuma das anteriores", "value": "++" }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "Em TESIM, os ficheiros resultantes de fotografias capturadas por uma máquina digital são...",
+      "answers": [
+        { "text": "Gráficos", "value": "+" },
+        { "text": "Imagens", "value": "++" },
+        { "text": "Áudio", "value": "--" },
+        { "text": "Video", "value": "-" }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "Uma das características dos documentos multimédia é terem...",
+      "answers": [
+        { "text": "imagens e texto", "value": "+" },
+        { "text": "formatos de ficheiro muito diversificados", "value": "++" },
+        { "text": "watermarking", "value": "-" },
+        { "text": "compressão simétrica", "value": "--" }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "Num fluxo de vídeo MPEG, para termos maior compressão, tipicamente devemos usar mais frames do tipo...",
+      "answers": [
+        { "text": "I", "value": "-" },
+        { "text": "B", "value": "++" },
+        { "text": "P", "value": "+" },
+        { "text": "X", "value": "--" }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "Uma solução HDR caracteriza-se por",
+      "answers": [
+        { "text": "melhorar a resolução da imagem", "value": "+" },
+        { "text": "limitar a qualidade das cores", "value": "-" },
+        { "text": "aumentar a gama de cores", "value": "++" },
+        { "text": "melhorar o som surround", "value": "--" }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Num sistema 7.1 o .1 reproduz, por norma...",
+      "answers": [
+        { "text": "apenas sons de alta frequência", "value": "+" },
+        { "text": "apenas sons de baixa frequência", "value": "++" },
+        { "text": "apenas sons nas frequências médias", "value": "-" },
+        { "text": "não reproduz sons de todo", "value": "--" }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "Num sistema multimédia deveremos dar prioridade na transmissão e processamento a...",
+      "answers": [
+        { "text": "gráficos", "value": "--" },
+        { "text": "áudio", "value": "++" },
+        { "text": "vídeo", "value": "+" },
+        { "text": "imagens", "value": "-" }
+      ]
+    },
+    {
+      "id": 17,
+      "text": "A principal vantagem do MIDI é...",
+      "answers": [
+        { "text": "reproduzir audio de alta fidelidade", "value": "+" },
+        { "text": "comprimir vídeos em tempo real", "value": "-" },
+        { "text": "tratar informação musical de forma eficiente", "value": "++" },
+        { "text": "gerar gráficos 3D", "value": "--" }
+      ]
+    },
+    {
+      "id": 18,
+      "text": "A visão humana \"constroi\" a imagem do nosso ambiente capturando...",
+      "answers": [
+        { "text": "toda a cena de uma vez só", "value": "+" },
+        { "text": "uma componente de cor de cada vez", "value": "-" },
+        { "text": "pequenas áreas de cada vez", "value": "++" },
+        { "text": "informação em 2 canais de cor", "value": "--" }
+      ]
+    },
+    {
+      "id": 19,
+      "text": "A principal vantagem do UNICODE é...",
+      "answers": [
+        { "text": "comprimir texto de forma eficiente", "value": "+" },
+        { "text": "suportar múltiplos idiomas e carateres", "value": "++" },
+        { "text": "gerar gráficos vetoriais", "value": "-" },
+        { "text": "codificar áudio surround", "value": "--" }
+      ]
+    },
+    {
+      "id": 20,
+      "text": "Ao usarmos a notação 4:1:1 teremos para cada conjunto de 4x4",
+      "answers": [
+        { "text": "1 amostra de cor", "value": "-" },
+        { "text": "2 amostras de cor", "value": "+" },
+        { "text": "4 amostras de cor", "value": "++" },
+        { "text": "16 amostras de cor", "value": "--" }
+      ]
+    },
+    {
+      "id": 21,
+      "text": "Qual a principal desvantagem do double buffering?",
+      "answers": [
+        { "text": "diminui a qualidade do som", "value": "--" },
+        { "text": "diminui a qualidade do vídeo", "value": "+" },
+        { "text": "requer mais memória", "value": "++" },
+        { "text": "aumenta o gamut", "value": "-" }
+      ]
+    },
+    {
+      "id": 22,
+      "text": "Ao ajustar a \"qualidade\" na gravação de um ficheiro JPEG num programa de edição, estamos...",
+      "answers": [
+        { "text": "ajustar a resolução espacial", "value": "-" },
+        { "text": "ajustar as tabelas de quantificação", "value": "++" },
+        { "text": "ajustar a compressão por entropia", "value": "+" },
+        { "text": "ajustar as necessidades computacionais", "value": "--" }
+      ]
+    },
+    {
+      "id": 23,
+      "text": "Para que serve um CODEC?",
+      "answers": [
+        { "text": "comprimir e descomprimir áudio digital", "value": "++" },
+        { "text": "normalizar o volume do áudio", "value": "--" },
+        { "text": "melhorar a qualidade do áudio", "value": "-" },
+        { "text": "converter áudio digital para analógico", "value": "+" }
+      ]
+    },
+    {
+      "id": 24,
+      "text": "A notação \"60p\", indica que..",
+      "answers": [
+        { "text": "temos 60 frames por segundo", "value": "++" },
+        { "text": "temos imagens com 60 pixeis", "value": "-" },
+        { "text": "o som tem uma relação sinal-ruído de 60 dB", "value": "--" },
+        { "text": "há 60 frames do tipo P", "value": "+" }
+      ]
+    },
+    {
+      "id": 25,
+      "text": "Uma das vantagens do HDMI no seu lançamento foi...",
+      "answers": [
+        { "text": "permitir Full HD", "value": "+" },
+        { "text": "permitir audio e vídeo digital", "value": "++" },
+        { "text": "suportar video analógico (tipo VGA)", "value": "--" },
+        { "text": "usar conectores já existentes", "value": "-" }
+      ]
+    },
+    {
+      "id": 26,
+      "text": "Uma das características distintivas do USB-C é...",
+      "answers": [
+        { "text": "ter uma ficha reversível", "value": "+" },
+        { "text": "suportar USB 2.0", "value": "-" },
+        { "text": "suportar múltiplos protocolos", "value": "--" },
+        { "text": "todas as anteriores", "value": "++" }
+      ]
+    },
+    {
+      "id": 27,
+      "text": "Uma das características da percepção visual humana é...",
+      "answers": [
+        { "text": "captura de toda uma cena de uma vez (tipo fotografia)", "value": "+" },
+        { "text": "facilidade em distinguir muitas cores em ambientes de pouca luz", "value": "-" },
+        { "text": "mais sensibilidade à cor azul", "value": "--" },
+        { "text": "maior resolução numa zona central da retina", "value": "++" }
+      ]
+    },
+    {
+      "id": 28,
+      "text": "Os meios de armazenamento digitais profissionais distinguem-se, tipicamente, por...",
+      "answers": [
+        { "text": "serem mais fiáveis", "value": "-" },
+        { "text": "terem taxas de transferências mais altas", "value": "+" },
+        { "text": "terem taxas de transferências mais altas e serem mais fiáveis", "value": "++" },
+        { "text": "suportarem tipos de dados específicos", "value": "--" }
+      ]
+    },
+    {
+      "id": 29,
+      "text": "Tipicamente, o passo inicial da compressão JPEG é...",
+      "answers": [
+        { "text": "compressão entropia", "value": "-" },
+        { "text": "transformação DCT", "value": "+" },
+        { "text": "subsampling de cor", "value": "++" },
+        { "text": "distribuição KFX", "value": "--" }
+      ]
+    },
+    {
+      "id": 30,
+      "text": "As gerações mais recentes de consolas distinguem-se umas das outras por...",
+      "answers": [
+        { "text": "terem os jogos em cartuchos", "value": "--" },
+        { "text": "suporte de Full HD", "value": "+" },
+        { "text": "número de bits do processador", "value": "-" },
+        { "text": "funcionalidades adicionais como comandos sem fios", "value": "++" }
+      ]
+    }
+  ]
+}

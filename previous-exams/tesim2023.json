@@ -1,0 +1,309 @@
+{
+  "exam_info": {
+    "course": "Tecnologias e Sistemas Multimédia",
+    "date": "29 janeiro 2024",
+    "institution": "ISEP"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "A experiência típica de experenciar conteúdo audio-visual que tem disponível apenas 1 faixa de vídeo e 1 faixa de áudio, pode ser considerada:",
+      "answers": [
+        { "text": "Multimédia, mas não Multisensorial", "value": "-" },
+        { "text": "Multimédia, e Multisensorial", "value": "+" },
+        { "text": "Multisensorial, mas não Multimédia", "value": "++" },
+        { "text": "Nem Multisensorial, nem Multimédia", "value": "-" }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Qual das seguintes alternativas é, tipicamente, mais interessante em termos de retenção?",
+      "answers": [
+        { "text": "ver conteúdo", "value": "--" },
+        { "text": "ouvir conteúdo", "value": "-" },
+        { "text": "ver e ouvir conteúdo", "value": "+" },
+        { "text": "ver, ouvir e praticar o conteúdo", "value": "++" }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Na implementação de um sistema de distribuição áudio para avisos globais num local público (e.g. aeroporto), faz sentido usar compressão:",
+      "answers": [
+        { "text": "simétrica", "value": "+" },
+        { "text": "assimétrica", "value": "++" },
+        { "text": "depende do conteúdo", "value": "-" },
+        { "text": "é irrelevante se é simétrica ou assimétrica", "value": "--" }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Os sistemas DCI caracterizam-se por suportarem:",
+      "answers": [
+        { "text": "resolução 2K", "value": "-" },
+        { "text": "resoluções 2K e 4K", "value": "++" },
+        { "text": "resoluções 2K, 4K e 8K", "value": "+" },
+        { "text": "não há nada no standard DCI sobre resoluções obrigatórias", "value": "--" }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Comparado com uma situação de luz normal (e.g. exterior num dia de sol), numa situação de muito baixa luminiosidade (e.g. exterior numa noite sem luar, sem luz artificial), o olho humano tem, tipicamente...",
+      "answers": [
+        { "text": "menor capacidade de distinguir cores", "value": "++" },
+        { "text": "maior capacidade de distinguir cores", "value": "-" },
+        { "text": "mais ou menos a mesma capacidade em termos de cor", "value": "+" },
+        { "text": "muito maior capacidade de distinguir tons de vermelho", "value": "--" }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "A compressão por entropia é tipicamente mais interessante quando temos dados de...",
+      "answers": [
+        { "text": "um tipo muito específico, e.g. imagens", "value": "+" },
+        { "text": "tipo genérico, e.g. sistema de ficheiros", "value": "++" },
+        { "text": "compressão MPEG 3", "value": "--" },
+        { "text": "limitações em termos de recursos computacionais", "value": "-" }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "A codificação de música é uma situação em que é útil utilizar codificação PCM com...",
+      "answers": [
+        { "text": "2 bits", "value": "-" },
+        { "text": "8 bits", "value": "+" },
+        { "text": "16 bits", "value": "++" },
+        { "text": "128 bits", "value": "--" }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "A diferença mínima de amplitude distinguível num sistema digital é controlada, essencialmente,...",
+      "answers": [
+        { "text": "pela gama dinâmica do sistema", "value": "+" },
+        { "text": "pelo número máximo de bits", "value": "++" },
+        { "text": "pela largura de banda máxima do sinal analógico", "value": "-" },
+        { "text": "pela capacidade assimétrica de compressão/descompressão", "value": "--" }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Uma das grandes vantagens do sistemas e-ink é...",
+      "answers": [
+        { "text": "facilmente utilizável à noite", "value": "-" },
+        { "text": "taxa de refrescamento muito lenta", "value": "--" },
+        { "text": "baixo consumo de bateria", "value": "++" },
+        { "text": "serem muito robustos", "value": "+" }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "O sistema MPEG7 é útil para comprimir",
+      "answers": [
+        { "text": "texto", "value": "-" },
+        { "text": "audio", "value": "+" },
+        { "text": "dados genéricos", "value": "-" },
+        { "text": "nenhuma das anteriores", "value": "++" }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "Em TESIM, objetos vectoriais criados no Adobe Animate (ou Illustrator), são...",
+      "answers": [
+        { "text": "Gráficos", "value": "++" },
+        { "text": "Imagens", "value": "+" },
+        { "text": "Áudio", "value": "--" },
+        { "text": "Video", "value": "-" }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "Tipicamente o sensor de uma máquina fotográfica tem mais sensores...",
+      "answers": [
+        { "text": "verdes", "value": "++" },
+        { "text": "azuis", "value": "-" },
+        { "text": "vermelhos", "value": "+" },
+        { "text": "brancos", "value": "--" }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "Num fluxo de vídeo MPEG, para termos maior resiliência a erros de transmissão, tipicamente devemos usar mais frames do tipo...",
+      "answers": [
+        { "text": "A", "value": "--" },
+        { "text": "B", "value": "-" },
+        { "text": "P", "value": "+" },
+        { "text": "I", "value": "++" }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "Uma das características essenciais dos documentos multimédia é integrarem...",
+      "answers": [
+        { "text": "som e imagens", "value": "+" },
+        { "text": "texto e respetivas fontes", "value": "--" },
+        { "text": "informação temporal de apresentação", "value": "++" },
+        { "text": "proteção DRM", "value": "-" }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Um sistema 7.1 é caracterizado por ter:",
+      "answers": [
+        { "text": "6 canais", "value": "-" },
+        { "text": "7 canais", "value": "+" },
+        { "text": "8 canais", "value": "++" },
+        { "text": "nenhuma das anteriores", "value": "--" }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "Em geral as pessoas são mais sensíveis a pequenas interrupções no fluxo de...",
+      "answers": [
+        { "text": "gráficos", "value": "-" },
+        { "text": "áudio", "value": "++" },
+        { "text": "vídeo", "value": "+" },
+        { "text": "imagens", "value": "-" }
+      ]
+    },
+    {
+      "id": 17,
+      "text": "Uma forma muito eficiente de armazenar informação musical (e.g. notas) é",
+      "answers": [
+        { "text": "MP3", "value": "+" },
+        { "text": "MIDI", "value": "++" },
+        { "text": "PCM", "value": "-" },
+        { "text": "DCI", "value": "--" }
+      ]
+    },
+    {
+      "id": 18,
+      "text": "A utilização do sistema UNICODE é muito importante numa perspetiva de...",
+      "answers": [
+        { "text": "garantir impressão fiel ao documento", "value": "+" },
+        { "text": "internacionalização", "value": "++" },
+        { "text": "facilidade de escrita", "value": "-" },
+        { "text": "compressão do documento", "value": "--" }
+      ]
+    },
+    {
+      "id": 19,
+      "text": "A visão humana \"constroi\" a imagem do nosso ambiente capturando...",
+      "answers": [
+        { "text": "toda a cena de uma vez só", "value": "+" },
+        { "text": "uma componente de cor de cada vez", "value": "-" },
+        { "text": "pequenas áreas de cada vez", "value": "++" },
+        { "text": "informação em 2 canais de cor", "value": "--" }
+      ]
+    },
+    {
+      "id": 20,
+      "text": "Ao usarmos a notação 4:2:2 teremos para cada bloco 4x2",
+      "answers": [
+        { "text": "1 amostra de cor", "value": "-" },
+        { "text": "2 amostras de cor", "value": "+" },
+        { "text": "4 amostras de cor", "value": "++" },
+        { "text": "16 amostras de cor", "value": "--" }
+      ]
+    },
+    {
+      "id": 21,
+      "text": "Uma das principais desvantagens de usar double ou triple buffering é...",
+      "answers": [
+        { "text": "resposta mais lenta do sistema", "value": "+" },
+        { "text": "problemas de compatibilidade com os monitores", "value": "--" },
+        { "text": "efeitos de \"tearing\" nas imagens", "value": "-" },
+        { "text": "necessidades adicionais de memória", "value": "++" }
+      ]
+    },
+    {
+      "id": 22,
+      "text": "Tipicamente o Gamut de cores de um ficheiro JPEG corresponde...",
+      "answers": [
+        { "text": "a mais cores do que a visão humana suporta", "value": "-" },
+        { "text": "mais ou menos a mesma gama de cores de visão humana", "value": "+" },
+        { "text": "menos cores do que a visão humana suporta", "value": "++" },
+        { "text": "nenhuma das anteriores", "value": "--" }
+      ]
+    },
+    {
+      "id": 23,
+      "text": "Ao ajustar a \"qualidade\" na gravação de um ficheiro JPEG num programa de edição, estamos...",
+      "answers": [
+        { "text": "ajustar a resolução espacial", "value": "+" },
+        { "text": "ajustar as tabelas de quantificação", "value": "++" },
+        { "text": "ajustar a compressão por entropia", "value": "-" },
+        { "text": "ajustar as necessidades computacionais", "value": "--" }
+      ]
+    },
+    {
+      "id": 24,
+      "text": "Um ficheiro de áudio+vídeo não é reproduzido numa PlayStation provavelmente devido a...",
+      "answers": [
+        { "text": "um bit de bloqueio no header do ficheiro", "value": "-" },
+        { "text": "informação embebida num canal digital específico", "value": "+" },
+        { "text": "uma marca de água na faixa de áudio", "value": "++" },
+        { "text": "um codificador quântico no fluxo de vídeo", "value": "--" }
+      ]
+    },
+    {
+      "id": 25,
+      "text": "Uma das vantagens do HDMI no seu lançamento foi...",
+      "answers": [
+        { "text": "permitir Full HD", "value": "+" },
+        { "text": "permitir audio e vídeo digital", "value": "++" },
+        { "text": "suportar video analógico (tipo VGA)", "value": "-" },
+        { "text": "usar conectores já existentes", "value": "--" }
+      ]
+    },
+    {
+      "id": 26,
+      "text": "Uma das características distintiva do Thunderbolt é combinar USB com...",
+      "answers": [
+        { "text": "DP", "value": "+" },
+        { "text": "SPDIF", "value": "-" },
+        { "text": "PCIe", "value": "++" },
+        { "text": "SATA", "value": "--" }
+      ]
+    },
+    {
+      "id": 27,
+      "text": "Os meios de armazenamento digitais profissionais distinguem-se, tipicamente, por...",
+      "answers": [
+        { "text": "serem mais fiáveis", "value": "+" },
+        { "text": "terem taxas de transferências mais altas", "value": "-" },
+        { "text": "terem taxas de transferências mais altas e serem mais fiáveis", "value": "++" },
+        { "text": "suportarem tipos de dados específicos", "value": "--" }
+      ]
+    },
+    {
+      "id": 28,
+      "text": "Uma das principais diferenças entre o FullHD e o UHTV é:",
+      "answers": [
+        { "text": "maior resolução", "value": "+" },
+        { "text": "gama ampliada de cores", "value": "-" },
+        { "text": "mais canais de áudio", "value": "--" },
+        { "text": "todas as anteriores", "value": "++" }
+      ]
+    },
+    {
+      "id": 29,
+      "text": "Tipicamente, o passo final da compressão JPEG é...",
+      "answers": [
+        { "text": "compressão entropia", "value": "++" },
+        { "text": "transformação DCT", "value": "+" },
+        { "text": "subsampling de cor", "value": "-" },
+        { "text": "distribuição XTC", "value": "--" }
+      ]
+    },
+    {
+      "id": 30,
+      "text": "Depois do crash dos jogos as primeiras gerações de consolas distingue-se umas das outras por...",
+      "answers": [
+        { "text": "terem os jogos em cartuchos", "value": "+" },
+        { "text": "suporte de Full HD", "value": "-" },
+        { "text": "número de bits do processador", "value": "++" },
+        { "text": "permitirem compras on-line", "value": "--" }
+      ]
+    }
+  ]
+}
