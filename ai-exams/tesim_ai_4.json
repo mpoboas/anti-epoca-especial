@@ -1,0 +1,444 @@
+{
+    "questions": [
+        {
+            "id": "q1",
+            "text": "Qual é a distinção técnica feita nos documentos entre 'Som' e 'Áudio'?",
+            "answers": [
+                {
+                    "text": "'Áudio' refere-se aos dados/representação eletrónica, enquanto 'Som' refere-se ao fenómeno físico (vibrações no ar).",
+                    "value": "++"
+                },
+                {
+                    "text": "'Áudio' é apenas o som comprimido (MP3), 'Som' é o formato WAV.",
+                    "value": "--"
+                },
+                {
+                    "text": "'Som' refere-se à gravação digital, 'Áudio' à reprodução analógica.",
+                    "value": "--"
+                },
+                {
+                    "text": "Não existe qualquer distinção, são termos intermutáveis em todos os contextos técnicos.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q2",
+            "text": "Na codificação de voz humana para telecomunicações, que tipo de codificação é preferível em relação à codificação linear?",
+            "answers": [
+                {
+                    "text": "Codificação Logarítmica, pois a sensibilidade auditiva humana varia de forma logarítmica.",
+                    "value": "++"
+                },
+                {
+                    "text": "Codificação Vetorial, para desenhar a onda sonora.",
+                    "value": "--"
+                },
+                {
+                    "text": "Codificação Fractal, para repetir padrões de voz.",
+                    "value": "--"
+                },
+                {
+                    "text": "Codificação Linear pura, pois ocupa menos espaço.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q3",
+            "text": "Em compressão de dados, como funciona a 'Quantificação Vetorial' (Vector Quantization)?",
+            "answers": [
+                {
+                    "text": "O fluxo de dados é dividido em blocos (vetores) que são comparados com uma tabela de padrões (codebook), transmitindo-se apenas a referência para o padrão mais semelhante.",
+                    "value": "++"
+                },
+                {
+                    "text": "Transforma a imagem em linhas e polígonos matemáticos.",
+                    "value": "--"
+                },
+                {
+                    "text": "Armazena cada pixel individualmente com precisão infinita.",
+                    "value": "-"
+                },
+                {
+                    "text": "Utiliza a transformada de Fourier para eliminar o som.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q4",
+            "text": "No standard General MIDI (GM), qual é o valor por defeito definido para a sensibilidade do 'Pitch Bend'?",
+            "answers": [
+                {
+                    "text": "Dois semitons.",
+                    "value": "++"
+                },
+                {
+                    "text": "Uma oitava completa.",
+                    "value": "--"
+                },
+                {
+                    "text": "12 semitons.",
+                    "value": "-"
+                },
+                {
+                    "text": "Zero (desligado).",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q5",
+            "text": "Qual é uma das vantagens do formato JPEG2000 em relação ao JPEG original?",
+            "answers": [
+                {
+                    "text": "Utiliza Wavelets em vez de DCT, permitindo maior flexibilidade (até 38 bits/canal) e definição de Regiões de Interesse (ROI).",
+                    "value": "++"
+                },
+                {
+                    "text": "É um formato exclusivo para áudio.",
+                    "value": "--"
+                },
+                {
+                    "text": "Usa menos processamento que o JPEG original.",
+                    "value": "--"
+                },
+                {
+                    "text": "Limita-se a 8 bits por canal para garantir compatibilidade.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q6",
+            "text": "Em fotografia, qual é a consequência de utilizar um tempo de exposição (Shutter Speed) muito longo (ex: 1 segundo) sem tripé?",
+            "answers": [
+                {
+                    "text": "A imagem fica com arrastamento (Motion Blur) visível devido ao movimento da câmara ou do objeto.",
+                    "value": "++"
+                },
+                {
+                    "text": "A imagem fica com grão (ruído digital) excessivo, independentemente do ISO.",
+                    "value": "-"
+                },
+                {
+                    "text": "A profundidade de campo diminui drasticamente.",
+                    "value": "--"
+                },
+                {
+                    "text": "A imagem fica a preto e branco.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q7",
+            "text": "Na compressão de vídeo MPEG, o que representa o 'Error Term' num macrobloco?",
+            "answers": [
+                {
+                    "text": "A diferença residual entre o macrobloco atual e o macrobloco de referência (após compensação de movimento).",
+                    "value": "++"
+                },
+                {
+                    "text": "Um erro de transmissão na rede.",
+                    "value": "--"
+                },
+                {
+                    "text": "O bloco que foi corrompido e não pode ser descodificado.",
+                    "value": "-"
+                },
+                {
+                    "text": "O vetor de movimento que aponta para o frame seguinte.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q8",
+            "text": "Numa configuração de som Dolby Surround 3.0, quais são os canais utilizados?",
+            "answers": [
+                {
+                    "text": "Esquerda, Direita e Trás (Surround).",
+                    "value": "++"
+                },
+                {
+                    "text": "Esquerda, Direita e Centro.",
+                    "value": "-"
+                },
+                {
+                    "text": "Esquerda, Direita e Subwoofer.",
+                    "value": "--"
+                },
+                {
+                    "text": "Três canais frontais (Esq, Centro, Dir).",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q9",
+            "text": "Qual é a largura de banda aproximada de um disco SSD com interface PCIe 5.0 x4 (geração 2023/2025)?",
+            "answers": [
+                {
+                    "text": "Cerca de 12 GB/s.",
+                    "value": "++"
+                },
+                {
+                    "text": "Cerca de 500 MB/s.",
+                    "value": "--"
+                },
+                {
+                    "text": "Cerca de 3000 MB/s.",
+                    "value": "-"
+                },
+                {
+                    "text": "Cerca de 100 GB/s.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q10",
+            "text": "Qual é o principal problema dos sistemas de rastreamento (trackers) magnéticos em Realidade Virtual?",
+            "answers": [
+                {
+                    "text": "São sensíveis a objetos metálicos e ruído eletromagnético no ambiente.",
+                    "value": "++"
+                },
+                {
+                    "text": "Exigem linha de vista direta (Line of Sight).",
+                    "value": "--"
+                },
+                {
+                    "text": "Têm uma latência muito superior aos sistemas mecânicos.",
+                    "value": "-"
+                },
+                {
+                    "text": "Não permitem medir a orientação (apenas posição).",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q11",
+            "text": "No contexto de DRM e Marcas de Água (Watermarking), o que é um 'Falso Positivo'?",
+            "answers": [
+                {
+                    "text": "Quando o sistema deteta incorretamente uma marca de água num conteúdo que não a possui, podendo bloquear indevidamente a reprodução.",
+                    "value": "++"
+                },
+                {
+                    "text": "Quando o sistema falha em detetar uma marca de água existente.",
+                    "value": "--"
+                },
+                {
+                    "text": "Quando a marca de água é removida com sucesso por um ataque.",
+                    "value": "-"
+                },
+                {
+                    "text": "Quando a qualidade da imagem melhora após a inserção da marca.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q12",
+            "text": "Que processadores equipam o dispositivo de Realidade Mista Apple Vision Pro?",
+            "answers": [
+                {
+                    "text": "Apple M2 (processamento geral) e R1 (processamento de sensores/câmaras).",
+                    "value": "++"
+                },
+                {
+                    "text": "Intel Core i9 e Nvidia RTX.",
+                    "value": "--"
+                },
+                {
+                    "text": "Apenas um chip M1 Pro.",
+                    "value": "-"
+                },
+                {
+                    "text": "Qualcomm Snapdragon XR2.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q13",
+            "text": "O que introduziu a norma HDMI 2.0 em termos de espaço de cor?",
+            "answers": [
+                {
+                    "text": "Suporte para a norma Rec. 2020 (WCG - Wide Color Gamut).",
+                    "value": "++"
+                },
+                {
+                    "text": "Suporte apenas para preto e branco.",
+                    "value": "--"
+                },
+                {
+                    "text": "Eliminação do suporte a RGB.",
+                    "value": "--"
+                },
+                {
+                    "text": "Suporte exclusivo para sinais analógicos.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q14",
+            "text": "Qual é a gama dinâmica teórica (Dynamic Range) de um sinal de áudio digital de 16 bits?",
+            "answers": [
+                {
+                    "text": "96 dB.",
+                    "value": "++"
+                },
+                {
+                    "text": "144 dB.",
+                    "value": "--"
+                },
+                {
+                    "text": "120 dB.",
+                    "value": "-"
+                },
+                {
+                    "text": "48 dB.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q15",
+            "text": "Qual a característica que torna os 'Billboards' eletrónicos especialmente interessantes para publicidade local?",
+            "answers": [
+                {
+                    "text": "A capacidade de segmentação geográfica (Geography-targeted).",
+                    "value": "++"
+                },
+                {
+                    "text": "O baixo custo de instalação do painel LED.",
+                    "value": "--"
+                },
+                {
+                    "text": "A capacidade de imprimir posters em papel rapidamente.",
+                    "value": "--"
+                },
+                {
+                    "text": "A transmissão de som via rádio FM.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q16",
+            "text": "No Cinema Digital (DCI), qual é a largura de banda aproximada reservada para o áudio não comprimido?",
+            "answers": [
+                {
+                    "text": "Cerca de 37 Mbit/s (para 16 canais a 24-bit/96kHz).",
+                    "value": "++"
+                },
+                {
+                    "text": "128 kbit/s (MP3).",
+                    "value": "--"
+                },
+                {
+                    "text": "10 Gbit/s.",
+                    "value": "--"
+                },
+                {
+                    "text": "1 Mbit/s.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q17",
+            "text": "Em que cenário é crítica a utilização de compressão 'Lossless' (sem perdas)?",
+            "answers": [
+                {
+                    "text": "Aplicações médicas (raio-X, TAC) onde a fiabilidade da informação é vital.",
+                    "value": "++"
+                },
+                {
+                    "text": "Streaming de vídeo no YouTube.",
+                    "value": "--"
+                },
+                {
+                    "text": "Videoconferência em redes móveis fracas.",
+                    "value": "-"
+                },
+                {
+                    "text": "Transmissão de rádio digital.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q18",
+            "text": "Qual é a principal vantagem do sistema de áudio MPEG-H em transmissões ao vivo?",
+            "answers": [
+                {
+                    "text": "Permite o ajuste interativo de objetos sonoros (ex: volume dos comentadores vs som ambiente do estádio) pelo utilizador final.",
+                    "value": "++"
+                },
+                {
+                    "text": "Reduz a qualidade do áudio para poupar dados.",
+                    "value": "--"
+                },
+                {
+                    "text": "É um formato analógico de alta fidelidade.",
+                    "value": "--"
+                },
+                {
+                    "text": "Só funciona com auscultadores mono.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q19",
+            "text": "O que caracteriza o 'Hipertexto' em oposição ao texto linear?",
+            "answers": [
+                {
+                    "text": "A existência de ligações (links) que permitem uma leitura não sequencial.",
+                    "value": "++"
+                },
+                {
+                    "text": "O uso obrigatório de tipos de letra coloridos.",
+                    "value": "--"
+                },
+                {
+                    "text": "A necessidade de imprimir o documento para o ler.",
+                    "value": "--"
+                },
+                {
+                    "text": "A ausência de qualquer formatação.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q20",
+            "text": "O que significa dizer que um gráfico vetorial possui 'informação semântica'?",
+            "answers": [
+                {
+                    "text": "Os elementos são descritos como objetos (ex: 'círculo', 'linha') com atributos editáveis, e não apenas como uma grelha de pontos.",
+                    "value": "++"
+                },
+                {
+                    "text": "O ficheiro contém legendas automáticas.",
+                    "value": "--"
+                },
+                {
+                    "text": "A imagem foi gerada por inteligência artificial.",
+                    "value": "-"
+                },
+                {
+                    "text": "O gráfico ocupa muito espaço em disco.",
+                    "value": "--"
+                }
+            ]
+        }
+    ]
+}

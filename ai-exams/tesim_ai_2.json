@@ -1,0 +1,444 @@
+{
+    "questions": [
+        {
+            "id": "new-21",
+            "text": "Qual é a principal diferença entre gráficos vetoriais e imagens de mapa de bits (bitmap)?",
+            "answers": [
+                {
+                    "text": "Os vetoriais são baseados em fórmulas matemáticas e escalam sem perda de qualidade.",
+                    "value": "++"
+                },
+                {
+                    "text": "Os vetoriais ocupam sempre mais espaço em disco.",
+                    "value": "--"
+                },
+                {
+                    "text": "Os bitmaps são melhores para desenhos de linhas simples e logótipos.",
+                    "value": "-"
+                },
+                {
+                    "text": "Os vetoriais são ideais para fotografias realistas.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-22",
+            "text": "No contexto de Texto Digital, qual é o objetivo do padrão Unicode?",
+            "answers": [
+                {
+                    "text": "Fornecer um código único para cada caracter de todas as línguas escritas.",
+                    "value": "++"
+                },
+                {
+                    "text": "Reduzir o tamanho dos ficheiros de texto para metade do ASCII.",
+                    "value": "--"
+                },
+                {
+                    "text": "Padronizar apenas os caracteres da Europa Ocidental (Latin-1).",
+                    "value": "+"
+                },
+                {
+                    "text": "Substituir o formato HTML na web.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "new-23",
+            "text": "O que transporta tipicamente uma mensagem MIDI 'Note On'?",
+            "answers": [
+                {
+                    "text": "A indicação da nota tocada (pitch) e a sua intensidade (velocity).",
+                    "value": "++"
+                },
+                {
+                    "text": "Um sample de áudio digital da nota.",
+                    "value": "--"
+                },
+                {
+                    "text": "A duração exata da nota em milissegundos.",
+                    "value": "-"
+                },
+                {
+                    "text": "Apenas o comando para iniciar o som, sem detalhes de intensidade.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-24",
+            "text": "Qual foi a motivação original para o desenvolvimento do varrimento entrelaçado (interlaced) na TV analógica?",
+            "answers": [
+                {
+                    "text": "Duplicar a taxa de atualização percebida sem aumentar a largura de banda.",
+                    "value": "++"
+                },
+                {
+                    "text": "Melhorar a resolução de cor da imagem.",
+                    "value": "-"
+                },
+                {
+                    "text": "Permitir a transmissão de áudio estéreo.",
+                    "value": "--"
+                },
+                {
+                    "text": "Adaptar o sinal aos ecrãs LCD modernos.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-25",
+            "text": "O standard DCI (Digital Cinema Initiatives) impõe o uso de qual algoritmo de compressão para a imagem?",
+            "answers": [
+                {
+                    "text": "JPEG 2000 (intra-frame).",
+                    "value": "++"
+                },
+                {
+                    "text": "MPEG-2.",
+                    "value": "--"
+                },
+                {
+                    "text": "H.264 / AVC.",
+                    "value": "+"
+                },
+                {
+                    "text": "RAW sem compressão.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "new-26",
+            "text": "Para ser eficaz na proteção de direitos de autor, uma marca de água digital (Watermark) numa imagem deve idealmente ser...",
+            "answers": [
+                {
+                    "text": "Imperceptível ao olho humano e robusta contra manipulações.",
+                    "value": "++"
+                },
+                {
+                    "text": "Visível no centro da imagem para desencorajar o uso.",
+                    "value": "-"
+                },
+                {
+                    "text": "Facilmente removível por software comum.",
+                    "value": "--"
+                },
+                {
+                    "text": "Colocada apenas nos metadados do ficheiro.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-27",
+            "text": "Em fotografia, qual é o efeito de usar uma grande abertura do diafragma (ex: f/1.8)?",
+            "answers": [
+                {
+                    "text": "Reduz a profundidade de campo, desfocando o fundo.",
+                    "value": "++"
+                },
+                {
+                    "text": "Aumenta a profundidade de campo, focando tudo.",
+                    "value": "--"
+                },
+                {
+                    "text": "Obriga a usar um tempo de exposição mais longo.",
+                    "value": "-"
+                },
+                {
+                    "text": "Permite a entrada de mais luz no sensor.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-28",
+            "text": "Na visão humana, qual é a principal função dos bastonetes (rods)?",
+            "answers": [
+                {
+                    "text": "Visão em condições de baixa luminosidade (visão escotópica).",
+                    "value": "++"
+                },
+                {
+                    "text": "Perceção de cores de alta fidelidade.",
+                    "value": "--"
+                },
+                {
+                    "text": "Visão de alta resolução na fóvea.",
+                    "value": "-"
+                },
+                {
+                    "text": "Deteção de movimento na visão periférica.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-29",
+            "text": "Qual é a gama de frequências teórica da audição humana?",
+            "answers": [
+                {
+                    "text": "20 Hz a 20 kHz.",
+                    "value": "++"
+                },
+                {
+                    "text": "0 Hz a 100 Hz.",
+                    "value": "--"
+                },
+                {
+                    "text": "100 Hz a 10 kHz.",
+                    "value": "-"
+                },
+                {
+                    "text": "10 Hz a 25 kHz.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-30",
+            "text": "Qual a função do canal LFE (Low Frequency Effects) num sistema de som 5.1?",
+            "answers": [
+                {
+                    "text": "Reproduzir sons de muito baixa frequência (subwoofer), como explosões.",
+                    "value": "++"
+                },
+                {
+                    "text": "Melhorar a clareza dos diálogos.",
+                    "value": "--"
+                },
+                {
+                    "text": "Criar som ambiente difuso.",
+                    "value": "-"
+                },
+                {
+                    "text": "Aliviar a carga de graves das colunas principais.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-31",
+            "text": "A compressão RLE (Run-Length Encoding) é mais eficaz em que tipo de dados?",
+            "answers": [
+                {
+                    "text": "Imagens com grandes áreas de cor sólida e repetida (ex: desenhos animados).",
+                    "value": "++"
+                },
+                {
+                    "text": "Fotografias complexas com muito ruído.",
+                    "value": "--"
+                },
+                {
+                    "text": "Áudio digital de alta fidelidade.",
+                    "value": "-"
+                },
+                {
+                    "text": "Texto com poucas repetições de caracteres.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-32",
+            "text": "Para reduzir o erro de quantização (ruído) na digitalização de um sinal analógico, deve-se...",
+            "answers": [
+                {
+                    "text": "Aumentar o número de bits por amostra (resolução).",
+                    "value": "++"
+                },
+                {
+                    "text": "Aumentar apenas a frequência de amostragem.",
+                    "value": "+"
+                },
+                {
+                    "text": "Diminuir a amplitude do sinal de entrada.",
+                    "value": "-"
+                },
+                {
+                    "text": "Usar compressão com perdas.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "new-33",
+            "text": "Porque são os LEDs a tecnologia dominante em Billboards Digitais de grande formato?",
+            "answers": [
+                {
+                    "text": "Alta luminosidade visível à luz do dia e eficiência energética.",
+                    "value": "++"
+                },
+                {
+                    "text": "Têm a maior densidade de pixeis do mercado (PPI).",
+                    "value": "-"
+                },
+                {
+                    "text": "São a tecnologia mais barata para ecrãs pequenos.",
+                    "value": "--"
+                },
+                {
+                    "text": "Permitem a construção modular de ecrãs gigantes.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-34",
+            "text": "Qual é a principal vantagem dos ecrãs OLED em relação aos LCDs tradicionais quanto ao contraste?",
+            "answers": [
+                {
+                    "text": "Os pixeis emitem luz própria, permitindo pretos perfeitos (desligados).",
+                    "value": "++"
+                },
+                {
+                    "text": "Usam um backlight mais potente.",
+                    "value": "-"
+                },
+                {
+                    "text": "Têm filtros de cor mais espessos.",
+                    "value": "--"
+                },
+                {
+                    "text": "Têm melhores ângulos de visão.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-35",
+            "text": "Numa imagem digital, o que armazena tipicamente o canal Alpha?",
+            "answers": [
+                {
+                    "text": "Informação de transparência ou opacidade do pixel.",
+                    "value": "++"
+                },
+                {
+                    "text": "A temperatura da cor.",
+                    "value": "--"
+                },
+                {
+                    "text": "Dados de profundidade 3D (Z-depth).",
+                    "value": "+"
+                },
+                {
+                    "text": "Metadados sobre a câmara.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "new-36",
+            "text": "No contexto de compressão de vídeo MPEG, o que é uma I-Frame (Intra-coded)?",
+            "answers": [
+                {
+                    "text": "Um quadro comprimido independentemente, sem referência a outros quadros.",
+                    "value": "++"
+                },
+                {
+                    "text": "Um quadro que guarda apenas as diferenças para o anterior.",
+                    "value": "-"
+                },
+                {
+                    "text": "O quadro com maior taxa de compressão do grupo.",
+                    "value": "--"
+                },
+                {
+                    "text": "Um ponto de acesso aleatório no vídeo.",
+                    "value": "+"
+                }
+            ]
+        },
+        {
+            "id": "new-37",
+            "text": "O que define a 'Gama Dinâmica' (Dynamic Range) de um sistema de som?",
+            "answers": [
+                {
+                    "text": "A diferença em dB entre o som mais suave e o mais forte sem distorção.",
+                    "value": "++"
+                },
+                {
+                    "text": "A resposta de frequência de graves a agudos.",
+                    "value": "+"
+                },
+                {
+                    "text": "A velocidade de transmissão do sinal.",
+                    "value": "--"
+                },
+                {
+                    "text": "O número de altifalantes do sistema.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "new-38",
+            "text": "Qual é a característica definidora de um sistema de Hipertexto?",
+            "answers": [
+                {
+                    "text": "Organização não-linear da informação através de ligações (links).",
+                    "value": "++"
+                },
+                {
+                    "text": "Capacidade de formatar texto com cores e fontes.",
+                    "value": "+"
+                },
+                {
+                    "text": "Armazenamento sequencial em base de dados.",
+                    "value": "-"
+                },
+                {
+                    "text": "Ser acessível apenas através da Internet.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "new-39",
+            "text": "Qual é a função do filtro Bayer num sensor de câmara digital?",
+            "answers": [
+                {
+                    "text": "Capturar informação de cor usando um mosaico de filtros R, G e B.",
+                    "value": "++"
+                },
+                {
+                    "text": "Filtrar a luz infravermelha.",
+                    "value": "+"
+                },
+                {
+                    "text": "Reduzir o ruído digital em ISOs altos.",
+                    "value": "-"
+                },
+                {
+                    "text": "Proteger o sensor de poeiras.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "new-40",
+            "text": "O que permite a funcionalidade HDMI ARC (Audio Return Channel)?",
+            "answers": [
+                {
+                    "text": "Enviar o áudio da TV (ex: apps ou sintonizador) de volta para o recetor AV pelo cabo HDMI.",
+                    "value": "++"
+                },
+                {
+                    "text": "Melhorar a resolução de vídeo para 4K.",
+                    "value": "--"
+                },
+                {
+                    "text": "Controlar todos os dispositivos com um comando (CEC).",
+                    "value": "+"
+                },
+                {
+                    "text": "Duplicar a largura de banda de áudio.",
+                    "value": "-"
+                }
+            ]
+        }
+    ]
+}

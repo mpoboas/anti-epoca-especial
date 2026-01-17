@@ -1,0 +1,382 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Electronic Billboards, Digital Cinema"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "Os Billboards de grandes dimensões são uma criação dos anos...",
+            "answers": [
+                {
+                    "text": "1800...",
+                    "value": "correct"
+                },
+                {
+                    "text": "2000...",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "1900...",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Muito mais antiga",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "Umas das principais vantagens dos Digital Billboards é...",
+            "answers": [
+                {
+                    "text": "Atualização rápida de conteúdos",
+                    "value": "correct"
+                },
+                {
+                    "text": "Grandes dimensões",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Grande Visibilidade",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Utilização de Côr",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "A tecnologia mais comum nos Digital Billboards de grandes dimensões é...",
+            "answers": [
+                {
+                    "text": "LED",
+                    "value": "correct"
+                },
+                {
+                    "text": "Néon",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Projeção",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "OLED",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "A seleção do espaçamento entre pixeis de um Digital Billboard depende principalmente...",
+            "answers": [
+                {
+                    "text": "da distância dos observadores",
+                    "value": "correct"
+                },
+                {
+                    "text": "do investimento da campanha",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "da energia a consumir",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "da luminosidade pretendida",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "Uma característica importante dos módulos utilizados em Billboards digitais é...",
+            "answers": [
+                {
+                    "text": "serem facilmente substituíveis",
+                    "value": "correct"
+                },
+                {
+                    "text": "serem compatíveis com HDMI",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "serem impermeáveis",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "terem taxas de refrescamento altas",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "Uma das vantagens da interatividade em Billboards é...",
+            "answers": [
+                {
+                    "text": "aumentar o interesse das pessoas",
+                    "value": "correct"
+                },
+                {
+                    "text": "permitir sistemas mais simples",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "facilitar a implementação do sistema",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "limitar a utilização de periféricos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "No standard DCI o vídeo é guardado em formato...",
+            "answers": [
+                {
+                    "text": "JPEG2000",
+                    "value": "correct"
+                },
+                {
+                    "text": "INTRI",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "MPEG4",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "MPEG2",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "Os formatos base do DCI são...",
+            "answers": [
+                {
+                    "text": "2K e 4K",
+                    "value": "correct"
+                },
+                {
+                    "text": "1080p e 720p",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "4K e 8K",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "2048p e 4096p",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "O DCI suporta, de base, até quantos canais de som?",
+            "answers": [
+                {
+                    "text": "16",
+                    "value": "correct"
+                },
+                {
+                    "text": "4",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "64",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "255",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "Os \"Track Files\" são no DCI...",
+            "answers": [
+                {
+                    "text": "a unidade base de distribuição",
+                    "value": "correct"
+                },
+                {
+                    "text": "um conjunto de ficheiros prontos a apresentar",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "o registo de utilização de um filme",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a combinação de áudio+vídeo+legendas",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "No DCI há uma preocupação acrescida para que...",
+            "answers": [
+                {
+                    "text": "o filme seja apresentado como previsto",
+                    "value": "correct"
+                },
+                {
+                    "text": "a qualidade do som seja excelente",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a sala tenha cadeiras adequadas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "seja impossível usar câmaras na sala",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "Uma característica específica dos projetores digitais para cinema é...",
+            "answers": [
+                {
+                    "text": "utilização de DLP",
+                    "value": "correct"
+                },
+                {
+                    "text": "luminosidade elevada",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "resolução 4K",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "suporte 3D",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "text": "Um problema específico do sistema 3D por polarização é...",
+            "answers": [
+                {
+                    "text": "precisar de ecrã especial",
+                    "value": "correct"
+                },
+                {
+                    "text": "precisar de óculos especiais",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a sincronização áudio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a resolução ser limitada",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "text": "Os projetores digitais mais recentes usam como fonte de luz...",
+            "answers": [
+                {
+                    "text": "Lasers",
+                    "value": "correct"
+                },
+                {
+                    "text": "Lâmpada UHP",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Lâmpada Xenon",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "LEDS",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "text": "Uma desvantagem dos sistemas Cinema LED é...",
+            "answers": [
+                {
+                    "text": "tamanho fixo",
+                    "value": "correct"
+                },
+                {
+                    "text": "menor qualidade de cor",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "ocuparem mais espaço no edifício",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "não serem certificados DCI",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "text": "Uma característica específica das câmaras digitais para cinema é...",
+            "answers": [
+                {
+                    "text": "sensores maiores",
+                    "value": "correct"
+                },
+                {
+                    "text": "suportarem HD",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "serem compactas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "permitirem ligação de rede",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "text": "Outra característica específica das câmaras digitais para cinema é serem...",
+            "answers": [
+                {
+                    "text": "extremamente modulares",
+                    "value": "correct"
+                },
+                {
+                    "text": "robustas e à prova de intempéries",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "permitirem ligação de energia permanente",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "suportarem cartões SD-HX",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,206 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Vídeo Digital"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "A edição de vídeo digital comparada com analógica tem como vantagem...",
+            "answers": [
+                {
+                    "text": "todas as outras",
+                    "value": "correct"
+                },
+                {
+                    "text": "portabilidade",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "edição não linear",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "fidelidade na tranmissão",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "A grande vantagem do USB-C é...",
+            "answers": [
+                {
+                    "text": "todas as outras",
+                    "value": "correct"
+                },
+                {
+                    "text": "conector reversível",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "permitir múltiplos protocolos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "alimentação até 100W",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "O Thunderbolt combina...",
+            "answers": [
+                {
+                    "text": "PCle e DisplayPort",
+                    "value": "correct"
+                },
+                {
+                    "text": "USB3 e HDMI",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "PD e DCI",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "FireWire e UHDTV",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "Uma das especificidades dos meios profissionais de gravação digital é suportarem...",
+            "answers": [
+                {
+                    "text": "taxas brutais de dados",
+                    "value": "correct"
+                },
+                {
+                    "text": "capacidades de armazenamento elevadas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "múltiplos fluxos de vídeo",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "serem à prova de água",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "A principal compressão do MPEG é resultado de...",
+            "answers": [
+                {
+                    "text": "redundância temporal",
+                    "value": "correct"
+                },
+                {
+                    "text": "redundância espacial",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "redundância piramidal",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "redundância de dados",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "Num fluxo MPEG, ter mais frames I resulta, tipicamente...",
+            "answers": [
+                {
+                    "text": "maior resiliência a erros de transmissão",
+                    "value": "correct"
+                },
+                {
+                    "text": "maior compressão",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "cores mais fiáveis",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "maiores necessidades de bufferização",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "O MPEG3 é...",
+            "answers": [
+                {
+                    "text": "um sistema que foi abandonado",
+                    "value": "correct"
+                },
+                {
+                    "text": "uma evolução do MPEG2",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "um sistema de codificação de meta-informação",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "uma forma eficiente de comprimir audio",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "Uma das vantagens do MPEG4 é...",
+            "answers": [
+                {
+                    "text": "permitir múltiplos fluxos",
+                    "value": "correct"
+                },
+                {
+                    "text": "comprimir HD",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "comprimir audio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "poder ser usado em CDs",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "Para indexar conteúdos multimédia devemos usar...",
+            "answers": [
+                {
+                    "text": "MPEG 7",
+                    "value": "correct"
+                },
+                {
+                    "text": "MPEG 1",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "MPEG 4",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "MPEG 9",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}

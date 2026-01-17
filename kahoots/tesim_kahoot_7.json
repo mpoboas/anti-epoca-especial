@@ -1,0 +1,492 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Home Cinema"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "Numa ligação Y Cb Cr, o canal mais importante é...",
+            "answers": [
+                {
+                    "text": "Y",
+                    "value": "correct"
+                },
+                {
+                    "text": "Cb",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Cr",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "São todos equivalentes",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "A principal vantagem do HDMI é...",
+            "answers": [
+                {
+                    "text": "Combinar audio e video digital",
+                    "value": "correct"
+                },
+                {
+                    "text": "Permitir vídeo digital HD",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Poder ser usado em televisores e monitores",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Incluir suporte HDCP",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "As várias versões do HDMI distinguem-se por...",
+            "answers": [
+                {
+                    "text": "Adicionarem funcionalidades",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Aumentarem largura de banda / resolução",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Necessitarem de novos cabos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "(todas as outras)",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "A funcionalidade ARC do HDMI é utilizada para transmitir áudio...",
+            "answers": [
+                {
+                    "text": "da televisão para um amplificador",
+                    "value": "correct"
+                },
+                {
+                    "text": "de uma consola para um amplificador",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "de uma consola para a televisão",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "de um amplificador para uma consola",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "Um dos problemas da HD é...",
+            "answers": [
+                {
+                    "text": "Ainda há poucos meios de gravação caseira",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Maiores exigências no estúdio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Não retro-compatível",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "(todas as outras)",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "Num sistema UHDTV temos, tipicamente...",
+            "answers": [
+                {
+                    "text": "Maior número de pixeis",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Maior número de pixeis e gamut de cores",
+                    "value": "correct"
+                },
+                {
+                    "text": "Maior gamut de cores",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Frames interlaçadas",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "Um dos principais problemas dos sistemas LCD é...",
+            "answers": [
+                {
+                    "text": "Precisarem de uma fonte de luz",
+                    "value": "correct"
+                },
+                {
+                    "text": "Terem resolução fixa",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Suportarem apenas cor RGB",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Terem velocidade de resposta limitada",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "A tecnologia de roda de cor dos projetores DLP permite...",
+            "answers": [
+                {
+                    "text": "usar apenas um chip DLP para cor total",
+                    "value": "correct"
+                },
+                {
+                    "text": "resoluções superiores",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "sistema de arrefecimento melhorado",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "sistemas mais compactos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "A projeção de mesa tem como vantagem comparada com a projeção de teto...",
+            "answers": [
+                {
+                    "text": "Instalação mais simples",
+                    "value": "correct"
+                },
+                {
+                    "text": "Evitar sombras",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Menos ruído",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Maior resolução",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "Num layout surround 5.1, o número 1 indica o número de canais...",
+            "answers": [
+                {
+                    "text": "de graves.",
+                    "value": "correct"
+                },
+                {
+                    "text": "de agudos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "de gama completa",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "encriptados",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "O sistema Dolby Pro-Logic é transmitido através de...",
+            "answers": [
+                {
+                    "text": "2 canais estéreo, digital ou analógico",
+                    "value": "correct"
+                },
+                {
+                    "text": "fluxo digital surround",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "4 canais analógicos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "sistema de multiplexagem holístico",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "A grande novidade do sistema Dolby ATMOS é...",
+            "answers": [
+                {
+                    "text": "ter altifalantes acima do normal",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "colocar objetos sonoros num espaço 3D genérico",
+                    "value": "correct"
+                },
+                {
+                    "text": "permitir surround 5.1",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "incluir codificação digital",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "text": "Uma vantagem única do DTS-HD Master Audio é...",
+            "answers": [
+                {
+                    "text": "ser compatível com o DTS standard",
+                    "value": "correct"
+                },
+                {
+                    "text": "permitir 7 canais independentes",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "ter compressão sem perdas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "permitir 24 bits",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "text": "O sistema MPEG-H possibilita ao utilizador...",
+            "answers": [
+                {
+                    "text": "acesso simples a diferentes misturas áudio",
+                    "value": "correct"
+                },
+                {
+                    "text": "ajustar os vários canais surround",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "indexação de conteúdos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "acesso a transmissões ao vivo",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "text": "Num layout recomendado Dolby 5.1 as colunas de surround estão...",
+            "answers": [
+                {
+                    "text": "ao lado ou ligeiramente atrás do ouvinte, aprox >=90º",
+                    "value": "correct"
+                },
+                {
+                    "text": "atrás do ouvinte, idealmente na posição 180°",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "à frente do ouvinte a cerca de 75º",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "atrás do ouvinte a cerca de 145º",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "text": "O canal LFE reproduz, tipicamente...",
+            "answers": [
+                {
+                    "text": "as baixas frequências",
+                    "value": "correct"
+                },
+                {
+                    "text": "as altas frequências",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "as frequências médias",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "as médias e altas frequências",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "text": "Num sistema surround caseiro os atrasos entre colunas são da ordem dos...",
+            "answers": [
+                {
+                    "text": "mili-segundos",
+                    "value": "correct"
+                },
+                {
+                    "text": "segundos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "micro-segundos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "femto-segundos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 18,
+            "text": "O sistema de DVD-Vídeo tem uma resolução típica de...",
+            "answers": [
+                {
+                    "text": "720x480",
+                    "value": "correct"
+                },
+                {
+                    "text": "1280x720",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "1920x1080",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "3840x2180",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 19,
+            "text": "O DVD-Vídeo trouxe como grande novidade...",
+            "answers": [
+                {
+                    "text": "permitir mudar faixa de áudio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "permitir navegação rápida entre capítulos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "um formato digital caseiro",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "(todas as outras)",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 20,
+            "text": "O sistema CSS foi implementado nos DVDs para evitar...",
+            "answers": [
+                {
+                    "text": "erros de leitura",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "cópias não autorizadas",
+                    "value": "correct"
+                },
+                {
+                    "text": "formatação inválida dos menus",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "complexidade na organização dos capítulos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "text": "Em termos de utilização a grande diferença do Blu-Ray é...",
+            "answers": [
+                {
+                    "text": "resolução melhorada",
+                    "value": "correct"
+                },
+                {
+                    "text": "menus mais interativos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "discos com tecnologia magnética",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "facilidade de edição de conteúdos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 22,
+            "text": "Uma limitação prática dos sistemas DVR mais comuns atualmente é...",
+            "answers": [
+                {
+                    "text": "não permitir transferência de conteúdos",
+                    "value": "correct"
+                },
+                {
+                    "text": "não suportarem HD",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "dificuldade em gravar transmissões ao vivo",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "usarem meios analógicos de registo",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}

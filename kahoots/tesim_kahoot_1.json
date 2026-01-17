@@ -1,0 +1,294 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Multimédia Digital, Documentos Multimédia"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "Um documento multimédia caracteriza-se por combinar...",
+            "answers": [
+                {
+                    "text": "diferentes tipos de dados",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "diferentes tipos de dados e informação temporal de apresentação",
+                    "value": "correct"
+                },
+                {
+                    "text": "dados locais e remotos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "compressão avançada",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "A orquestração é importante para....",
+            "answers": [
+                {
+                    "text": "áudio/vídeo de um mesmo clip",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "sincronização entre múltiplos meios",
+                    "value": "correct"
+                },
+                {
+                    "text": "armazenamento de música sinfónica",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "reprodução de áudio",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "A enorme variedade de funcionalidades multimédia leva a...",
+            "answers": [
+                {
+                    "text": "problemas de compatibilidade",
+                    "value": "correct"
+                },
+                {
+                    "text": "dificuldades no armazenamento",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "uma maior facilidade na troca de dados",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "estagnação em termos de opções de software",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "O conceito de Hipertexto refere-se, essencialmente, a...",
+            "answers": [
+                {
+                    "text": "apresentação & estrutura",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "acesso",
+                    "value": "correct"
+                },
+                {
+                    "text": "armazenamento",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "A frame-rate a partir da qual temos animação é, cerca de ...",
+            "answers": [
+                {
+                    "text": "10 fps",
+                    "value": "correct"
+                },
+                {
+                    "text": "25 fps",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "60 fps",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "depende do conteúdo e utilizador",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "Os avanços tecnológicos *promovem* o multimédia através de...",
+            "answers": [
+                {
+                    "text": "mais funcionalidades de entrada/saída",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "maiores capacidades de processamento",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "maiores capacidades de armazenamento/transmissão",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "Qual dos seguintes exemplos é multimédia e multisensorial?",
+            "answers": [
+                {
+                    "text": "ver filme legendado no cinema",
+                    "value": "correct"
+                },
+                {
+                    "text": "música no elevador",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "música no telemóvel",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "vídeo no telemóvel c/ legenda à escolha",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "Qual dos seguintes exemplos é multisensorial mas não multimédia?",
+            "answers": [
+                {
+                    "text": "Apresentação powerpoint numa aula",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "DVD com múltiplas faixas de áudio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Filme mudo no cinema",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Jornal em papel",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "A Aquisição de informação refere-se a um processo...",
+            "answers": [
+                {
+                    "text": "ao longo de toda a vida",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "numa experiência específica",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "entre múltiplas pessoas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "recorrendo a múltiplos sentidos",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "Na aquisição o sentido mais relevante é...",
+            "answers": [
+                {
+                    "text": "visão",
+                    "value": "correct"
+                },
+                {
+                    "text": "audição",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "olfato",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "tacto",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "Pode-se melhorar uma experiência de Retenção recorrendo a...",
+            "answers": [
+                {
+                    "text": "imagens animadas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "imagens combinadas com som",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "som surround",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "imagens, som e alguma forma de prática",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "Uma das principais vantagens do multimedia digital é...",
+            "answers": [
+                {
+                    "text": "unificar diferentes tipos de informação",
+                    "value": "correct"
+                },
+                {
+                    "text": "permitir aumentar a retenção",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "facilitar a edição",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "eliminar erros de amostragem",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "text": "Em termos de amostragem digital, devemos usar...",
+            "answers": [
+                {
+                    "text": "a maior qualidade possivel",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a menor qualidade possível",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a menor possível, que sirva os objetivos",
+                    "value": "correct"
+                },
+                {
+                    "text": "a mais simples possível",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}

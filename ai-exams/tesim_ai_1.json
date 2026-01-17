@@ -1,0 +1,444 @@
+{
+  "questions": [
+    {
+      "id": "new-1",
+      "text": "Qual é a principal vantagem da codificação logarítmica (como a Lei-A ou Lei-µ) na voz humana em comparação com a linear?",
+      "answers": [
+        {
+          "text": "Aumentar a taxa de amostragem para captar frequências ultrassónicas.",
+          "value": "--"
+        },
+        {
+          "text": "Melhorar a resolução para sinais de baixa amplitude, onde a voz é mais detalhada.",
+          "value": "++"
+        },
+        {
+          "text": "Reduzir o ruído de fundo em ambientes ruidosos.",
+          "value": "+"
+        },
+        {
+          "text": "Permitir a reprodução de música com alta fidelidade.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-2",
+      "text": "No contexto do Teorema de Nyquist, se quisermos digitalizar um sinal com frequência máxima de 22 kHz, qual deve ser a taxa de amostragem mínima?",
+      "answers": [
+        {
+          "text": "Pelo menos 44 kHz.",
+          "value": "++"
+        },
+        {
+          "text": "Aproximadamente 22 kHz.",
+          "value": "--"
+        },
+        {
+          "text": "48 kHz para garantir uma margem de segurança.",
+          "value": "+"
+        },
+        {
+          "text": "11 kHz, pois basta metade da frequência.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-3",
+      "text": "O que caracteriza o 'Aliasing' num sinal digital?",
+      "answers": [
+        {
+          "text": "O aparecimento de frequências fantasma devido a uma amostragem insuficiente.",
+          "value": "++"
+        },
+        {
+          "text": "Um tipo de compressão com perdas usado em MP3.",
+          "value": "--"
+        },
+        {
+          "text": "A distorção causada por quantização com poucos bits.",
+          "value": "-"
+        },
+        {
+          "text": "A sobreposição de sinais de alta frequência no espectro audível.",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-4",
+      "text": "Na compressão JPEG, qual é a função da Transformada Discreta de Cosseno (DCT)?",
+      "answers": [
+        {
+          "text": "Converter os dados do domínio espacial para o domínio da frequência.",
+          "value": "++"
+        },
+        {
+          "text": "Reduzir a resolução da imagem dividindo-a em blocos.",
+          "value": "-"
+        },
+        {
+          "text": "Separar as componentes de cor da componente de brilho.",
+          "value": "+"
+        },
+        {
+          "text": "Aplicar a codificação de Huffman aos pixeis.",
+          "value": "--"
+        }
+      ]
+    },
+    {
+      "id": "new-5",
+      "text": "Em vídeo digital, qual a principal função dos quadros do tipo 'B-Frame' (Bidirectional)?",
+      "answers": [
+        {
+          "text": "Servir de referência absoluta para todos os outros quadros.",
+          "value": "--"
+        },
+        {
+          "text": "Usar informação de quadros passados e futuros para máxima compressão.",
+          "value": "++"
+        },
+        {
+          "text": "Armazenar apenas a diferença em relação ao quadro anterior.",
+          "value": "+"
+        },
+        {
+          "text": "Garantir a sincronização de áudio e vídeo.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-6",
+      "text": "O que distingue a tecnologia 'E-Ink' (tinta eletrónica) dos ecrãs LCD tradicionais?",
+      "answers": [
+        {
+          "text": "Consome energia apenas na mudança de página e é legível sob luz solar direta.",
+          "value": "++"
+        },
+        {
+          "text": "Permite taxas de atualização muito elevadas para vídeo.",
+          "value": "--"
+        },
+        {
+          "text": "Tem melhor reprodução de cores vibrantes.",
+          "value": "-"
+        },
+        {
+          "text": "Não emite luz própria, dependendo da iluminação ambiente.",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-7",
+      "text": "Ao aumentar o valor ISO numa câmara digital, qual é o efeito colateral mais comum?",
+      "answers": [
+        {
+          "text": "A imagem fica mais escura.",
+          "value": "--"
+        },
+        {
+          "text": "Aumento do ruído digital ou grão na imagem.",
+          "value": "++"
+        },
+        {
+          "text": "A profundidade de campo diminui.",
+          "value": "-"
+        },
+        {
+          "text": "A sensibilidade do sensor aumenta, permitindo fotos em ambientes escuros.",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-8",
+      "text": "O que representa a notação de subamostragem de cor 4:2:0?",
+      "answers": [
+        {
+          "text": "Que a cor tem metade da resolução horizontal e vertical da luminância.",
+          "value": "++"
+        },
+        {
+          "text": "Que não há informação de cor, apenas preto e branco.",
+          "value": "--"
+        },
+        {
+          "text": "Que a resolução de cor é metade apenas na horizontal.",
+          "value": "-"
+        },
+        {
+          "text": "Que a informação de cor é partilhada entre linhas adjacentes.",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-9",
+      "text": "Qual é a principal vantagem dos displays HUD (Head-Up Display) em veículos?",
+      "answers": [
+        {
+          "text": "Permitir ver filmes enquanto se conduz.",
+          "value": "--"
+        },
+        {
+          "text": "Manter a atenção do condutor na estrada projetando informação no campo de visão.",
+          "value": "++"
+        },
+        {
+          "text": "Substituir completamente o painel de instrumentos tradicional.",
+          "value": "-"
+        },
+        {
+          "text": "Fornecer dados de navegação e velocidade sem desviar o olhar.",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-10",
+      "text": "Num sistema de marca de água digital (Watermarking), o que se entende por 'robustez'?",
+      "answers": [
+        {
+          "text": "A capacidade da marca sobreviver a ataques como compressão ou recorte.",
+          "value": "++"
+        },
+        {
+          "text": "A impossibilidade de a marca ser vista a olho nu.",
+          "value": "-"
+        },
+        {
+          "text": "A quantidade de dados que a marca consegue armazenar.",
+          "value": "+"
+        },
+        {
+          "text": "A marca tornar o ficheiro impossível de copiar.",
+          "value": "--"
+        }
+      ]
+    },
+    {
+      "id": "new-11",
+      "text": "O algoritmo LZW (Lempel-Ziv-Welch) é um exemplo de compressão de que tipo?",
+      "answers": [
+        {
+          "text": "Baseada em dicionário e sem perdas (Lossless).",
+          "value": "++"
+        },
+        {
+          "text": "Baseada em transformadas de frequência.",
+          "value": "--"
+        },
+        {
+          "text": "Estatística, baseada na frequência de caracteres.",
+          "value": "+"
+        },
+        {
+          "text": "Semântica com perdas.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-12",
+      "text": "Em áudio digital, o que acontece se aumentarmos a resolução de bits de 16 para 24 bits?",
+      "answers": [
+        {
+          "text": "Aumentamos a gama dinâmica do som (diferença entre o som mais fraco e o mais forte).",
+          "value": "++"
+        },
+        {
+          "text": "Aumentamos a frequência máxima que pode ser gravada.",
+          "value": "--"
+        },
+        {
+          "text": "Melhoramos a relação sinal-ruído.",
+          "value": "+"
+        },
+        {
+          "text": "O ficheiro fica mais pequeno.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-13",
+      "text": "Qual a diferença fundamental entre compressão por Entropia e compressão Semântica?",
+      "answers": [
+        {
+          "text": "A Entropia ignora o significado dos dados, a Semântica baseia-se no tipo de dados (ex: voz, imagem).",
+          "value": "++"
+        },
+        {
+          "text": "A Entropia é sempre com perdas e a Semântica sem perdas.",
+          "value": "--"
+        },
+        {
+          "text": "A Entropia usa estatística pura, enquanto a Semântica usa modelos do conteúdo.",
+          "value": "+"
+        },
+        {
+          "text": "A Semântica é usada apenas para texto.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-14",
+      "text": "O que é o efeito de 'Motion Blur' na fotografia?",
+      "answers": [
+        {
+          "text": "O arrastamento visível quando o objeto se move mais rápido que o tempo de exposição.",
+          "value": "++"
+        },
+        {
+          "text": "A falta de focagem devido a uma abertura muito grande.",
+          "value": "-"
+        },
+        {
+          "text": "Um filtro digital aplicado no pós-processamento.",
+          "value": "--"
+        },
+        {
+          "text": "A sensação de movimento criada por velocidades de obturador lentas.",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-15",
+      "text": "Para que servem os 'Motion Vectors' na compressão de vídeo MPEG?",
+      "answers": [
+        {
+          "text": "Para indicar o deslocamento de blocos de imagem entre quadros consecutivos.",
+          "value": "++"
+        },
+        {
+          "text": "Para aumentar a taxa de frames do vídeo.",
+          "value": "--"
+        },
+        {
+          "text": "Para reduzir a redundância temporal.",
+          "value": "+"
+        },
+        {
+          "text": "Para corrigir erros de cor na transmissão.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-16",
+      "text": "Numa imagem digital, o que define a 'Profundidade de Cor' (Color Depth)?",
+      "answers": [
+        {
+          "text": "O número de bits usados para representar a cor de cada pixel.",
+          "value": "++"
+        },
+        {
+          "text": "A quantidade de pixeis na imagem.",
+          "value": "--"
+        },
+        {
+          "text": "A capacidade de distinguir tons subtis.",
+          "value": "+"
+        },
+        {
+          "text": "O tamanho físico da imagem impressa.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-17",
+      "text": "O que é o 'Masking Effect' (Efeito de Máscara) na psicoacústica?",
+      "answers": [
+        {
+          "text": "Quando um som forte torna inaudível um som mais fraco próximo em frequência ou tempo.",
+          "value": "++"
+        },
+        {
+          "text": "A utilização de auscultadores para bloquear ruído externo.",
+          "value": "--"
+        },
+        {
+          "text": "A técnica de compressão usada no MP3 para descartar sons irrelevantes.",
+          "value": "+"
+        },
+        {
+          "text": "A sobreposição de duas faixas de áudio.",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "id": "new-18",
+      "text": "Qual a principal desvantagem do vídeo entrelaçado (interlaced) em ecrãs modernos (LCD/OLED)?",
+      "answers": [
+        {
+          "text": "Requer o dobro da largura de banda.",
+          "value": "--"
+        },
+        {
+          "text": "Pode criar artefactos visuais (efeito pente) em movimentos rápidos se não for bem desentrelaçado.",
+          "value": "++"
+        },
+        {
+          "text": "Tem metade da resolução temporal do progressivo.",
+          "value": "-"
+        },
+        {
+          "text": "Não é compatível com resoluções HD.",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-19",
+      "text": "No contexto de DRM, o que distingue a 2ª geração de sistemas da 1ª geração?",
+      "answers": [
+        {
+          "text": "A 1ª focava-se apenas em encriptação; a 2ª inclui gestão de direitos e modelos de negócio.",
+          "value": "++"
+        },
+        {
+          "text": "A 2ª geração usa chaves de encriptação maiores.",
+          "value": "-"
+        },
+        {
+          "text": "A 1ª geração não funcionava em vídeo.",
+          "value": "--"
+        },
+        {
+          "text": "A 2ª geração permite definir regras de uso (ex: copiar 3 vezes).",
+          "value": "+"
+        }
+      ]
+    },
+    {
+      "id": "new-20",
+      "text": "Qual é a relação aproximada de intensidade sonora ao aumentarmos 10 dB?",
+      "answers": [
+        {
+          "text": "O som torna-se 10 vezes mais forte.",
+          "value": "+"
+        },
+        {
+          "text": "A perceção de volume duplica (2x).",
+          "value": "++"
+        },
+        {
+          "text": "O volume aumenta linearmente.",
+          "value": "-"
+        },
+        {
+          "text": "O som fica 100 vezes mais forte.",
+          "value": "--"
+        }
+      ]
+    }
+  ]
+}

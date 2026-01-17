@@ -1,0 +1,382 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Som, MIDI"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "Ao combinar duas ondas sonoras de amplitude x, a amplitude final será...",
+            "answers": [
+                {
+                    "text": "não sabemos, depende das ondas",
+                    "value": "correct"
+                },
+                {
+                    "text": "o dobro",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "o quádruplo",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "metade",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "A escala útil de um sistema de som é de cerca de...",
+            "answers": [
+                {
+                    "text": "100 dB",
+                    "value": "correct"
+                },
+                {
+                    "text": "10 dB",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "1000 dB",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "1 dB",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "100 dB correspondem aproximadamente a uma resolução de...",
+            "answers": [
+                {
+                    "text": "8 bits",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "16 bits",
+                    "value": "correct"
+                },
+                {
+                    "text": "24 bits",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "32 bits",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "A audição típica dos humanos atinge cerca de...",
+            "answers": [
+                {
+                    "text": "20 kHz",
+                    "value": "correct"
+                },
+                {
+                    "text": "40 kHz",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "200 kHz",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "2 MHz",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "Tipicamente ao tocar uma nota num instrumento musical resulta...",
+            "answers": [
+                {
+                    "text": "uma gama alargada de frequências",
+                    "value": "correct"
+                },
+                {
+                    "text": "uma gama muito limitada de frequências",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "uma gama que depende fortemente da nota",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "uma frequência única",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "Tipicamente os humanos são mais sensíveis na gama de frequências...",
+            "answers": [
+                {
+                    "text": "dos graves",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "dos agudos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "da voz",
+                    "value": "correct"
+                },
+                {
+                    "text": "em toda a gama",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "O \"efeito máscara\" significa que um som forte irá reduzir a capacidade de detectar sons...",
+            "answers": [
+                {
+                    "text": "em frequências próximas",
+                    "value": "correct"
+                },
+                {
+                    "text": "nas baixas frequências",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "nas altas frequências",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "em todas as frequências",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "Se tivermos de escolher, devemos dar prioridade...",
+            "answers": [
+                {
+                    "text": "ao áudio, em detrimento do vídeo",
+                    "value": "correct"
+                },
+                {
+                    "text": "ao vídeo, em detrimento do áudio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "devemos cortar ambos se necessário",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "não há relação",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "A codificação logarítmica é muito interessante para...",
+            "answers": [
+                {
+                    "text": "VOZ",
+                    "value": "correct"
+                },
+                {
+                    "text": "música",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "som em geral",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "não é utilizável em som",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "Ao codificar música a taxa de amostragem deve ser, cerca de...",
+            "answers": [
+                {
+                    "text": "44 kHz",
+                    "value": "correct"
+                },
+                {
+                    "text": "22 kHz",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "11 kHz",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "88 kHz",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "Um sequenciador tem, tipicamente, comparado com editor de som, ficheiros...",
+            "answers": [
+                {
+                    "text": "mais pequenos",
+                    "value": "correct"
+                },
+                {
+                    "text": "maiores",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "similares",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "não há relação",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "Em sistemas de processamento de áudio digital baseados em PC o hardware adicional é essencial para...",
+            "answers": [
+                {
+                    "text": "interface com o utilizador",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "permitir transmissão sem fios",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "processamento tempo-real",
+                    "value": "correct"
+                },
+                {
+                    "text": "reproduzir MP3",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "text": "O sistema MIDI foi criado para interligar...",
+            "answers": [
+                {
+                    "text": "PCs",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "instrumentos musicais",
+                    "value": "correct"
+                },
+                {
+                    "text": "sistemas de controlo industriais",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "veículos autónomos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "text": "A principal informação transmitida no MIDI são...",
+            "answers": [
+                {
+                    "text": "notas musicais",
+                    "value": "correct"
+                },
+                {
+                    "text": "samples de som",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "ficheiros de áudio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "apresentações multimédia",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "text": "A norma General MIDI garante maior...",
+            "answers": [
+                {
+                    "text": "compatibilidade",
+                    "value": "correct"
+                },
+                {
+                    "text": "velocidade",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "alcance",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "eficiência",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "text": "As mensagens System Exclusive foram pensadas para transferir...",
+            "answers": [
+                {
+                    "text": "dados genéricos",
+                    "value": "correct"
+                },
+                {
+                    "text": "notas simples",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "comandos em tempo real",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "comandos adicionais",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "text": "Uma das inovações do MIDI 2.0 é permitir...",
+            "answers": [
+                {
+                    "text": "comunicação bi-direcional.",
+                    "value": "correct"
+                },
+                {
+                    "text": "múltiplos canais",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "interligar múltiplos dispositivos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "sincronização start/stop",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,272 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Texto e Visão"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "A grande vantagem do \"plain text\" é permitir...",
+            "answers": [
+                {
+                    "text": "menos recursos computacionais",
+                    "value": "correct"
+                },
+                {
+                    "text": "conjuntos de caracteres mais complexos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "visualização WYSIWYG",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "utilização de fontes bitmap",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "O UNICODE tem como grande vantagem relativamente ao ASCII...",
+            "answers": [
+                {
+                    "text": "suportar muitos mais alfabetos",
+                    "value": "correct"
+                },
+                {
+                    "text": "ter suporte da língua inglesa",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "permitir codificação 8 bits",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "usar muito poucos recursos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "Um glifo representa",
+            "answers": [
+                {
+                    "text": "graficamente um caracter",
+                    "value": "correct"
+                },
+                {
+                    "text": "um conjunto alargado de caracteres",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "o tipo de letra (e.g. bold vs normal)",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a descrição gráfica de uma página",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "Quantos tipos de sensores fazem parte da visão humana (tipicamente)?",
+            "answers": [
+                {
+                    "text": "4",
+                    "value": "correct"
+                },
+                {
+                    "text": "1",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "8",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "3",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "A visão humana é menos sensível em que cor?",
+            "answers": [
+                {
+                    "text": "azul",
+                    "value": "correct"
+                },
+                {
+                    "text": "verde",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "vermelho",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "são todos mais ou menos iguais...",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "A cor que observamos num objeto é resultado de...",
+            "answers": [
+                {
+                    "text": "iluminação material",
+                    "value": "correct"
+                },
+                {
+                    "text": "iluminação",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "material",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "nenhuma das anteriores",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "No olho humano a íris basicamente controla...",
+            "answers": [
+                {
+                    "text": "a quantidade de luz",
+                    "value": "correct"
+                },
+                {
+                    "text": "a focagem",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a saturação das cores",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a deteção de contornos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "No olho humano a Fóvea é responsável por",
+            "answers": [
+                {
+                    "text": "a visão de detalhes e cor",
+                    "value": "correct"
+                },
+                {
+                    "text": "a visão 3D",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a visão periférica",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a visão noturna",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "Os humanos capturam uma cena...",
+            "answers": [
+                {
+                    "text": "pequenas seções de cada vez",
+                    "value": "correct"
+                },
+                {
+                    "text": "uma cor de cada vez",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "toda a cena de uma vez",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "com um olho de cada vez",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "O modelo sRGB representa",
+            "answers": [
+                {
+                    "text": "uma gama limitada de cores",
+                    "value": "correct"
+                },
+                {
+                    "text": "todas as cores visíveis pelos humanos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "todas as cores que podem ser impressas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "todas as cores que podem ser apresentadas num ecrã",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "Nos modelos de cor, Y representa, tipicamente...",
+            "answers": [
+                {
+                    "text": "a luminosidade",
+                    "value": "correct"
+                },
+                {
+                    "text": "a saturação",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a cor vermelha",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "o \"hue\" da cor",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "A grande diferença entre RAL e Pantone é que o RAL representa...",
+            "answers": [
+                {
+                    "text": "cores finais",
+                    "value": "correct"
+                },
+                {
+                    "text": "fórmulas químicas de pigmentos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "misturas de tintas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "modelos RGB",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}

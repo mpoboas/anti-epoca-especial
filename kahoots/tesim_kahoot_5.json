@@ -1,0 +1,360 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Imagens, Fotografia, Gráficos"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "A resolução de uma imagem indica...",
+            "answers": [
+                {
+                    "text": "a densidade de pixeis por área",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "o largura e altura em pixeis da imagem",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "correct"
+                },
+                {
+                    "text": "o número total de pixeis da imagem",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "Na notação 4:2:2, o primeiro valor indica o número de amostras",
+            "answers": [
+                {
+                    "text": "da componente Y",
+                    "value": "correct"
+                },
+                {
+                    "text": "diferentes na 1ª linha",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "diferentes na 2ª linha",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "totais na 1ª e 2ª linha",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "Um sistema 4:2:0 comparado com um sistema 4:4:4 tem",
+            "answers": [
+                {
+                    "text": "menor resolução cromática.",
+                    "value": "correct"
+                },
+                {
+                    "text": "mesma resolução cromática",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "maior resolução cromática",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "nenhuma das outras",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "A correção de gama permite ajustar...",
+            "answers": [
+                {
+                    "text": "a evolução dos tons de cinzento",
+                    "value": "correct"
+                },
+                {
+                    "text": "o valor do branco",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "o valor do preto",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a diferença entre o valor de branco e preto",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "O JPEG usa a transformada",
+            "answers": [
+                {
+                    "text": "DCT",
+                    "value": "correct"
+                },
+                {
+                    "text": "FFT",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "XPT",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "KFC",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "No algoritmo JPEG a qualidade/compressão é ajustada através de...",
+            "answers": [
+                {
+                    "text": "uma tabela de coeficientes",
+                    "value": "correct"
+                },
+                {
+                    "text": "um valor de 0 a 100",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "um valor de 0.0 a 1.0",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "uma fórmula matemática",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "Uma das vantagens do PNG relativamente ao GIF é permitir...",
+            "answers": [
+                {
+                    "text": "transparência com até 16 bits",
+                    "value": "correct"
+                },
+                {
+                    "text": "animações",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "compressão eficiente de fotos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "informação adicional como coordenadas GPS",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "Numa fotografia ao aumentar o ISO temos, tipicamente...",
+            "answers": [
+                {
+                    "text": "mais ruído",
+                    "value": "correct"
+                },
+                {
+                    "text": "menos ruído",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "mais cores",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "ficheiros mais pequenos",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "Para ajustar a profundidade de campo devemos mudar...",
+            "answers": [
+                {
+                    "text": "f/",
+                    "value": "correct"
+                },
+                {
+                    "text": "ISO",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Velocidade",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "Zoom",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "As máquinas DSLR têm, tipicamente, como principal vantagem...",
+            "answers": [
+                {
+                    "text": "acesso direto a mais controlos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "sensores de imagem maiores",
+                    "value": "correct"
+                },
+                {
+                    "text": "maior resolução",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "maior frame rate",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "Tipicamente uma lente f/1 comparada com uma lente f/4 será...",
+            "answers": [
+                {
+                    "text": "mais cara",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "mais pesada",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "mais volumosa",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "todas as anteriores",
+                    "value": "correct"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "Um sistema HDR aumenta...",
+            "answers": [
+                {
+                    "text": "a gama dinâmica",
+                    "value": "correct"
+                },
+                {
+                    "text": "a velocidade de resposta",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a resolução da imagem",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "a ampliação do zoom",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "text": "Tipicamente, um sensor de máquina fotográfica tem...",
+            "answers": [
+                {
+                    "text": "mais sensores da cor verde",
+                    "value": "correct"
+                },
+                {
+                    "text": "mais sensores da cor vermelha",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "mais sensores da cor azul",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "mais sensores da cor violeta",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "text": "O sistema double buffer é essencial para",
+            "answers": [
+                {
+                    "text": "animações",
+                    "value": "correct"
+                },
+                {
+                    "text": "fotografia",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "áudio",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "force feedback",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "text": "Uma forma de implementar anti-aliasing é...",
+            "answers": [
+                {
+                    "text": "renderizar com o dobro da resolução",
+                    "value": "correct"
+                },
+                {
+                    "text": "usar faces counter-clockwise",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "usar radiosidade",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "implementar triple-buffering",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "text": "Um dos problemas dos ficheiros gráficos é a sua...",
+            "answers": [
+                {
+                    "text": "variedade de funcionalidades",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "dimensão em disco",
+                    "value": "correct"
+                },
+                {
+                    "text": "dificuldade em alterar atributos dos objetos",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "entropia",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}

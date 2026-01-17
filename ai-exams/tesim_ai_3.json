@@ -1,0 +1,444 @@
+{
+    "questions": [
+        {
+            "id": "q1",
+            "text": "Na teoria da cor, qual é a frequência aproximada da radiação associada à cor vermelha?",
+            "answers": [
+                {
+                    "text": "4.3 x 10^14 Hz",
+                    "value": "++"
+                },
+                {
+                    "text": "7.5 x 10^14 Hz",
+                    "value": "--"
+                },
+                {
+                    "text": "44.1 kHz",
+                    "value": "--"
+                },
+                {
+                    "text": "100 Hz",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q2",
+            "text": "Qual é a função da pré-filtragem (Pre-Filtering) no processo de codificação de um sinal analógico?",
+            "answers": [
+                {
+                    "text": "Remover frequências que não podem ser detetadas pela amostragem (maiores que 2 vezes a frequência de amostragem).",
+                    "value": "++"
+                },
+                {
+                    "text": "Aumentar a amplitude do sinal para evitar ruído.",
+                    "value": "--"
+                },
+                {
+                    "text": "Converter o sinal de analógico para digital.",
+                    "value": "-"
+                },
+                {
+                    "text": "Comprimir o sinal antes da quantificação.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q3",
+            "text": "Em que cenário é mais vantajosa a utilização de compressão assimétrica (mais tempo a comprimir, reprodução leve)?",
+            "answers": [
+                {
+                    "text": "Video on Demand (VoD), onde o conteúdo é comprimido uma vez e visualizado muitas vezes.",
+                    "value": "++"
+                },
+                {
+                    "text": "Videoconferência em tempo real.",
+                    "value": "--"
+                },
+                {
+                    "text": "Transmissão ao vivo de desporto.",
+                    "value": "-"
+                },
+                {
+                    "text": "Chamadas de voz GSM.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q4",
+            "text": "O que descreve o 'Efeito de Máscara' (Mask Effect) na perceção sonora?",
+            "answers": [
+                {
+                    "text": "A incapacidade de ouvir sons de menor intensidade que estão próximos (em frequência ou tempo) de sons de maior intensidade.",
+                    "value": "++"
+                },
+                {
+                    "text": "A distorção causada por microfones de baixa qualidade.",
+                    "value": "--"
+                },
+                {
+                    "text": "O eco gerado numa sala vazia.",
+                    "value": "-"
+                },
+                {
+                    "text": "A conversão de som estéreo para mono.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q5",
+            "text": "Qual é a principal vantagem do protocolo BLE-MIDI (Bluetooth Low Energy) mencionada nos documentos?",
+            "answers": [
+                {
+                    "text": "Fácil de implementar em dispositivos IoT (Internet of Things), como Arduino e Adafruit.",
+                    "value": "++"
+                },
+                {
+                    "text": "Tem latência zero absoluta.",
+                    "value": "--"
+                },
+                {
+                    "text": "Permite transmitir vídeo juntamente com o áudio.",
+                    "value": "--"
+                },
+                {
+                    "text": "Substitui completamente os cabos USB em estúdios profissionais devido à maior largura de banda.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q6",
+            "text": "O que caracteriza o 'Rich Text' (Texto Formatado) em comparação com o texto simples?",
+            "answers": [
+                {
+                    "text": "Incorpora estruturas ou formatos de descrição de página (WYSIWYG) e elementos visuais além do conteúdo linguístico.",
+                    "value": "++"
+                },
+                {
+                    "text": "Utiliza apenas caracteres ASCII de 7 bits.",
+                    "value": "--"
+                },
+                {
+                    "text": "É o formato usado exclusivamente para código de programação.",
+                    "value": "-"
+                },
+                {
+                    "text": "Não permite o uso de cores ou fontes diferentes.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q7",
+            "text": "Na codificação de imagens a preto e branco, em que consiste o 'Chain Code'?",
+            "answers": [
+                {
+                    "text": "Uma codificação que descreve os contornos dos objetos na imagem.",
+                    "value": "++"
+                },
+                {
+                    "text": "Uma técnica de compressão de cor baseada em wavelets.",
+                    "value": "--"
+                },
+                {
+                    "text": "Um método de conversão de RGB para CMYK.",
+                    "value": "--"
+                },
+                {
+                    "text": "Uma forma de aumentar a resolução da imagem artificialmente.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q8",
+            "text": "Qual foi o objetivo da Adobe ao criar o formato DNG (Digital Negative)?",
+            "answers": [
+                {
+                    "text": "Criar um formato de armazenamento genérico para ficheiros RAW, combatendo a falta de padronização entre fabricantes.",
+                    "value": "++"
+                },
+                {
+                    "text": "Criar um formato exclusivo para o Photoshop que não abre noutros programas.",
+                    "value": "--"
+                },
+                {
+                    "text": "Substituir o formato JPEG na Web.",
+                    "value": "-"
+                },
+                {
+                    "text": "Comprimir imagens com perdas para poupar espaço.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q9",
+            "text": "Para além da escalabilidade, qual é uma vantagem dos gráficos vetoriais?",
+            "answers": [
+                {
+                    "text": "Possuem informação semântica associada aos elementos (linhas, polígonos).",
+                    "value": "++"
+                },
+                {
+                    "text": "São ideais para representar fotografias realistas.",
+                    "value": "--"
+                },
+                {
+                    "text": "Ocupam sempre mais espaço que um bitmap equivalente.",
+                    "value": "--"
+                },
+                {
+                    "text": "São baseados numa grelha fixa de pixéis.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q10",
+            "text": "Que característica da visão humana facilita a perceção de vídeo como um movimento contínuo?",
+            "answers": [
+                {
+                    "text": "O mecanismo de integração e a incapacidade de distinguir a falta de imagem numa pequena sequência de milissegundos.",
+                    "value": "++"
+                },
+                {
+                    "text": "A capacidade de ver radiação infravermelha.",
+                    "value": "--"
+                },
+                {
+                    "text": "A visão monocular.",
+                    "value": "-"
+                },
+                {
+                    "text": "A perceção logarítmica do som.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q11",
+            "text": "Qual a principal vantagem da edição de vídeo digital não-linear sobre a edição linear analógica?",
+            "answers": [
+                {
+                    "text": "Permite acesso direto a qualquer quadro (frame) e manipulação flexível sem necessidade de cópia sequencial.",
+                    "value": "++"
+                },
+                {
+                    "text": "Garante que o vídeo nunca tem compressão.",
+                    "value": "-"
+                },
+                {
+                    "text": "É mais lenta mas tem melhor qualidade de imagem.",
+                    "value": "--"
+                },
+                {
+                    "text": "Requer o uso de fitas magnéticas.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q12",
+            "text": "Qual é a taxa de dados aproximada necessária para armazenar Cinema Digital 4K a 24fps com codificação 4:4:4 de 10 bits sem compressão?",
+            "answers": [
+                {
+                    "text": "Cerca de 800 MB/s.",
+                    "value": "++"
+                },
+                {
+                    "text": "Cerca de 50 MB/s.",
+                    "value": "--"
+                },
+                {
+                    "text": "Cerca de 10 GB/s.",
+                    "value": "-"
+                },
+                {
+                    "text": "Cerca de 100 KB/s.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q13",
+            "text": "No sistema Dolby Pro Logic original, quantos canais são utilizados para a transmissão do sinal?",
+            "answers": [
+                {
+                    "text": "2 canais (onde a informação surround está matriciada).",
+                    "value": "++"
+                },
+                {
+                    "text": "6 canais discretos.",
+                    "value": "--"
+                },
+                {
+                    "text": "1 canal mono.",
+                    "value": "--"
+                },
+                {
+                    "text": "5 canais discretos.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q14",
+            "text": "Segundo as normas DCI para Cinema Digital, qual deve ser o rácio de contraste mínimo entre uma imagem branca e preta (intra-frame)?",
+            "answers": [
+                {
+                    "text": "Pelo menos 1200:1.",
+                    "value": "++"
+                },
+                {
+                    "text": "Pelo menos 100:1.",
+                    "value": "-"
+                },
+                {
+                    "text": "Pelo menos 10:1.",
+                    "value": "--"
+                },
+                {
+                    "text": "Pelo menos 5000:1.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q15",
+            "text": "Qual é uma das principais razões para o uso de 'Billboards' eletrónicos na publicidade?",
+            "answers": [
+                {
+                    "text": "Grande impacto visual e capacidade de segmentação geográfica (geography-targeted).",
+                    "value": "++"
+                },
+                {
+                    "text": "Baixo custo de instalação inicial.",
+                    "value": "--"
+                },
+                {
+                    "text": "Capacidade de emitir som para longas distâncias.",
+                    "value": "-"
+                },
+                {
+                    "text": "Serem invisíveis durante o dia.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q16",
+            "text": "Qual é uma limitação técnica típica dos ecrãs de Tinta Eletrónica (E-Ink) mencionados?",
+            "answers": [
+                {
+                    "text": "Baixas taxas de atualização (low refresh rates), o que dificulta a animação.",
+                    "value": "++"
+                },
+                {
+                    "text": "Alto consumo de energia em imagens estáticas.",
+                    "value": "--"
+                },
+                {
+                    "text": "Emitem demasiada luz, cansando a vista.",
+                    "value": "--"
+                },
+                {
+                    "text": "Necessitam de retroiluminação constante.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q17",
+            "text": "No contexto de DRM e marcas de água (watermarking), como atua um ataque de 'filtro' (ex: low-pass filter)?",
+            "answers": [
+                {
+                    "text": "Afeta principalmente as zonas de transição da imagem.",
+                    "value": "++"
+                },
+                {
+                    "text": "Corta as bordas da imagem (crop).",
+                    "value": "--"
+                },
+                {
+                    "text": "Adiciona ruído aleatório a toda a imagem.",
+                    "value": "-"
+                },
+                {
+                    "text": "Inverte as cores da imagem.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q18",
+            "text": "O que é o 'Universal MIDI Packet' introduzido no MIDI 2.0?",
+            "answers": [
+                {
+                    "text": "Um novo formato de pacote otimizado para transferências via USB e Ethernet.",
+                    "value": "++"
+                },
+                {
+                    "text": "Um cabo universal para ligar qualquer instrumento.",
+                    "value": "--"
+                },
+                {
+                    "text": "Um sintetizador de software incluído no protocolo.",
+                    "value": "--"
+                },
+                {
+                    "text": "Um formato de ficheiro de áudio comprimido.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q19",
+            "text": "Qual a principal razão para a existência do standard UNICODE em oposição ao ASCII?",
+            "answers": [
+                {
+                    "text": "A necessidade de representar múltiplos alfabetos e símbolos usados globalmente, superando o limite de caracteres do ASCII.",
+                    "value": "++"
+                },
+                {
+                    "text": "O UNICODE ocupa menos espaço em memória que o ASCII.",
+                    "value": "--"
+                },
+                {
+                    "text": "O ASCII não permitia o uso de números.",
+                    "value": "--"
+                },
+                {
+                    "text": "O UNICODE é exclusivo para sistemas Apple.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q20",
+            "text": "O que significa 'orquestração' no contexto de documentos multimédia?",
+            "answers": [
+                {
+                    "text": "A coordenação temporal e espacial de diferentes tipos de media (som, vídeo, texto) num documento composto.",
+                    "value": "++"
+                },
+                {
+                    "text": "A composição de música para filmes.",
+                    "value": "-"
+                },
+                {
+                    "text": "A conversão de texto em fala.",
+                    "value": "--"
+                },
+                {
+                    "text": "O processo de imprimir documentos em cores.",
+                    "value": "--"
+                }
+            ]
+        }
+    ]
+}

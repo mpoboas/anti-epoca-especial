@@ -1,0 +1,228 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "Codificação e Compressão"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "A compressão semântica é usada em...",
+            "answers": [
+                {
+                    "text": "dados específicos (e.g. imagem)",
+                    "value": "correct"
+                },
+                {
+                    "text": "dados genéricos (e.g. sistema de ficheiros)",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "encriptação de dados",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "conversão digital para analógico",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "A compressão Huffman é um exemplo de compressão",
+            "answers": [
+                {
+                    "text": "entropia",
+                    "value": "correct"
+                },
+                {
+                    "text": "semântica",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "piramidal",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "convolutiva",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "A utilização de FFT (Fast Fourier Transform) permite implementar compressão...",
+            "answers": [
+                {
+                    "text": "semântica",
+                    "value": "correct"
+                },
+                {
+                    "text": "entropia",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "vectorial",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "ortogonal",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "Um sistema VoD é o exemplo típico de compressão...",
+            "answers": [
+                {
+                    "text": "assimétrica",
+                    "value": "correct"
+                },
+                {
+                    "text": "simétrica",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "helicoidal",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "financeira",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "A Gama Dinâmica de um sinal refere-se à diferença...",
+            "answers": [
+                {
+                    "text": "máxima de amplitude",
+                    "value": "correct"
+                },
+                {
+                    "text": "mínima de amplitude",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "máxima entre amostras no tempo",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "mínima entre amostras no tempo",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "O ruído máximo aceitável é, tipicamente, controlado...",
+            "answers": [
+                {
+                    "text": "pelo número de bits",
+                    "value": "correct"
+                },
+                {
+                    "text": "pelo número de canais",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "pelo número de arnostras",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "pela gama dinâmica",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "Para um sinal com largura de banda útil de 2Hz, devemos usar uma amostragem de...",
+            "answers": [
+                {
+                    "text": "4Hz",
+                    "value": "correct"
+                },
+                {
+                    "text": "1 Hz",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "8Hz",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "é irrelevante a amostragem",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "Uma característica do PCM é ter...",
+            "answers": [
+                {
+                    "text": "amostras independentes",
+                    "value": "correct"
+                },
+                {
+                    "text": "uma amostragem logaritmica",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "necessidades computacionais elevadas",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "uma excelente taxa de compressão direta",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "O efeito de Aliasing acontece por falha na",
+            "answers": [
+                {
+                    "text": "filtragem",
+                    "value": "correct"
+                },
+                {
+                    "text": "quantificação",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "extração",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "polinização",
+                    "value": "incorrect"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "Na voz, há vantagens em usar codificação...",
+            "answers": [
+                {
+                    "text": "logarítmica",
+                    "value": "correct"
+                },
+                {
+                    "text": "linear",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "polinomial",
+                    "value": "incorrect"
+                },
+                {
+                    "text": "extrajudicial",
+                    "value": "incorrect"
+                }
+            ]
+        }
+    ]
+}
