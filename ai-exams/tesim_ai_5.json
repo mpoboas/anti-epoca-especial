@@ -1,0 +1,444 @@
+{
+    "questions": [
+        {
+            "id": "q1",
+            "text": "De acordo com a teoria da luz e cor, qual é a frequência aproximada associada à cor violeta?",
+            "answers": [
+                {
+                    "text": "7.5 x 10^14 Hz",
+                    "value": "++"
+                },
+                {
+                    "text": "4.3 x 10^14 Hz",
+                    "value": "--"
+                },
+                {
+                    "text": "100 Hz",
+                    "value": "--"
+                },
+                {
+                    "text": "300 MHz",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q2",
+            "text": "No contexto da compressão de imagens, em que situações é o formato PNG tipicamente mais adequado que o JPEG?",
+            "answers": [
+                {
+                    "text": "Capturas de ecrã (screenshots), imagens com grandes áreas de cor única e texto, devido à compressão sem perdas.",
+                    "value": "++"
+                },
+                {
+                    "text": "Fotografias de paisagens com muitos gradientes complexos.",
+                    "value": "--"
+                },
+                {
+                    "text": "Apenas para animações, pois não suporta imagens estáticas.",
+                    "value": "--"
+                },
+                {
+                    "text": "Quando se pretende o ficheiro mais pequeno possível independentemente da qualidade.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q3",
+            "text": "Na compressão de vídeo MPEG, como são codificadas as 'I-Frames' (Intra-coded Frames)?",
+            "answers": [
+                {
+                    "text": "De forma semelhante ao JPEG, usando blocos 8x8, DCT, quantificação e codificação entrópica, sem referência a outros quadros.",
+                    "value": "++"
+                },
+                {
+                    "text": "Baseando-se apenas nas diferenças em relação ao quadro anterior (P-Frame).",
+                    "value": "--"
+                },
+                {
+                    "text": "Usando vetores de movimento bidirecionais.",
+                    "value": "--"
+                },
+                {
+                    "text": "Guardando apenas os píxeis que mudaram de cor.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q4",
+            "text": "No padrão General MIDI (GM), a que família de instrumentos correspondem os programas (Program Change) de 1 a 8?",
+            "answers": [
+                {
+                    "text": "Piano.",
+                    "value": "++"
+                },
+                {
+                    "text": "Cordas (Strings).",
+                    "value": "--"
+                },
+                {
+                    "text": "Metais (Brass).",
+                    "value": "--"
+                },
+                {
+                    "text": "Percussão Cromática.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q5",
+            "text": "Qual é a função da ligação '100Base-T Ethernet' especificada nas normas de projeção de Cinema Digital (DCI)?",
+            "answers": [
+                {
+                    "text": "Controlo do projetor (On/Off, Zoom, Foco, Seleção de entrada) e monitorização de estado.",
+                    "value": "++"
+                },
+                {
+                    "text": "Transmissão do fluxo principal de imagem descomprimida (10 Gbit/s).",
+                    "value": "--"
+                },
+                {
+                    "text": "Ligação exclusiva para o sistema de som.",
+                    "value": "--"
+                },
+                {
+                    "text": "Apenas para acesso à internet para download de legendas.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q6",
+            "text": "Qual é uma das desvantagens inerentes à edição de vídeo linear (analógica) mencionada nos documentos?",
+            "answers": [
+                {
+                    "text": "Necessidade de avançar/recuar a fita para a posição (cue tape), esperar pela cópia sequencial e baixa portabilidade.",
+                    "value": "++"
+                },
+                {
+                    "text": "Incapacidade de gravar som.",
+                    "value": "--"
+                },
+                {
+                    "text": "Qualidade digital excessiva que ocupa muito espaço.",
+                    "value": "--"
+                },
+                {
+                    "text": "Impossibilidade de fazer cortes no vídeo.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q7",
+            "text": "O que caracteriza o formato de imagem WebP, desenvolvido pela Google?",
+            "answers": [
+                {
+                    "text": "Suporta compressão com e sem perdas, transparência (alfa) e animação, sendo nativo em browsers modernos.",
+                    "value": "++"
+                },
+                {
+                    "text": "É um formato exclusivo para impressão vetorial.",
+                    "value": "--"
+                },
+                {
+                    "text": "Só suporta imagens a preto e branco.",
+                    "value": "--"
+                },
+                {
+                    "text": "É o padrão oficial das câmaras fotográficas DSLR.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q8",
+            "text": "Em áudio digital, qual é o efeito da 'Interferência Destrutiva' combinada entre duas ondas sonoras?",
+            "answers": [
+                {
+                    "text": "A amplitude da onda resultante é zero (ou reduzida) quando as ondas estão desfasadas.",
+                    "value": "++"
+                },
+                {
+                    "text": "O som torna-se duas vezes mais alto.",
+                    "value": "--"
+                },
+                {
+                    "text": "A frequência do som duplica.",
+                    "value": "--"
+                },
+                {
+                    "text": "Gera-se um eco infinito.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q9",
+            "text": "Qual é o brilho máximo definido pela norma HDR10 para televisão?",
+            "answers": [
+                {
+                    "text": "10.000 cd/m2 (nits).",
+                    "value": "++"
+                },
+                {
+                    "text": "100 cd/m2.",
+                    "value": "--"
+                },
+                {
+                    "text": "1.000 cd/m2.",
+                    "value": "-"
+                },
+                {
+                    "text": "500 cd/m2.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q10",
+            "text": "No contexto de DRM e Direitos de Autor, qual é uma vantagem da cópia digital em relação à cópia analógica que preocupa os detentores de direitos?",
+            "answers": [
+                {
+                    "text": "A cópia digital é idêntica ao original sem degradação de qualidade, ao contrário da analógica que perde qualidade a cada geração.",
+                    "value": "++"
+                },
+                {
+                    "text": "A cópia digital é mais difícil de fazer.",
+                    "value": "--"
+                },
+                {
+                    "text": "A cópia digital ocupa mais espaço físico.",
+                    "value": "--"
+                },
+                {
+                    "text": "A cópia analógica é encriptada por natureza.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q11",
+            "text": "Como são tipicamente geridas as legendas no formato de Cinema Digital (DCI)?",
+            "answers": [
+                {
+                    "text": "Como texto renderizado pelo projetor/servidor usando tipos de letra OpenType incluídos no arquivo (MXF).",
+                    "value": "++"
+                },
+                {
+                    "text": "Gravadas (\"queimadas\") diretamente na imagem do filme, impossíveis de remover.",
+                    "value": "--"
+                },
+                {
+                    "text": "Num ficheiro de texto simples (.txt) à parte sem formatação.",
+                    "value": "-"
+                },
+                {
+                    "text": "Enviadas via fax para o cinema.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q12",
+            "text": "Quais são exemplos de aplicações de edição de gráficos vetoriais (2D) citados nos documentos?",
+            "answers": [
+                {
+                    "text": "Adobe Illustrator e Corel Draw.",
+                    "value": "++"
+                },
+                {
+                    "text": "Adobe Photoshop e Paint.",
+                    "value": "--"
+                },
+                {
+                    "text": "Notepad e Wordpad.",
+                    "value": "--"
+                },
+                {
+                    "text": "Audacity e VLC.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q13",
+            "text": "Na compressão semântica preditiva (DPCM) a 1 bit (Delta), qual é um problema comum quando a variação do sinal é muito rápida?",
+            "answers": [
+                {
+                    "text": "Geração de mais ruído ('slope overload'), pois o código não consegue acompanhar a inclinação da onda.",
+                    "value": "++"
+                },
+                {
+                    "text": "A imagem fica a preto e branco.",
+                    "value": "--"
+                },
+                {
+                    "text": "O ficheiro aumenta de tamanho em vez de diminuir.",
+                    "value": "--"
+                },
+                {
+                    "text": "O sinal torna-se perfeitamente linear.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q14",
+            "text": "O que acontece ao usar um 'Head-Up Display' (HUD) comercial num automóvel sem o uso de lentes corretoras?",
+            "answers": [
+                {
+                    "text": "O condutor teria dificuldade em focar a informação (perto) e a estrada (longe) simultaneamente.",
+                    "value": "++"
+                },
+                {
+                    "text": "A imagem apareceria de cabeça para baixo.",
+                    "value": "--"
+                },
+                {
+                    "text": "O brilho seria excessivo à noite.",
+                    "value": "-"
+                },
+                {
+                    "text": "A informação apareceria a preto e branco.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q15",
+            "text": "Considerando a resolução de som, qual é a gama dinâmica teórica aproximada de uma placa de som de 16 bits?",
+            "answers": [
+                {
+                    "text": "96 dB.",
+                    "value": "++"
+                },
+                {
+                    "text": "145 dB.",
+                    "value": "--"
+                },
+                {
+                    "text": "60 dB.",
+                    "value": "-"
+                },
+                {
+                    "text": "256 dB.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q16",
+            "text": "Que tipo de compressão é caracterizada por ser irreversível e onde os erros não são detetados pelos utilizadores (ex: vídeo e áudio)?",
+            "answers": [
+                {
+                    "text": "Compressão com perdas (Lossy).",
+                    "value": "++"
+                },
+                {
+                    "text": "Compressão sem perdas (Lossless).",
+                    "value": "--"
+                },
+                {
+                    "text": "Compressão RLE pura.",
+                    "value": "-"
+                },
+                {
+                    "text": "Compressão assimétrica de texto.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q17",
+            "text": "Nos sistemas de televisão analógica, o que define a interligação por RF (Radio Frequency)?",
+            "answers": [
+                {
+                    "text": "Transmissão com modulação, sintonizada num canal de TV analógico.",
+                    "value": "++"
+                },
+                {
+                    "text": "Separação total entre Luminância e Crominância em cabos diferentes.",
+                    "value": "--"
+                },
+                {
+                    "text": "Transmissão digital de dados por pacotes.",
+                    "value": "--"
+                },
+                {
+                    "text": "Uso exclusivo de conectores SCART.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q18",
+            "text": "O que representam graficamente as curvas 'A-Law' e 'mu-Law' na codificação de voz?",
+            "answers": [
+                {
+                    "text": "Uma codificação logarítmica (não linear) usada para otimizar a gama dinâmica na voz humana.",
+                    "value": "++"
+                },
+                {
+                    "text": "Uma codificação perfeitamente linear.",
+                    "value": "--"
+                },
+                {
+                    "text": "A resposta de frequência de um instrumento musical.",
+                    "value": "--"
+                },
+                {
+                    "text": "A taxa de compressão de um ficheiro ZIP.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q19",
+            "text": "Qual é a relação de retrocompatibilidade do MIDI 2.0 com o MIDI 1.0?",
+            "answers": [
+                {
+                    "text": "O MIDI 2.0 prevê mecanismos de 'fallback' para MIDI 1.0 se o dispositivo não suportar as novas funcionalidades.",
+                    "value": "++"
+                },
+                {
+                    "text": "O MIDI 2.0 é totalmente incompatível e requer cabos diferentes.",
+                    "value": "--"
+                },
+                {
+                    "text": "O MIDI 1.0 deixa de funcionar assim que sai o 2.0.",
+                    "value": "--"
+                },
+                {
+                    "text": "Apenas funciona se usar adaptadores USB especiais.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q20",
+            "text": "Para que servem dispositivos como Scanners e Câmaras Digitais no contexto da computação gráfica?",
+            "answers": [
+                {
+                    "text": "Para a Captura de Imagem Real (Real Image Capture).",
+                    "value": "++"
+                },
+                {
+                    "text": "Para a renderização de gráficos vetoriais.",
+                    "value": "--"
+                },
+                {
+                    "text": "Para a geração de som sintético.",
+                    "value": "--"
+                },
+                {
+                    "text": "Para projetar imagens em telas grandes.",
+                    "value": "--"
+                }
+            ]
+        }
+    ]
+}

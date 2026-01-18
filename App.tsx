@@ -4,10 +4,12 @@ import { ResultSummary } from './components/ResultSummary';
 import { QuestionNavigator } from './components/QuestionNavigator';
 import { AuthModal } from './src/components/AuthModal';
 import { StatsView } from './src/components/StatsView';
+import { AdminPanel } from './src/components/AdminPanel';
 import {
     pb,
     isLoggedIn,
     getCurrentUser,
+    isAdmin,
     logout,
     getCourses,
     getRandomQuestions as fetchRandomQuestions,
@@ -21,7 +23,8 @@ import {
 } from './src/lib/pocketbase';
 import {
     Loader2, BookOpen, ArrowRight, ArrowLeft, CheckCircle,
-    Bot, AlertTriangle, Library, ChevronLeft, Gamepad2, User, LogIn
+    Bot, AlertTriangle, Library, ChevronLeft, Gamepad2, User, LogIn,
+    Moon, Sun, Wrench
 } from 'lucide-react';
 
 const EXAM_QUESTION_COUNT = 15;
@@ -77,8 +80,12 @@ const App: React.FC = () => {
     const [stats, setStats] = useState<UserStats | null>(null);
 
     // App State
-    const [appState, setAppState] = useState<'loading' | 'source-select' | 'menu' | 'exam' | 'results' | 'profile'>('loading');
+    const [appState, setAppState] = useState<'loading' | 'source-select' | 'menu' | 'exam' | 'results' | 'profile' | 'admin'>('loading');
     const [statsRefreshKey, setStatsRefreshKey] = useState(0);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const saved = localStorage.getItem('theme');
+        return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    });
 
     // Exam State
     const [examQuestions, setExamQuestions] = useState<Question[]>([]);
@@ -95,6 +102,17 @@ const App: React.FC = () => {
             setIsAuthenticated(isLoggedIn());
         });
     }, []);
+
+    // Theme effect
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    }, [isDarkMode]);
 
     // Load courses on mount
     useEffect(() => {
@@ -247,31 +265,31 @@ const App: React.FC = () => {
         const isAnswered = userAnswers.some(ua => ua.questionId === q.id);
 
         if (isAnswered) {
-            return 'bg-gray-500 border-gray-600 text-white';
+            return 'bg-gray-500 dark:bg-slate-700 border-gray-600 dark:border-slate-600 text-white';
         }
-        return 'bg-white border-gray-300 text-gray-500';
+        return 'bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-700 text-gray-500 dark:text-slate-400';
     };
 
     // Get color class based on source
     const getSourceColorClass = (type: 'bg' | 'text' | 'border' | 'hover-border', variant: 'light' | 'normal' = 'normal') => {
         const colors = {
             previous: {
-                bg: variant === 'light' ? 'bg-indigo-50' : 'bg-indigo-600',
-                text: variant === 'light' ? 'text-indigo-700' : 'text-white',
-                border: 'border-indigo-200',
-                'hover-border': 'hover:border-indigo-500'
+                bg: variant === 'light' ? 'bg-indigo-50 dark:bg-indigo-900/30' : 'bg-indigo-600 dark:bg-indigo-500',
+                text: variant === 'light' ? 'text-indigo-700 dark:text-indigo-400' : 'text-white',
+                border: 'border-indigo-200 dark:border-indigo-800',
+                'hover-border': 'hover:border-indigo-500 dark:hover:border-indigo-400'
             },
             ai: {
-                bg: variant === 'light' ? 'bg-fuchsia-50' : 'bg-fuchsia-600',
-                text: variant === 'light' ? 'text-fuchsia-700' : 'text-white',
-                border: 'border-fuchsia-200',
-                'hover-border': 'hover:border-fuchsia-500'
+                bg: variant === 'light' ? 'bg-fuchsia-50 dark:bg-fuchsia-900/30' : 'bg-fuchsia-600 dark:bg-fuchsia-500',
+                text: variant === 'light' ? 'text-fuchsia-700 dark:text-fuchsia-400' : 'text-white',
+                border: 'border-fuchsia-200 dark:border-fuchsia-800',
+                'hover-border': 'hover:border-fuchsia-500 dark:hover:border-fuchsia-400'
             },
             kahoots: {
-                bg: variant === 'light' ? 'bg-teal-50' : 'bg-teal-600',
-                text: variant === 'light' ? 'text-teal-700' : 'text-white',
-                border: 'border-teal-200',
-                'hover-border': 'hover:border-teal-500'
+                bg: variant === 'light' ? 'bg-teal-50 dark:bg-teal-900/30' : 'bg-teal-600 dark:bg-teal-500',
+                text: variant === 'light' ? 'text-teal-700 dark:text-teal-400' : 'text-white',
+                border: 'border-teal-200 dark:border-teal-800',
+                'hover-border': 'hover:border-teal-500 dark:hover:border-teal-400'
             }
         };
 
@@ -325,11 +343,10 @@ const App: React.FC = () => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [appState, currentQuestionIndex, examQuestions]);
 
-    // Loading screen
     if (appState === 'loading' || (loading && appState === 'source-select')) {
         return (
-            <div className="h-[100dvh] flex items-center justify-center bg-slate-50">
-                <Loader2 className="w-10 h-10 animate-spin text-indigo-600" />
+            <div className="h-[100dvh] flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+                <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
             </div>
         );
     }
@@ -337,12 +354,12 @@ const App: React.FC = () => {
     // Error screen
     if (error) {
         return (
-            <div className="h-[100dvh] flex items-center justify-center bg-slate-50">
-                <div className="p-8 text-center bg-white rounded-xl shadow-lg mx-4">
+            <div className="h-[100dvh] flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+                <div className="p-8 text-center bg-white dark:bg-slate-900 rounded-xl shadow-lg mx-4 border dark:border-slate-800">
                     <div className="text-red-600 font-bold mb-4">{error}</div>
                     <button
                         onClick={() => window.location.reload()}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg"
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg"
                     >
                         Recarregar
                     </button>
@@ -355,13 +372,13 @@ const App: React.FC = () => {
     const user = getCurrentUser();
 
     return (
-        <div className="h-[100dvh] bg-slate-50 text-gray-800 font-sans selection:bg-blue-100 flex flex-col overflow-hidden">
+        <div className="h-[100dvh] bg-slate-50 dark:bg-slate-950 text-gray-800 dark:text-slate-200 font-sans selection:bg-blue-100 dark:selection:bg-blue-900 flex flex-col overflow-hidden transition-colors duration-300">
             {/* Header */}
-            <header className="bg-white shadow-sm shrink-0 z-20 relative">
+            <header className="bg-white dark:bg-slate-900 shadow-sm shrink-0 z-20 relative border-b dark:border-slate-800">
                 <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-2 cursor-pointer" onClick={() => setAppState('source-select')}>
                         <img src="/logo.png" className="w-9 h-9 md:w-11 md:h-11 rounded-xl shrink-0 object-contain" alt="Logo" />
-                        <h1 className="font-bold text-lg md:text-xl text-gray-900 tracking-tight truncate">
+                        <h1 className="font-bold text-lg md:text-xl text-gray-900 dark:text-white tracking-tight truncate">
                             AntiÉpocaEspecial
                         </h1>
                     </div>
@@ -374,6 +391,27 @@ const App: React.FC = () => {
               `}>
                                 {SOURCE_CONFIG[selectedSource].name}
                             </span>
+                        )}
+
+                        {/* Theme Toggle */}
+                        <button
+                            onClick={() => setIsDarkMode(!isDarkMode)}
+                            className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                            aria-label="Toggle dark mode"
+                        >
+                            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                        </button>
+
+                        {/* Admin Button */}
+                        {isAuthenticated && isAdmin() && (
+                            <button
+                                onClick={() => setAppState('admin')}
+                                className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors"
+                                aria-label="Admin panel"
+                                title="Painel de Administração"
+                            >
+                                <Wrench className="w-5 h-5" />
+                            </button>
                         )}
 
                         {/* Profile/Login Button */}
@@ -391,7 +429,7 @@ const App: React.FC = () => {
                         ) : (
                             <button
                                 onClick={() => setShowAuthModal(true)}
-                                className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-all"
+                                className="flex items-center gap-2 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-300 px-3 py-2 rounded-lg transition-all"
                             >
                                 <LogIn className="w-4 h-4" />
                                 <span className="hidden md:inline text-sm font-medium">Entrar</span>
@@ -409,10 +447,10 @@ const App: React.FC = () => {
                     {appState === 'source-select' && (
                         <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 animate-fade-in custom-scrollbar">
                             <div className="flex flex-col items-center justify-center min-h-full max-w-4xl mx-auto">
-                                <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-2 tracking-tight text-center">
+                                <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-2 tracking-tight text-center">
                                     Selecionar Fonte
                                 </h1>
-                                <p className="text-gray-500 mb-8 md:mb-12 text-center text-sm md:text-base">
+                                <p className="text-gray-500 dark:text-slate-400 mb-8 md:mb-12 text-center text-sm md:text-base">
                                     Escolhe a origem das perguntas
                                 </p>
 
@@ -422,23 +460,23 @@ const App: React.FC = () => {
                                             key={source}
                                             onClick={() => loadSourceData(source)}
                                             disabled={loading}
-                                            className={`bg-white p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent 
+                                            className={`bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent 
                         ${SOURCE_CONFIG[source].color === 'indigo' ? 'hover:border-indigo-500' :
                                                     SOURCE_CONFIG[source].color === 'fuchsia' ? 'hover:border-fuchsia-500' :
                                                         'hover:border-teal-500'} 
-                        hover:shadow-xl transition-all duration-300 text-left group disabled:opacity-50`}
+                        hover:shadow-xl dark:shadow-blue-900/10 transition-all duration-300 text-left group disabled:opacity-50`}
                                         >
                                             <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform
-                        ${SOURCE_CONFIG[source].color === 'indigo' ? 'bg-indigo-50' :
-                                                    SOURCE_CONFIG[source].color === 'fuchsia' ? 'bg-fuchsia-50' :
-                                                        'bg-teal-50'}`}
+                        ${SOURCE_CONFIG[source].color === 'indigo' ? 'bg-indigo-50 dark:bg-indigo-950/50' :
+                                                    SOURCE_CONFIG[source].color === 'fuchsia' ? 'bg-fuchsia-50 dark:bg-fuchsia-950/50' :
+                                                        'bg-teal-50 dark:bg-teal-950/50'}`}
                                             >
                                                 {SOURCE_CONFIG[source].icon}
                                             </div>
-                                            <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                                            <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">
                                                 {SOURCE_CONFIG[source].name}
                                             </h3>
-                                            <p className="text-sm md:text-base text-gray-500 mb-4">
+                                            <p className="text-sm md:text-base text-gray-500 dark:text-slate-400 mb-4">
                                                 {SOURCE_CONFIG[source].description}
                                             </p>
 
@@ -461,16 +499,16 @@ const App: React.FC = () => {
                     {appState === 'menu' && selectedSource && (
                         <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 animate-fade-in custom-scrollbar">
                             <div className="flex flex-col items-center justify-center min-h-full max-w-2xl mx-auto text-center">
-                                <div className="mb-8 p-6 bg-white rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden w-full">
-                                    <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Progresso do Estudo</h2>
+                                <div className="mb-8 p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden w-full">
+                                    <h2 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Progresso do Estudo</h2>
 
-                                    <div className="w-full max-w-[250px] h-2 bg-gray-200 rounded-full mx-auto mt-4 overflow-hidden">
+                                    <div className="w-full max-w-[250px] h-2 bg-gray-200 dark:bg-slate-800 rounded-full mx-auto mt-4 overflow-hidden">
                                         <div
                                             className={`h-full transition-all duration-1000 ${getSourceColorClass('bg')}`}
                                             style={{ width: `${questionCount > 0 ? ((questionCount - questionsLeft) / questionCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <p className="mt-2 text-sm text-gray-500 font-medium">
+                                    <p className="mt-2 text-sm text-gray-500 dark:text-slate-400 font-medium">
                                         {isAuthenticated ? (
                                             questionsLeft > 0
                                                 ? `${questionsLeft} perguntas por descobrir (${questionCount} total)`
@@ -489,16 +527,16 @@ const App: React.FC = () => {
                                     </p>
 
                                     {stats && (
-                                        <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-gray-50 text-xs font-medium text-gray-600">
+                                        <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-gray-50 dark:bg-slate-800 text-xs font-medium text-gray-600 dark:text-slate-400">
                                             Nota Média: {stats.averageScore.toFixed(1)} / 20
                                         </div>
                                     )}
                                 </div>
 
-                                <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 md:mb-6 tracking-tight">
+                                <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 md:mb-6 tracking-tight text-glow">
                                     Exame Modelo
                                 </h1>
-                                <p className="text-base md:text-lg text-gray-600 mb-8 md:mb-10 leading-relaxed max-w-lg mx-auto">
+                                <p className="text-base md:text-lg text-gray-600 dark:text-slate-400 mb-8 md:mb-10 leading-relaxed max-w-lg mx-auto">
                                     Serás testado em {Math.min(EXAM_QUESTION_COUNT, questionCount)} perguntas aleatórias do conjunto <strong>{SOURCE_CONFIG[selectedSource].name}</strong>.
                                 </p>
 
@@ -520,13 +558,13 @@ const App: React.FC = () => {
 
                                 <button
                                     onClick={() => setAppState('source-select')}
-                                    className="mt-8 text-gray-400 hover:text-gray-600 text-sm font-medium flex items-center gap-1 transition-colors p-2"
+                                    className="mt-8 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 text-sm font-medium flex items-center gap-1 transition-colors p-2"
                                 >
                                     <ChevronLeft className="w-4 h-4" />
                                     Alterar Fonte
                                 </button>
 
-                                <div className="mt-12 text-sm text-gray-400 hidden md:block">
+                                <div className="mt-12 text-sm text-gray-400 dark:text-slate-500 hidden md:block">
                                     <p>Dica: Usa as setas para navegar e 1-4 para responder.</p>
                                 </div>
                             </div>
@@ -536,7 +574,7 @@ const App: React.FC = () => {
                     {/* Exam */}
                     {appState === 'exam' && examQuestions.length > 0 && (
                         <div className="flex-1 flex flex-col h-full overflow-hidden max-w-2xl mx-auto w-full relative">
-                            <div className="shrink-0 pt-4 px-4 pb-0 z-10 bg-slate-50">
+                            <div className="shrink-0 pt-4 px-4 pb-0 z-10 bg-slate-50 dark:bg-slate-950">
                                 <QuestionNavigator
                                     total={examQuestions.length}
                                     current={currentQuestionIndex}
@@ -556,12 +594,12 @@ const App: React.FC = () => {
                             </div>
 
                             {/* Footer */}
-                            <div className="fixed bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50 flex items-center gap-3 md:relative md:bg-transparent md:border-t md:shadow-none md:p-4 md:pb-6">
+                            <div className="fixed bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-blue-900/5 z-50 flex items-center gap-3 md:relative md:bg-transparent md:border-t md:shadow-none md:p-4 md:pb-6">
                                 <div className="w-full max-w-2xl mx-auto flex items-center gap-3">
                                     <button
                                         onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
                                         disabled={currentQuestionIndex === 0}
-                                        className="flex-1 flex items-center justify-center px-4 py-3 md:py-2 text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:shadow-sm rounded-xl disabled:opacity-40 disabled:hover:bg-gray-50 font-medium transition-all"
+                                        className="flex-1 flex items-center justify-center px-4 py-3 md:py-2 text-gray-600 dark:text-slate-300 bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-700 hover:shadow-sm rounded-xl disabled:opacity-40 disabled:hover:bg-gray-50 dark:disabled:hover:bg-slate-800 font-medium transition-all"
                                     >
                                         <ArrowLeft className="w-5 h-5 md:mr-2" />
                                         <span className="hidden md:inline">Anterior</span>
@@ -609,6 +647,14 @@ const App: React.FC = () => {
                             key={statsRefreshKey}
                             course={selectedCourse}
                             onClose={() => setAppState(selectedSource ? 'menu' : 'source-select')}
+                        />
+                    )}
+
+                    {/* Admin Panel */}
+                    {appState === 'admin' && (
+                        <AdminPanel
+                            courses={courses}
+                            onClose={() => setAppState('source-select')}
                         />
                     )}
                 </div>

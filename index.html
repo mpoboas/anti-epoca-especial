@@ -6,12 +6,34 @@
     <title>AntiÉpocaEspecial</title>
     <link rel="icon" type="image/png" href="/logo.png" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                950: '#020617',
+                900: '#0f172a',
+                850: '#151e33',
+                800: '#1e293b',
+              }
+            }
+          }
+        }
+      }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #f8fafc;
         overscroll-behavior-y: none;
+      }
+      body.dark {
+        background-color: #020617;
+      }
+      body:not(.dark) {
+        background-color: #f8fafc;
       }
       .text-glow {
         text-shadow: 0 0 10px rgba(163, 230, 53, 0.4);

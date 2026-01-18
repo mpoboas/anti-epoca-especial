@@ -244,27 +244,25 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
 
     const getSourceColor = (source: string) => {
         switch (source) {
-            case 'previous': return 'bg-indigo-100 text-indigo-700';
-            case 'ai': return 'bg-fuchsia-100 text-fuchsia-700';
-            case 'kahoots': return 'bg-teal-100 text-teal-700';
-            default: return 'bg-gray-100 text-gray-700';
+            case 'previous': return 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400';
+            case 'ai': return 'bg-fuchsia-100 dark:bg-fuchsia-900/40 text-fuchsia-700 dark:text-fuchsia-400';
+            case 'kahoots': return 'bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-400';
+            default: return 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-400';
         }
     };
 
     if (loading) {
         return (
-            <div className="flex-1 flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+            <div className="flex-1 flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
             </div>
         );
     }
 
     if (!stats || !user) {
-        return (
-            <div className="flex-1 flex items-center justify-center text-gray-500">
-                <p>Faz login para ver as tuas estatísticas</p>
-            </div>
-        );
+        // Auto-redirect when not logged in
+        onClose();
+        return null;
     }
 
     // Show exam details view
@@ -281,13 +279,13 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
     }
 
     return (
-        <div className="flex-1 overflow-y-auto bg-slate-50 animate-fade-in custom-scrollbar">
+        <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 transition-colors duration-300 animate-fade-in custom-scrollbar">
             <div className="max-w-6xl mx-auto p-4 md:p-6">
                 {/* Back Button & Profile Header */}
                 <div className="flex items-center justify-between mb-6">
                     <button
                         onClick={onClose}
-                        className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition-colors"
+                        className="flex items-center gap-1 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors"
                     >
                         <ChevronLeft className="w-5 h-5" />
                         <span>Voltar</span>
@@ -295,12 +293,12 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
 
                     <div className="flex items-center gap-3">
                         <div className="text-right">
-                            <p className="text-sm font-medium text-gray-800">{user?.name || 'Estudante'}</p>
-                            <p className="text-xs text-gray-500">{user?.email}</p>
+                            <p className="text-sm font-medium text-gray-800 dark:text-slate-100">{user?.name || 'Estudante'}</p>
+                            <p className="text-xs text-gray-500 dark:text-slate-400">{user?.email}</p>
                         </div>
                         <button
                             onClick={handleLogout}
-                            className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors text-gray-600"
+                            className="bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 p-2 rounded-lg transition-colors text-gray-600 dark:text-slate-400"
                             title="Terminar sessão"
                         >
                             <LogOut className="w-4 h-4" />
@@ -370,8 +368,8 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                 {/* Pie Charts Row */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     {/* Exams Pie */}
-                    <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                        <h3 className="font-bold text-gray-800 mb-4 text-center">Número de Exames</h3>
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-slate-800">
+                        <h3 className="font-bold text-gray-800 dark:text-slate-100 mb-4 text-center">Número de Exames</h3>
                         <div className="flex justify-center mb-4">
                             <PieChart
                                 data={[
@@ -381,7 +379,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                 size={120}
                             />
                         </div>
-                        <div className="flex justify-center gap-4 text-xs">
+                        <div className="flex justify-center gap-4 text-xs text-gray-600 dark:text-slate-400">
                             <span className="flex items-center gap-1">
                                 <span className="w-3 h-3 bg-green-500 rounded-full"></span>
                                 Aprovado ({stats.passedExams})
@@ -394,8 +392,8 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                     </div>
 
                     {/* Questions Pie */}
-                    <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                        <h3 className="font-bold text-gray-800 mb-4 text-center">Respostas</h3>
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-slate-800">
+                        <h3 className="font-bold text-gray-800 dark:text-slate-100 mb-4 text-center">Respostas</h3>
                         <div className="flex justify-center mb-4">
                             <PieChart
                                 data={[
@@ -405,7 +403,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                 size={120}
                             />
                         </div>
-                        <div className="flex justify-center gap-4 text-xs">
+                        <div className="flex justify-center gap-4 text-xs text-gray-600 dark:text-slate-400">
                             <span className="flex items-center gap-1">
                                 <span className="w-3 h-3 bg-green-500 rounded-full"></span>
                                 Corretas ({stats.correctAnswersTotal})
@@ -418,8 +416,8 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                     </div>
 
                     {/* Source Pie */}
-                    <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                        <h3 className="font-bold text-gray-800 mb-4 text-center">Tipo de Exame</h3>
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-slate-800">
+                        <h3 className="font-bold text-gray-800 dark:text-slate-100 mb-4 text-center">Tipo de Exame</h3>
                         <div className="flex justify-center mb-4">
                             <PieChart
                                 data={[
@@ -430,7 +428,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                 size={120}
                             />
                         </div>
-                        <div className="flex justify-center gap-3 text-xs flex-wrap">
+                        <div className="flex justify-center gap-3 text-xs flex-wrap text-gray-600 dark:text-slate-400">
                             <span className="flex items-center gap-1">
                                 <span className="w-3 h-3 bg-indigo-500 rounded-full"></span>
                                 Anteriores ({stats.examsBySource.previous})
@@ -449,10 +447,10 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
 
                 {/* Score Evolution Chart */}
                 {stats.scoreHistory.length > 1 && (
-                    <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-6">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-slate-800 mb-6">
                         <div className="flex items-center gap-2 mb-4">
                             <TrendingUp className="w-5 h-5 text-gray-400" />
-                            <h3 className="font-bold text-gray-800">Evolução das Notas</h3>
+                            <h3 className="font-bold text-gray-800 dark:text-slate-100">Evolução das Notas</h3>
                             <div className="flex items-center gap-4 ml-auto text-xs text-gray-500">
                                 <span className="flex items-center gap-1">
                                     <span className="w-3 h-3 bg-indigo-500 rounded-full"></span> Nota
@@ -469,9 +467,9 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
 
                 {/* Exam History */}
                 {stats.examResults.length > 0 && (
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="p-5 border-b border-gray-100">
-                            <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden">
+                        <div className="p-5 border-b border-gray-100 dark:border-slate-800">
+                            <h3 className="font-bold text-gray-800 dark:text-slate-100 flex items-center gap-2">
                                 <Clock className="w-5 h-5 text-gray-400" />
                                 Histórico de Exames
                             </h3>
@@ -492,7 +490,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                     {stats.examResults.slice(0, 10).map((exam, index) => (
                                         <tr
                                             key={exam.id}
-                                            className={`border-b border-gray-50 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}
+                                            className={`border-b border-gray-50 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors ${index % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-gray-50/50 dark:bg-slate-800/40'}`}
                                         >
                                             <td className="px-4 py-3">
                                                 <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium ${getSourceColor(exam.source)}`}>
@@ -502,13 +500,13 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                             </td>
                                             <td className="px-4 py-3 text-center">
                                                 <span className={`inline-flex items-center justify-center w-12 h-8 rounded-lg font-bold text-sm ${exam.score >= 10
-                                                    ? 'bg-green-100 text-green-700'
-                                                    : 'bg-red-100 text-red-700'
+                                                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                                                    : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
                                                     }`}>
                                                     {exam.score}
                                                 </span>
                                             </td>
-                                            <td className="px-4 py-3 text-center text-sm text-gray-600">
+                                            <td className="px-4 py-3 text-center text-sm text-gray-600 dark:text-slate-400">
                                                 {new Date(exam.created).toLocaleDateString('pt-PT', {
                                                     day: '2-digit',
                                                     month: 'short',
@@ -525,7 +523,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                                 <button
                                                     onClick={() => loadExamDetails(exam)}
                                                     disabled={loadingExam}
-                                                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors text-sm font-medium disabled:opacity-50"
+                                                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors text-sm font-medium disabled:opacity-50"
                                                 >
                                                     {loadingExam ? (
                                                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -544,7 +542,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                         </div>
 
                         {stats.examResults.length > 10 && (
-                            <div className="p-4 text-center text-sm text-gray-500 border-t border-gray-100">
+                            <div className="p-4 text-center text-sm text-gray-500 dark:text-slate-400 border-t border-gray-100 dark:border-slate-800">
                                 A mostrar os últimos 10 exames de {stats.examResults.length} total
                             </div>
                         )}
@@ -569,25 +567,25 @@ const ExamDetailView: React.FC<{
     const getAnswerStyle = (value: string, isSelected: boolean) => {
         if (value === '++') {
             return isSelected
-                ? 'bg-green-100 border-green-500 text-green-800'
-                : 'bg-green-50 border-green-300 text-green-700 opacity-75';
+                ? 'bg-green-100 dark:bg-green-900/40 border-green-500 text-green-800 dark:text-green-400'
+                : 'bg-green-50 dark:bg-green-950/20 border-green-300 dark:border-green-800 text-green-700 dark:text-green-500 opacity-75';
         }
         if (value === '+') {
             return isSelected
-                ? 'bg-yellow-100 border-yellow-500 text-yellow-800'
-                : 'bg-gray-50 border-gray-200 text-gray-400 opacity-50';
+                ? 'bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500 text-yellow-800 dark:text-yellow-400'
+                : 'bg-gray-50 dark:bg-slate-900/50 border-gray-200 dark:border-slate-800 text-gray-400 dark:text-slate-600 opacity-50';
         }
         if (value === '-') {
             return isSelected
-                ? 'bg-orange-100 border-orange-500 text-orange-800'
-                : 'bg-gray-50 border-gray-200 text-gray-400 opacity-50';
+                ? 'bg-orange-100 dark:bg-orange-900/40 border-orange-500 text-orange-800 dark:text-orange-400'
+                : 'bg-gray-50 dark:bg-slate-900/50 border-gray-200 dark:border-slate-800 text-gray-400 dark:text-slate-600 opacity-50';
         }
         if (value === '--') {
             return isSelected
-                ? 'bg-red-100 border-red-500 text-red-800'
-                : 'bg-gray-50 border-gray-200 text-gray-400 opacity-50';
+                ? 'bg-red-100 dark:bg-red-900/40 border-red-500 text-red-800 dark:text-red-400'
+                : 'bg-gray-50 dark:bg-slate-900/50 border-gray-200 dark:border-slate-800 text-gray-400 dark:text-slate-600 opacity-50';
         }
-        return 'bg-gray-50 border-gray-200 text-gray-400';
+        return 'bg-gray-50 dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-400 dark:text-slate-500';
     };
 
     const getValueLabel = (value: string) => {
@@ -601,13 +599,13 @@ const ExamDetailView: React.FC<{
     };
 
     return (
-        <div className="flex-1 overflow-y-auto bg-slate-50 animate-fade-in custom-scrollbar">
-            <div className="max-w-4xl mx-auto p-4 md:p-6">
+        <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 transition-colors duration-300 animate-fade-in custom-scrollbar">
+            <div className="max-w-4xl mx-auto p-4 md:p-6 pb-20 md:pb-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <button
                         onClick={onBack}
-                        className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition-colors"
+                        className="flex items-center gap-1 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors"
                     >
                         <ChevronLeft className="w-5 h-5" />
                         <span>Voltar às estatísticas</span>
@@ -615,15 +613,15 @@ const ExamDetailView: React.FC<{
                 </div>
 
                 {/* Exam Summary */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 mb-6">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div>
                             <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium mb-2 ${getSourceColor(examResult.source)}`}>
                                 {getSourceIcon(examResult.source)}
                                 {getSourceLabel(examResult.source)}
                             </span>
-                            <h2 className="text-xl font-bold text-gray-800">Revisão do Exame</h2>
-                            <p className="text-sm text-gray-500">
+                            <h2 className="text-xl font-bold text-gray-800 dark:text-white">Revisão do Exame</h2>
+                            <p className="text-sm text-gray-500 dark:text-slate-400">
                                 {new Date(examResult.created).toLocaleDateString('pt-PT', {
                                     day: '2-digit',
                                     month: 'long',
@@ -636,23 +634,23 @@ const ExamDetailView: React.FC<{
 
                         <div className="flex items-center gap-4">
                             <div className="text-center">
-                                <p className={`text-3xl font-bold ${examResult.score >= 10 ? 'text-green-600' : 'text-red-600'}`}>
+                                <p className={`text-3xl font-bold ${examResult.score >= 10 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                                     {examResult.score}
                                 </p>
-                                <p className="text-xs text-gray-500">Nota</p>
+                                <p className="text-xs text-gray-500 dark:text-slate-500">Nota</p>
                             </div>
                             <div className="text-center">
-                                <p className="text-3xl font-bold text-gray-800">
+                                <p className="text-3xl font-bold text-gray-800 dark:text-white">
                                     {examResult.correct_answers}/{examResult.total_questions}
                                 </p>
-                                <p className="text-xs text-gray-500">Corretas</p>
+                                <p className="text-xs text-gray-500 dark:text-slate-500">Corretas</p>
                             </div>
-                            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${examResult.score >= 10 ? 'bg-green-100' : 'bg-red-100'
+                            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${examResult.score >= 10 ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'
                                 }`}>
                                 {examResult.score >= 10 ? (
-                                    <CheckCircle className="w-6 h-6 text-green-600" />
+                                    <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
                                 ) : (
-                                    <XCircle className="w-6 h-6 text-red-600" />
+                                    <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
                                 )}
                             </div>
                         </div>
@@ -660,7 +658,7 @@ const ExamDetailView: React.FC<{
                 </div>
 
                 {/* Question Navigator */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-4 mb-6">
                     <div className="flex flex-wrap gap-2 justify-center">
                         {answers.map((answer, index) => {
                             const isUnanswered = answer.selected_answer?.text === '(Não respondida)';
@@ -676,7 +674,7 @@ const ExamDetailView: React.FC<{
                                 <button
                                     key={answer.id}
                                     onClick={() => setCurrentQuestion(index)}
-                                    className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${currentQuestion === index ? 'ring-2 ring-indigo-500 ring-offset-2' : ''
+                                    className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${currentQuestion === index ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-slate-900' : ''
                                         } ${getButtonColor()}`}
                                 >
                                     {index + 1}
@@ -688,14 +686,14 @@ const ExamDetailView: React.FC<{
 
                 {/* Current Question */}
                 {answers[currentQuestion] && (
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                        <div className="mb-4 text-sm text-gray-500">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6">
+                        <div className="mb-4 text-sm text-gray-500 dark:text-slate-400">
                             Pergunta {currentQuestion + 1} de {answers.length}
                         </div>
 
                         {answers[currentQuestion].questionData ? (
                             <>
-                                <h3 className="text-lg font-semibold text-gray-800 mb-6">
+                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">
                                     {answers[currentQuestion].questionData.text}
                                 </h3>
 
@@ -739,18 +737,18 @@ const ExamDetailView: React.FC<{
                         )}
 
                         {/* Navigation */}
-                        <div className="flex justify-between mt-6 pt-4 border-t border-gray-100">
+                        <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100 dark:border-slate-800">
                             <button
                                 onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
                                 disabled={currentQuestion === 0}
-                                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg disabled:opacity-40 transition-colors"
+                                className="px-4 py-2 text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg disabled:opacity-40 transition-colors"
                             >
                                 ← Anterior
                             </button>
                             <button
                                 onClick={() => setCurrentQuestion(prev => Math.min(answers.length - 1, prev + 1))}
                                 disabled={currentQuestion === answers.length - 1}
-                                className="px-4 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg disabled:opacity-40 transition-colors"
+                                className="px-4 py-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg disabled:opacity-40 transition-colors bg-blue-50 dark:bg-blue-950/40 font-bold"
                             >
                                 Seguinte →
                             </button>
@@ -879,7 +877,7 @@ const LineChart: React.FC<{ data: { date: string; score: number }[] }> = ({ data
                     color: '#9ca3af',
                 },
                 grid: {
-                    color: '#e5e7eb',
+                    color: 'rgba(156, 163, 175, 0.1)',
                 },
             },
             x: {
@@ -904,16 +902,16 @@ const LineChart: React.FC<{ data: { date: string; score: number }[] }> = ({ data
 // Quick Stat Component
 const QuickStat: React.FC<{ label: string; value: string | number; color: 'indigo' | 'green' | 'purple' | 'blue' }> = ({ label, value, color }) => {
     const colorClasses = {
-        indigo: 'bg-indigo-50 text-indigo-600',
-        green: 'bg-green-50 text-green-600',
-        purple: 'bg-purple-50 text-purple-600',
-        blue: 'bg-blue-50 text-blue-600',
+        indigo: 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400',
+        green: 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400',
+        purple: 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400',
+        blue: 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400',
     };
 
     return (
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <p className={`text-2xl font-bold ${colorClasses[color].split(' ')[1]}`}>{value}</p>
-            <p className="text-xs text-gray-500 mt-1">{label}</p>
+        <div className="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-slate-800">
+            <p className={`text-2xl font-bold ${colorClasses[color].split(' ').pop()}`}>{value}</p>
+            <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">{label}</p>
         </div>
     );
 };

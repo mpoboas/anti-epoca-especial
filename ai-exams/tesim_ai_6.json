@@ -1,0 +1,444 @@
+{
+    "questions": [
+        {
+            "id": "q1",
+            "text": "Na escala de sensibilidade sonora, qual é o valor em decibéis (dB) tipicamente associado ao 'Limiar da Dor' (Pain Threshold)?",
+            "answers": [
+                {
+                    "text": "120 dB",
+                    "value": "++"
+                },
+                {
+                    "text": "80 dB",
+                    "value": "-"
+                },
+                {
+                    "text": "150 dB",
+                    "value": "--"
+                },
+                {
+                    "text": "100 dB",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q2",
+            "text": "Qual era uma das principais limitações dos primeiros sintetizadores analógicos dos anos 60 e 70?",
+            "answers": [
+                {
+                    "text": "Eram monofónicos, tocando apenas uma nota de cada vez.",
+                    "value": "++"
+                },
+                {
+                    "text": "Não permitiam alterar o volume.",
+                    "value": "--"
+                },
+                {
+                    "text": "Eram totalmente digitais e difíceis de programar.",
+                    "value": "--"
+                },
+                {
+                    "text": "Só funcionavam com computadores.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q3",
+            "text": "O que distingue o 'Rich Text' (Texto Formatado) das definições básicas de texto simples?",
+            "answers": [
+                {
+                    "text": "Segue o paradigma WYSIWYG, incorporando estruturas de descrição de página e elementos visuais para legibilidade.",
+                    "value": "++"
+                },
+                {
+                    "text": "Utiliza apenas 7 bits por carácter.",
+                    "value": "--"
+                },
+                {
+                    "text": "Não permite a utilização de cores.",
+                    "value": "--"
+                },
+                {
+                    "text": "É usado exclusivamente em ambientes de linha de comandos.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q4",
+            "text": "Qual é a profundidade de cor (bit depth) típica de uma imagem em 'Grayscale' (escala de cinzentos)?",
+            "answers": [
+                {
+                    "text": "8 bits.",
+                    "value": "++"
+                },
+                {
+                    "text": "1 bit.",
+                    "value": "--"
+                },
+                {
+                    "text": "24 bits.",
+                    "value": "--"
+                },
+                {
+                    "text": "16 bits.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q5",
+            "text": "Na Compressão Fractal, porque é que o processo é considerado assimétrico?",
+            "answers": [
+                {
+                    "text": "É muito mais complexo e demorado procurar os blocos correspondentes na compressão do que simplesmente apresentá-los na descompressão.",
+                    "value": "++"
+                },
+                {
+                    "text": "A descompressão demora mais tempo que a compressão.",
+                    "value": "--"
+                },
+                {
+                    "text": "Só funciona para imagens a preto e branco.",
+                    "value": "--"
+                },
+                {
+                    "text": "Utiliza chaves de encriptação diferentes para abrir o ficheiro.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q6",
+            "text": "Qual o mecanismo da visão humana que dificulta a distinção entre desenhos misturados e permite a ilusão de movimento no vídeo?",
+            "answers": [
+                {
+                    "text": "O mecanismo de integração e a natureza de 'varrimento' (scanning) da visão.",
+                    "value": "++"
+                },
+                {
+                    "text": "A visão estereoscópica.",
+                    "value": "-"
+                },
+                {
+                    "text": "A capacidade de ver em ultra-alta resolução.",
+                    "value": "--"
+                },
+                {
+                    "text": "A sensibilidade à luz infravermelha.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q7",
+            "text": "Nas normas de Cinema Digital (DCI), qual é o valor de referência para a luminosidade da luz branca no centro do ecrã?",
+            "answers": [
+                {
+                    "text": "48 cd/m2.",
+                    "value": "++"
+                },
+                {
+                    "text": "1000 cd/m2.",
+                    "value": "--"
+                },
+                {
+                    "text": "10 cd/m2.",
+                    "value": "-"
+                },
+                {
+                    "text": "1200 cd/m2.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q8",
+            "text": "Para que serve a ferramenta 'Stirmark' no contexto de Watermarking?",
+            "answers": [
+                {
+                    "text": "Para 'benchmarking', determinando a robustez dos algoritmos de marca de água contra ataques.",
+                    "value": "++"
+                },
+                {
+                    "text": "Para criar marcas de água visíveis em logótipos.",
+                    "value": "--"
+                },
+                {
+                    "text": "Para comprimir imagens sem perdas.",
+                    "value": "--"
+                },
+                {
+                    "text": "Para converter áudio em texto.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q9",
+            "text": "Qual é o público-alvo e a principal característica das câmaras digitais do tipo 'Point & Shoot'?",
+            "answers": [
+                {
+                    "text": "Utilizadores inexperientes; permitem disparar e fazer ajustes automáticos.",
+                    "value": "++"
+                },
+                {
+                    "text": "Fotógrafos profissionais; exigem lentes intermutáveis.",
+                    "value": "--"
+                },
+                {
+                    "text": "Cinema digital; gravam apenas em RAW não comprimido.",
+                    "value": "--"
+                },
+                {
+                    "text": "Astronomia; não possuem flash.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q10",
+            "text": "O que permite a 'Análise de Cenas Auditivas' (Auditory Scene Analysis) aos seres humanos?",
+            "answers": [
+                {
+                    "text": "Identificar a área envolvente através de vibrações, ecos e som permanente.",
+                    "value": "++"
+                },
+                {
+                    "text": "Ouvir frequências acima de 20kHz.",
+                    "value": "--"
+                },
+                {
+                    "text": "Eliminar totalmente o ruído de fundo.",
+                    "value": "-"
+                },
+                {
+                    "text": "Gerar música mentalmente.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q11",
+            "text": "No padrão General MIDI (GM), qual é o intervalo de números de programa reservado para a família de instrumentos 'Strings' (Cordas)?",
+            "answers": [
+                {
+                    "text": "41-48.",
+                    "value": "++"
+                },
+                {
+                    "text": "1-8.",
+                    "value": "--"
+                },
+                {
+                    "text": "57-64.",
+                    "value": "--"
+                },
+                {
+                    "text": "17-24.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q12",
+            "text": "Qual das seguintes aplicações é citada nos documentos como exemplo de software de edição gráfica 2D/3D?",
+            "answers": [
+                {
+                    "text": "Autodesk AutoCAD.",
+                    "value": "++"
+                },
+                {
+                    "text": "Microsoft Word.",
+                    "value": "--"
+                },
+                {
+                    "text": "Notepad++.",
+                    "value": "--"
+                },
+                {
+                    "text": "Audacity.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q13",
+            "text": "No sistema de segurança do Cinema Digital (DCI), como são protegidas as ligações externas?",
+            "answers": [
+                {
+                    "text": "Encriptadas por TLS (Transport Layer Security).",
+                    "value": "++"
+                },
+                {
+                    "text": "Usando cabos analógicos sem proteção.",
+                    "value": "--"
+                },
+                {
+                    "text": "Apenas com palavras-passe simples.",
+                    "value": "-"
+                },
+                {
+                    "text": "Não são protegidas, apenas a ligação interna é.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q14",
+            "text": "No protocolo MIDI, qual é a função atribuída ao Controlador número 1?",
+            "answers": [
+                {
+                    "text": "Fine Tuning (Afinação Fina).",
+                    "value": "++"
+                },
+                {
+                    "text": "Volume Principal.",
+                    "value": "--"
+                },
+                {
+                    "text": "Panorâmica (Pan).",
+                    "value": "-"
+                },
+                {
+                    "text": "Sustain.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q15",
+            "text": "Nos sistemas HUD (Head-Up Display) automóveis, como o exemplo do Corvette Z06 (2002), que tipo de informação gráfica pode ser apresentada?",
+            "answers": [
+                {
+                    "text": "Rotações do motor, pressão do óleo e aceleração lateral.",
+                    "value": "++"
+                },
+                {
+                    "text": "Vídeos do YouTube.",
+                    "value": "--"
+                },
+                {
+                    "text": "Apenas a velocidade em texto.",
+                    "value": "-"
+                },
+                {
+                    "text": "O mapa completo da cidade em 3D realista.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q16",
+            "text": "O que distinguia a 1.ª Geração de arquiteturas DRM da 2.ª Geração?",
+            "answers": [
+                {
+                    "text": "A 1.ª focava-se na encriptação; a 2.ª abrange identificação, descrição, comercialização e monitorização.",
+                    "value": "++"
+                },
+                {
+                    "text": "A 1.ª era apenas para texto, a 2.ª para vídeo.",
+                    "value": "--"
+                },
+                {
+                    "text": "A 1.ª usava Blockchain, a 2.ª usa Cloud.",
+                    "value": "--"
+                },
+                {
+                    "text": "Não houve evolução, o DRM manteve-se igual.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q17",
+            "text": "No contexto de processamento de texto, que operações são típicas ao lidar com 'Strings'?",
+            "answers": [
+                {
+                    "text": "Comparação, adição (concatenação), extração e substituição.",
+                    "value": "++"
+                },
+                {
+                    "text": "Ajuste de brilho e contraste.",
+                    "value": "--"
+                },
+                {
+                    "text": "Filtragem passa-baixo.",
+                    "value": "--"
+                },
+                {
+                    "text": "Quantificação vetorial.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q18",
+            "text": "Qual é a distinção técnica entre 'dpi' e 'pixéis' na resolução de imagens?",
+            "answers": [
+                {
+                    "text": "'Dpi' refere-se ao tamanho físico do pixel (pontos por polegada linear), enquanto 'pixéis' refere-se ao número total de pontos na imagem.",
+                    "value": "++"
+                },
+                {
+                    "text": "São sinónimos exatos.",
+                    "value": "--"
+                },
+                {
+                    "text": "'Dpi' é para vídeo e 'pixéis' para impressão.",
+                    "value": "--"
+                },
+                {
+                    "text": "'Pixéis' refere-se à cor e 'dpi' ao brilho.",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": "q19",
+            "text": "Qual é a taxa de dados (largura de banda) aproximada necessária para Cinema Digital 8K a 24fps sem compressão (4:4:4 10-bit)?",
+            "answers": [
+                {
+                    "text": "Cerca de 3200 MB/s.",
+                    "value": "++"
+                },
+                {
+                    "text": "Cerca de 100 MB/s.",
+                    "value": "--"
+                },
+                {
+                    "text": "Cerca de 800 MB/s (isso é para 4K).",
+                    "value": "-"
+                },
+                {
+                    "text": "Cerca de 10 GB/s.",
+                    "value": "-"
+                }
+            ]
+        },
+        {
+            "id": "q20",
+            "text": "Qual é uma das principais vantagens funcionais da edição de vídeo digital não-linear?",
+            "answers": [
+                {
+                    "text": "Acesso direto a qualquer quadro (frame) sem necessidade de avançar ou rebobinar sequencialmente.",
+                    "value": "++"
+                },
+                {
+                    "text": "A obrigatoriedade de usar fitas magnéticas.",
+                    "value": "--"
+                },
+                {
+                    "text": "A impossibilidade de apagar clips.",
+                    "value": "--"
+                },
+                {
+                    "text": "A menor qualidade de imagem em relação à edição linear.",
+                    "value": "--"
+                }
+            ]
+        }
+    ]
+}

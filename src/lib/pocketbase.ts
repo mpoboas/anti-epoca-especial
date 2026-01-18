@@ -68,6 +68,11 @@ export interface User {
 export const isLoggedIn = () => pb.authStore.isValid;
 export const getCurrentUser = () => pb.authStore.record as unknown as User | null;
 export const logout = () => pb.authStore.clear();
+export const isAdmin = () => {
+    // Try both record and model as Pocketbase SDK versions differ
+    const user = pb.authStore.record || (pb.authStore as any).model;
+    return user?.role === 'admin';
+};
 
 // Login with email/password
 export const login = async (email: string, password: string) => {
@@ -336,4 +341,36 @@ export const getUserStats = async (courseId: string, source?: string): Promise<U
         scoreEvolution,
         passRate: totalExams > 0 ? Math.round((passedExams / totalExams) * 100) : 0,
     };
+};
+
+// Admin: Create questions in batch
+export interface QuestionInput {
+    text: string;
+    answers: Answer[];
+}
+
+export const createQuestions = async (
+    courseId: string,
+    source: 'previous' | 'ai' | 'kahoots',
+    questions: QuestionInput[]
+): Promise<{ created: number; errors: string[] }> => {
+    const errors: string[] = [];
+    let created = 0;
+
+    for (let i = 0; i < questions.length; i++) {
+        const q = questions[i];
+        try {
+            await pb.collection('questions').create({
+                text: q.text,
+                answers: q.answers,
+                source,
+                course: courseId,
+            }, { requestKey: null });
+            created++;
+        } catch (e: any) {
+            errors.push(`Pergunta ${i + 1}: ${e.message || 'Erro desconhecido'}`);
+        }
+    }
+
+    return { created, errors };
 };
