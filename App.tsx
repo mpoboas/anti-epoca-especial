@@ -1,25 +1,36 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { QuizData, Question, UserAnswer, Answer, GlobalStats } from './types';
+import React, { useState, useEffect } from 'react';
 import { QuizCard } from './components/QuizCard';
 import { ResultSummary } from './components/ResultSummary';
 import { QuestionNavigator } from './components/QuestionNavigator';
-import { getRandomQuestions, calculateScore } from './utils';
-import { saveExam, getStats } from './db';
-import { Loader2, BookOpen, BarChart3, ArrowRight, ArrowLeft, CheckCircle, Bot, AlertTriangle, Library, ChevronLeft, Gamepad2 } from 'lucide-react';
+import { AuthModal } from './src/components/AuthModal';
+import { StatsView } from './src/components/StatsView';
+import {
+    pb,
+    isLoggedIn,
+    getCurrentUser,
+    logout,
+    getCourses,
+    getRandomQuestions as fetchRandomQuestions,
+    getQuestionCount,
+    saveExamResult,
+    getUserStats,
+    Course,
+    Question,
+    Answer,
+    UserStats
+} from './src/lib/pocketbase';
+import {
+    Loader2, BookOpen, ArrowRight, ArrowLeft, CheckCircle,
+    Bot, AlertTriangle, Library, ChevronLeft, Gamepad2, User, LogIn
+} from 'lucide-react';
 
 const EXAM_QUESTION_COUNT = 15;
 
-// Auto-detect JSON files in each folder using Vite's import.meta.glob
-const previousExamFiles = import.meta.glob('./previous-exams/*.json', { eager: true, import: 'default' });
-const aiExamFiles = import.meta.glob('./ai-exams/*.json', { eager: true, import: 'default' });
-const kahootFiles = import.meta.glob('./kahoots/*.json', { eager: true, import: 'default' });
-
-// Define available sources
-const SOURCES = {
+// Source configurations
+const SOURCE_CONFIG = {
     previous: {
         id: 'previous',
         name: 'Exames Anteriores',
-        files: previousExamFiles,
         icon: <Library className="w-8 h-8 text-indigo-600 mb-3" />,
         color: 'indigo',
         description: 'Perguntas oficiais de exames de anos anteriores.',
@@ -28,7 +39,6 @@ const SOURCES = {
     ai: {
         id: 'ai',
         name: 'Exames Gerados por IA',
-        files: aiExamFiles,
         icon: <Bot className="w-8 h-8 text-fuchsia-600 mb-3" />,
         color: 'fuchsia',
         description: 'Perguntas geradas para prática extra.',
@@ -37,27 +47,38 @@ const SOURCES = {
     kahoots: {
         id: 'kahoots',
         name: 'Kahoots',
-        files: kahootFiles,
         icon: <Gamepad2 className="w-8 h-8 text-teal-600 mb-3" />,
         color: 'teal',
         description: 'Perguntas de Kahoots disponibilizados pelos professores.',
         warning: null
     }
-};
+} as const;
 
-type SourceType = keyof typeof SOURCES;
+type SourceType = keyof typeof SOURCE_CONFIG;
+
+interface UserAnswer {
+    questionId: string;
+    selectedAnswer: Answer;
+}
 
 const App: React.FC = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Data Pool
-    const [allQuestions, setAllQuestions] = useState<Question[]>([]);
+    // Auth
+    const [showAuthModal, setShowAuthModal] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    // Data
+    const [courses, setCourses] = useState<Course[]>([]);
+    const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
     const [selectedSource, setSelectedSource] = useState<SourceType | null>(null);
+    const [questionCount, setQuestionCount] = useState(0);
+    const [stats, setStats] = useState<UserStats | null>(null);
 
     // App State
-    const [appState, setAppState] = useState<'source-select' | 'menu' | 'exam' | 'results'>('source-select');
-    const [stats, setStats] = useState<GlobalStats | null>(null);
+    const [appState, setAppState] = useState<'loading' | 'source-select' | 'menu' | 'exam' | 'results' | 'profile'>('loading');
+    const [statsRefreshKey, setStatsRefreshKey] = useState(0);
 
     // Exam State
     const [examQuestions, setExamQuestions] = useState<Question[]>([]);
@@ -65,58 +86,199 @@ const App: React.FC = () => {
     const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
     const [examScore, setExamScore] = useState(0);
 
-    const loadSourceData = async (sourceKey: SourceType) => {
-        try {
-            setLoading(true);
-            setError(null);
-            const sourceConfig = SOURCES[sourceKey];
+    // Check auth on mount
+    useEffect(() => {
+        setIsAuthenticated(isLoggedIn());
 
-            // Files are already imported via import.meta.glob
-            const filesEntries = Object.entries(sourceConfig.files);
+        // Listen for auth changes
+        pb.authStore.onChange(() => {
+            setIsAuthenticated(isLoggedIn());
+        });
+    }, []);
 
-            // Extract questions from all files
-            let questions: Question[] = [];
+    // Load courses on mount
+    useEffect(() => {
+        const loadCourses = async () => {
+            try {
+                const coursesData = await getCourses();
+                setCourses(coursesData);
 
-            for (const [filePath, data] of filesEntries) {
-                const fileData = data as QuizData;
-
-                if (sourceKey === 'kahoots') {
-                    // Extract file number from path (e.g., ./kahoots/tesim_kahoot_1.json -> 1)
-                    const fileMatch = filePath.match(/kahoot_(\d+)\.json$/);
-                    const fileNum = fileMatch ? fileMatch[1] : filePath;
-
-                    // Normalize answer values and create unique IDs
-                    const normalizedQuestions = fileData.questions.map(q => ({
-                        ...q,
-                        id: `kahoot_${fileNum}_${q.id}`,
-                        answers: q.answers.map(a => ({
-                            ...a,
-                            value: a.value === 'correct' ? '++' : a.value === 'incorrect' ? '--' : a.value
-                        }))
-                    }));
-                    questions = questions.concat(normalizedQuestions);
-                } else {
-                    questions = questions.concat(fileData.questions);
+                // Auto-select first course (TESIM)
+                if (coursesData.length > 0) {
+                    setSelectedCourse(coursesData[0]);
                 }
+
+                setAppState('source-select');
+            } catch (err) {
+                console.error(err);
+                setError('Não foi possível carregar os cursos. Verifica a conexão.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadCourses();
+    }, []);
+
+    // Load question count and stats when source is selected
+    const loadSourceData = async (source: SourceType) => {
+        if (!selectedCourse) return;
+
+        setLoading(true);
+        try {
+            const count = await getQuestionCount(selectedCourse.id, source);
+            setQuestionCount(count);
+
+            if (isAuthenticated) {
+                const userStats = await getUserStats(selectedCourse.id, source);
+                setStats(userStats);
             }
 
-            setAllQuestions(questions);
-
-            // Load stats specific to this pool of questions
-            const dbStats = await getStats(questions.map(q => q.id));
-            setStats(dbStats);
-
-            setSelectedSource(sourceKey);
+            setSelectedSource(source);
             setAppState('menu');
         } catch (err) {
             console.error(err);
-            setError('Não foi possível carregar os dados do exame. Por favor verifique se os ficheiros existem.');
+            setError('Erro ao carregar dados.');
         } finally {
             setLoading(false);
         }
     };
 
-    // Keyboard Navigation
+    // Start exam
+    const startExam = async () => {
+        if (!selectedCourse || !selectedSource) return;
+
+        setLoading(true);
+        try {
+            const questions = await fetchRandomQuestions(
+                selectedCourse.id,
+                selectedSource,
+                EXAM_QUESTION_COUNT
+            );
+
+            setExamQuestions(questions);
+            setUserAnswers([]);
+            setCurrentQuestionIndex(0);
+            setAppState('exam');
+        } catch (err) {
+            console.error(err);
+            setError('Erro ao carregar perguntas.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Handle answer
+    const handleAnswer = (answer: Answer) => {
+        const questionId = examQuestions[currentQuestionIndex].id;
+        setUserAnswers(prev => {
+            const existing = prev.filter(ua => ua.questionId !== questionId);
+            return [...existing, { questionId, selectedAnswer: answer }];
+        });
+    };
+
+    // Calculate score
+    const calculateScore = (answers: UserAnswer[]): { score: number; correct: number } => {
+        let totalPoints = 0;
+        let correctCount = 0;
+
+        answers.forEach(ans => {
+            switch (ans.selectedAnswer.value) {
+                case '++': totalPoints += 1; correctCount++; break;
+                case '+': totalPoints += 0.33; break;
+                case '-': totalPoints -= 0.33; break;
+                case '--': totalPoints -= 1; break;
+            }
+        });
+
+        const totalQuestions = examQuestions.length;
+        const grade = totalQuestions > 0 ? (totalPoints / totalQuestions) * 20 : 0;
+
+        return {
+            score: Math.max(0, Math.round(grade * 10) / 10),
+            correct: correctCount
+        };
+    };
+
+    // Finish exam
+    const finishExam = async () => {
+        const { score, correct } = calculateScore(userAnswers);
+        setExamScore(score);
+
+        // Save to database if authenticated
+        if (isAuthenticated && selectedCourse && selectedSource) {
+            try {
+                // Build answers for ALL questions (including unanswered)
+                const allAnswers = examQuestions.map(q => {
+                    const userAnswer = userAnswers.find(ua => ua.questionId === q.id);
+                    if (userAnswer) {
+                        return {
+                            questionId: q.id,
+                            selectedAnswer: userAnswer.selectedAnswer
+                        };
+                    } else {
+                        // For unanswered questions, we still save them with a null-like answer
+                        return {
+                            questionId: q.id,
+                            selectedAnswer: { text: '(Não respondida)', value: '--' as const }
+                        };
+                    }
+                });
+
+                await saveExamResult(
+                    selectedCourse.id,
+                    selectedSource,
+                    score,
+                    examQuestions.length,
+                    correct,
+                    allAnswers
+                );
+            } catch (err) {
+                console.error('Failed to save exam result:', err);
+            }
+        }
+
+        setAppState('results');
+    };
+
+    // Get status color for navigator
+    const getExamStatusColor = (index: number) => {
+        const q = examQuestions[index];
+        const isAnswered = userAnswers.some(ua => ua.questionId === q.id);
+
+        if (isAnswered) {
+            return 'bg-gray-500 border-gray-600 text-white';
+        }
+        return 'bg-white border-gray-300 text-gray-500';
+    };
+
+    // Get color class based on source
+    const getSourceColorClass = (type: 'bg' | 'text' | 'border' | 'hover-border', variant: 'light' | 'normal' = 'normal') => {
+        const colors = {
+            previous: {
+                bg: variant === 'light' ? 'bg-indigo-50' : 'bg-indigo-600',
+                text: variant === 'light' ? 'text-indigo-700' : 'text-white',
+                border: 'border-indigo-200',
+                'hover-border': 'hover:border-indigo-500'
+            },
+            ai: {
+                bg: variant === 'light' ? 'bg-fuchsia-50' : 'bg-fuchsia-600',
+                text: variant === 'light' ? 'text-fuchsia-700' : 'text-white',
+                border: 'border-fuchsia-200',
+                'hover-border': 'hover:border-fuchsia-500'
+            },
+            kahoots: {
+                bg: variant === 'light' ? 'bg-teal-50' : 'bg-teal-600',
+                text: variant === 'light' ? 'text-teal-700' : 'text-white',
+                border: 'border-teal-200',
+                'hover-border': 'hover:border-teal-500'
+            }
+        };
+
+        return selectedSource ? colors[selectedSource][type] : colors.previous[type];
+    };
+
+    // Keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (appState !== 'exam') return;
@@ -126,6 +288,7 @@ const App: React.FC = () => {
 
             switch (e.key) {
                 case 'ArrowRight':
+                case 'Enter':
                     if (currentQuestionIndex < examQuestions.length - 1) {
                         setCurrentQuestionIndex(prev => prev + 1);
                     }
@@ -155,58 +318,15 @@ const App: React.FC = () => {
                 case 'D':
                     if (currentQ.answers[3]) handleAnswer(currentQ.answers[3]);
                     break;
-                case 'Enter':
-                    if (currentQuestionIndex < examQuestions.length - 1) {
-                        setCurrentQuestionIndex(prev => prev + 1);
-                    }
-                    break;
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [appState, currentQuestionIndex, examQuestions, userAnswers]);
+    }, [appState, currentQuestionIndex, examQuestions]);
 
-    const startExam = () => {
-        const questions = getRandomQuestions(allQuestions, EXAM_QUESTION_COUNT);
-        setExamQuestions(questions);
-        setUserAnswers([]);
-        setCurrentQuestionIndex(0);
-        setAppState('exam');
-    };
-
-    const handleAnswer = (answer: Answer) => {
-        const questionId = examQuestions[currentQuestionIndex].id;
-        setUserAnswers(prev => {
-            const existing = prev.filter(ua => ua.questionId !== questionId);
-            return [...existing, { questionId, selectedAnswer: answer }];
-        });
-    };
-
-    const finishExam = async () => {
-        const score = calculateScore(userAnswers, examQuestions.length);
-        setExamScore(score);
-
-        await saveExam(score, userAnswers);
-
-        // Refresh stats
-        const newStats = await getStats(allQuestions.map(q => q.id));
-        setStats(newStats);
-
-        setAppState('results');
-    };
-
-    const getExamStatusColor = (index: number) => {
-        const q = examQuestions[index];
-        const isAnswered = userAnswers.some(ua => ua.questionId === q.id);
-
-        if (isAnswered) {
-            return 'bg-gray-500 border-gray-600 text-white';
-        }
-        return 'bg-white border-gray-300 text-gray-500';
-    };
-
-    if (loading) {
+    // Loading screen
+    if (appState === 'loading' || (loading && appState === 'source-select')) {
         return (
             <div className="h-[100dvh] flex items-center justify-center bg-slate-50">
                 <Loader2 className="w-10 h-10 animate-spin text-indigo-600" />
@@ -214,6 +334,7 @@ const App: React.FC = () => {
         );
     }
 
+    // Error screen
     if (error) {
         return (
             <div className="h-[100dvh] flex items-center justify-center bg-slate-50">
@@ -230,116 +351,149 @@ const App: React.FC = () => {
         );
     }
 
-    // Helper for progress text
-    const questionsLeft = stats ? Math.max(0, stats.totalQuestionsPool - stats.questionsSeen) : 0;
+    const questionsLeft = stats ? Math.max(0, stats.totalQuestionsInPool - stats.uniqueQuestionsSeen) : questionCount;
+    const user = getCurrentUser();
 
     return (
         <div className="h-[100dvh] bg-slate-50 text-gray-800 font-sans selection:bg-indigo-100 flex flex-col overflow-hidden">
+            {/* Header */}
             <header className="bg-white shadow-sm shrink-0 z-20 relative">
                 <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-2 cursor-pointer" onClick={() => setAppState('source-select')}>
                         <div className="bg-indigo-600 p-2 rounded-lg shrink-0">
                             <BookOpen className="w-5 h-5 text-white" />
                         </div>
-                        <h1 className="font-bold text-lg md:text-xl text-gray-900 tracking-tight truncate">AntiÉpocaEspecial</h1>
+                        <h1 className="font-bold text-lg md:text-xl text-gray-900 tracking-tight truncate">
+                            AntiÉpocaEspecial
+                        </h1>
                     </div>
 
-                    {appState !== 'source-select' && selectedSource && (
-                        <div className="flex items-center gap-2 shrink-0">
-                            <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wide border truncate max-w-[120px] md:max-w-none
-                        ${selectedSource === 'previous' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' :
-                                    selectedSource === 'ai' ? 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200' :
-                                        'bg-teal-50 text-teal-700 border-teal-200'}
-                     `}>
-                                {SOURCES[selectedSource].name}
+                    <div className="flex items-center gap-3">
+                        {/* Source Badge */}
+                        {appState !== 'source-select' && selectedSource && (
+                            <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wide border truncate max-w-[100px] md:max-w-none
+                ${getSourceColorClass('bg', 'light')} ${getSourceColorClass('text', 'light')} ${getSourceColorClass('border')}
+              `}>
+                                {SOURCE_CONFIG[selectedSource].name}
                             </span>
-                        </div>
-                    )}
+                        )}
+
+                        {/* Profile/Login Button */}
+                        {isAuthenticated ? (
+                            <button
+                                onClick={() => {
+                                    setStatsRefreshKey(k => k + 1);
+                                    setAppState('profile');
+                                }}
+                                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-2 rounded-lg hover:shadow-md transition-all"
+                            >
+                                <User className="w-4 h-4" />
+                                <span className="hidden md:inline text-sm font-medium">{user?.name || 'Perfil'}</span>
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => setShowAuthModal(true)}
+                                className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-all"
+                            >
+                                <LogIn className="w-4 h-4" />
+                                <span className="hidden md:inline text-sm font-medium">Entrar</span>
+                            </button>
+                        )}
+                    </div>
                 </div>
             </header>
 
+            {/* Main Content */}
             <main className="flex-1 flex flex-col overflow-hidden w-full relative min-h-0">
                 <div className="flex-1 flex flex-col w-full max-w-5xl mx-auto min-h-0">
 
+                    {/* Source Selection */}
                     {appState === 'source-select' && (
                         <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 animate-fade-in custom-scrollbar">
                             <div className="flex flex-col items-center justify-center min-h-full max-w-4xl mx-auto">
                                 <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-2 tracking-tight text-center">
                                     Selecionar Fonte
                                 </h1>
-                                <p className="text-gray-500 mb-8 md:mb-12 text-center text-sm md:text-base">Escolha a origem das perguntas</p>
+                                <p className="text-gray-500 mb-8 md:mb-12 text-center text-sm md:text-base">
+                                    Escolhe a origem das perguntas
+                                </p>
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-5xl">
-                                    {/* Previous Exams Card */}
-                                    <button
-                                        onClick={() => loadSourceData('previous')}
-                                        className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent hover:border-indigo-500 hover:shadow-xl transition-all duration-300 text-left group"
-                                    >
-                                        <div className="bg-indigo-50 w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform">
-                                            {SOURCES.previous.icon}
-                                        </div>
-                                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{SOURCES.previous.name}</h3>
-                                        <p className="text-sm md:text-base text-gray-500 mb-4">{SOURCES.previous.description}</p>
-                                    </button>
+                                    {(Object.keys(SOURCE_CONFIG) as SourceType[]).map(source => (
+                                        <button
+                                            key={source}
+                                            onClick={() => loadSourceData(source)}
+                                            disabled={loading}
+                                            className={`bg-white p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent 
+                        ${SOURCE_CONFIG[source].color === 'indigo' ? 'hover:border-indigo-500' :
+                                                    SOURCE_CONFIG[source].color === 'fuchsia' ? 'hover:border-fuchsia-500' :
+                                                        'hover:border-teal-500'} 
+                        hover:shadow-xl transition-all duration-300 text-left group disabled:opacity-50`}
+                                        >
+                                            <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform
+                        ${SOURCE_CONFIG[source].color === 'indigo' ? 'bg-indigo-50' :
+                                                    SOURCE_CONFIG[source].color === 'fuchsia' ? 'bg-fuchsia-50' :
+                                                        'bg-teal-50'}`}
+                                            >
+                                                {SOURCE_CONFIG[source].icon}
+                                            </div>
+                                            <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                                                {SOURCE_CONFIG[source].name}
+                                            </h3>
+                                            <p className="text-sm md:text-base text-gray-500 mb-4">
+                                                {SOURCE_CONFIG[source].description}
+                                            </p>
 
-                                    {/* AI Exams Card */}
-                                    <button
-                                        onClick={() => loadSourceData('ai')}
-                                        className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent hover:border-fuchsia-500 hover:shadow-xl transition-all duration-300 text-left group relative overflow-hidden"
-                                    >
-                                        <div className="bg-fuchsia-50 w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform">
-                                            {SOURCES.ai.icon}
-                                        </div>
-                                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{SOURCES.ai.name}</h3>
-                                        <p className="text-sm md:text-base text-gray-500 mb-4">{SOURCES.ai.description}</p>
-
-                                        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-3 mt-2">
-                                            <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                                            <span className="text-xs text-amber-800 font-medium leading-tight">
-                                                {SOURCES.ai.warning}
-                                            </span>
-                                        </div>
-                                    </button>
-
-                                    {/* Kahoots Card */}
-                                    <button
-                                        onClick={() => loadSourceData('kahoots')}
-                                        className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent hover:border-teal-500 hover:shadow-xl transition-all duration-300 text-left group"
-                                    >
-                                        <div className="bg-teal-50 w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform">
-                                            {SOURCES.kahoots.icon}
-                                        </div>
-                                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{SOURCES.kahoots.name}</h3>
-                                        <p className="text-sm md:text-base text-gray-500 mb-4">{SOURCES.kahoots.description}</p>
-                                    </button>
+                                            {SOURCE_CONFIG[source].warning && (
+                                                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-3 mt-2">
+                                                    <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0" />
+                                                    <span className="text-xs text-amber-800 font-medium leading-tight">
+                                                        {SOURCE_CONFIG[source].warning}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
                         </div>
                     )}
 
+                    {/* Menu */}
                     {appState === 'menu' && selectedSource && (
                         <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 animate-fade-in custom-scrollbar">
                             <div className="flex flex-col items-center justify-center min-h-full max-w-2xl mx-auto text-center">
                                 <div className="mb-8 p-6 bg-white rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden w-full">
                                     <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Progresso do Estudo</h2>
 
+                                    <div className="w-full max-w-[250px] h-2 bg-gray-200 rounded-full mx-auto mt-4 overflow-hidden">
+                                        <div
+                                            className={`h-full transition-all duration-1000 ${getSourceColorClass('bg')}`}
+                                            style={{ width: `${questionCount > 0 ? ((questionCount - questionsLeft) / questionCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <p className="mt-2 text-sm text-gray-500 font-medium">
+                                        {isAuthenticated ? (
+                                            questionsLeft > 0
+                                                ? `${questionsLeft} perguntas por descobrir (${questionCount} total)`
+                                                : "Todas as perguntas vistas!"
+                                        ) : (
+                                            <>
+                                                <button
+                                                    onClick={() => setShowAuthModal(true)}
+                                                    className={`font-bold hover:underline ${getSourceColorClass('text', 'light')}`}
+                                                >
+                                                    Faz login
+                                                </button>
+                                                {' '}para guardares o teu progresso
+                                            </>
+                                        )}
+                                    </p>
+
                                     {stats && (
-                                        <>
-                                            <div className="w-full max-w-[250px] h-2 bg-gray-200 rounded-full mx-auto mt-4 overflow-hidden">
-                                                <div
-                                                    className={`h-full transition-all duration-1000 ${selectedSource === 'previous' ? 'bg-indigo-500' : selectedSource === 'ai' ? 'bg-fuchsia-500' : 'bg-teal-500'}`}
-                                                    style={{ width: `${(stats.questionsSeen / stats.totalQuestionsPool) * 100}%` }}
-                                                ></div>
-                                            </div>
-                                            <p className="mt-2 text-sm text-gray-500 font-medium">
-                                                {questionsLeft > 0
-                                                    ? `${questionsLeft} perguntas por descobrir`
-                                                    : "Todas as perguntas vistas!"}
-                                            </p>
-                                            <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-gray-50 text-xs font-medium text-gray-600">
-                                                Nota Média: {stats.averageGrade.toFixed(1)} / 20
-                                            </div>
-                                        </>
+                                        <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-gray-50 text-xs font-medium text-gray-600">
+                                            Nota Média: {stats.averageScore.toFixed(1)} / 20
+                                        </div>
                                     )}
                                 </div>
 
@@ -347,20 +501,23 @@ const App: React.FC = () => {
                                     Exame Modelo
                                 </h1>
                                 <p className="text-base md:text-lg text-gray-600 mb-8 md:mb-10 leading-relaxed max-w-lg mx-auto">
-                                    Será testado em {Math.min(EXAM_QUESTION_COUNT, allQuestions.length)} perguntas aleatórias do conjunto <strong>{SOURCES[selectedSource].name}</strong>.
+                                    Serás testado em {Math.min(EXAM_QUESTION_COUNT, questionCount)} perguntas aleatórias do conjunto <strong>{SOURCE_CONFIG[selectedSource].name}</strong>.
                                 </p>
 
                                 <button
                                     onClick={startExam}
-                                    className={`w-full md:w-auto group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 rounded-xl md:rounded-full hover:shadow-lg transform active:scale-95 hover:-translate-y-1
-                            ${selectedSource === 'previous'
-                                            ? 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-200'
-                                            : selectedSource === 'ai' ? 'bg-fuchsia-600 hover:bg-fuchsia-700 shadow-fuchsia-200'
-                                                : 'bg-teal-600 hover:bg-teal-700 shadow-teal-200'}
-                        `}
+                                    disabled={loading || questionCount === 0}
+                                    className={`w-full md:w-auto group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 rounded-xl md:rounded-full hover:shadow-lg transform active:scale-95 hover:-translate-y-1 disabled:opacity-50
+                    ${getSourceColorClass('bg')} hover:opacity-90`}
                                 >
-                                    <span>Iniciar Novo Exame</span>
-                                    <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                                    {loading ? (
+                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                    ) : (
+                                        <>
+                                            <span>Iniciar Novo Exame</span>
+                                            <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                                        </>
+                                    )}
                                 </button>
 
                                 <button
@@ -372,15 +529,15 @@ const App: React.FC = () => {
                                 </button>
 
                                 <div className="mt-12 text-sm text-gray-400 hidden md:block">
-                                    <p>Dica: Use as setas para navegar e 1-4 para responder.</p>
+                                    <p>Dica: Usa as setas para navegar e 1-4 para responder.</p>
                                 </div>
                             </div>
                         </div>
                     )}
 
+                    {/* Exam */}
                     {appState === 'exam' && examQuestions.length > 0 && (
                         <div className="flex-1 flex flex-col h-full overflow-hidden max-w-2xl mx-auto w-full relative">
-
                             <div className="shrink-0 pt-4 px-4 pb-0 z-10 bg-slate-50">
                                 <QuestionNavigator
                                     total={examQuestions.length}
@@ -390,7 +547,6 @@ const App: React.FC = () => {
                                 />
                             </div>
 
-                            {/* Scrollable Question Area - pb-32 to clear fixed footer */}
                             <div className="flex-1 overflow-y-auto px-4 pt-2 pb-32 custom-scrollbar">
                                 <QuizCard
                                     key={examQuestions[currentQuestionIndex].id}
@@ -401,7 +557,7 @@ const App: React.FC = () => {
                                 />
                             </div>
 
-                            {/* Fixed Footer Buttons */}
+                            {/* Footer */}
                             <div className="fixed bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50 flex items-center gap-3 md:relative md:bg-transparent md:border-t md:shadow-none md:p-4 md:pb-6">
                                 <div className="w-full max-w-2xl mx-auto flex items-center gap-3">
                                     <button
@@ -417,8 +573,7 @@ const App: React.FC = () => {
                                         <button
                                             onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
                                             className={`flex-1 flex items-center justify-center px-4 py-3 md:py-2 text-white rounded-xl shadow-sm font-bold transition-all transform active:scale-95
-                                    ${selectedSource === 'previous' ? 'bg-indigo-600 hover:bg-indigo-700' : selectedSource === 'ai' ? 'bg-fuchsia-600 hover:bg-fuchsia-700' : 'bg-teal-600 hover:bg-teal-700'}
-                                `}
+                        ${getSourceColorClass('bg')} hover:opacity-90`}
                                         >
                                             <span className="hidden md:inline">Seguinte</span>
                                             <span className="md:hidden">Próxima</span>
@@ -435,20 +590,10 @@ const App: React.FC = () => {
                                     )}
                                 </div>
                             </div>
-
-                            <div className="hidden md:flex justify-center gap-8 opacity-40 text-xs shrink-0 pb-2">
-                                <div className="flex flex-col items-center">
-                                    <span className="border border-gray-400 rounded px-2 py-0.5 mb-1">← / →</span>
-                                    <span>Navegar</span>
-                                </div>
-                                <div className="flex flex-col items-center">
-                                    <span className="border border-gray-400 rounded px-2 py-0.5 mb-1">1 - 4</span>
-                                    <span>Selecionar Resposta</span>
-                                </div>
-                            </div>
                         </div>
                     )}
 
+                    {/* Results */}
                     {appState === 'results' && (
                         <div className="flex-1 flex flex-col h-full overflow-hidden px-2 py-2 md:px-4 md:py-4 relative">
                             <ResultSummary
@@ -460,27 +605,47 @@ const App: React.FC = () => {
                             />
                         </div>
                     )}
+
+                    {/* Stats/Profile */}
+                    {appState === 'profile' && (
+                        <StatsView
+                            key={statsRefreshKey}
+                            course={selectedCourse}
+                            onClose={() => setAppState(selectedSource ? 'menu' : 'source-select')}
+                        />
+                    )}
                 </div>
             </main>
 
+            {/* Auth Modal */}
+            {showAuthModal && (
+                <AuthModal
+                    onSuccess={() => {
+                        setShowAuthModal(false);
+                        setIsAuthenticated(true);
+                    }}
+                    onClose={() => setShowAuthModal(false)}
+                />
+            )}
+
+            {/* Styles */}
             <style>{`
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         .animate-fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
+          animation: fadeIn 0.6s ease-out forwards;
         }
-        /* Custom Scrollbar for better UX in fixed containers */
         .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+          width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
+          background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 20px;
+          background-color: #cbd5e1;
+          border-radius: 20px;
         }
       `}</style>
         </div>
