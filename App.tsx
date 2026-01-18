@@ -31,23 +31,23 @@ const SOURCE_CONFIG = {
     previous: {
         id: 'previous',
         name: 'Exames Anteriores',
-        icon: <Library className="w-8 h-8 text-indigo-600 mb-3" />,
-        color: 'indigo',
+        icon: <Library className="w-8 h-8 text-blue-600" />,
+        color: 'blue',
         description: 'Perguntas oficiais de exames de anos anteriores.',
         warning: null
     },
     ai: {
         id: 'ai',
         name: 'Exames Gerados por IA',
-        icon: <Bot className="w-8 h-8 text-fuchsia-600 mb-3" />,
-        color: 'fuchsia',
+        icon: <Bot className="w-8 h-8 text-cyan-600" />,
+        color: 'cyan',
         description: 'Perguntas geradas para prática extra.',
         warning: 'O conteúdo pode conter imprecisões'
     },
     kahoots: {
         id: 'kahoots',
         name: 'Kahoots',
-        icon: <Gamepad2 className="w-8 h-8 text-teal-600 mb-3" />,
+        icon: <Gamepad2 className="w-8 h-8 text-teal-600" />,
         color: 'teal',
         description: 'Perguntas de Kahoots disponibilizados pelos professores.',
         warning: null
@@ -255,19 +255,19 @@ const App: React.FC = () => {
     // Get color class based on source
     const getSourceColorClass = (type: 'bg' | 'text' | 'border' | 'hover-border', variant: 'light' | 'normal' = 'normal') => {
         const colors = {
-            previous: {
-                bg: variant === 'light' ? 'bg-indigo-50' : 'bg-indigo-600',
-                text: variant === 'light' ? 'text-indigo-700' : 'text-white',
-                border: 'border-indigo-200',
-                'hover-border': 'hover:border-indigo-500'
+            blue: {
+                bg: variant === 'light' ? 'bg-blue-50' : 'bg-blue-600',
+                text: variant === 'light' ? 'text-blue-700' : 'text-white',
+                border: 'border-blue-200',
+                'hover-border': 'hover:border-blue-500'
             },
-            ai: {
-                bg: variant === 'light' ? 'bg-fuchsia-50' : 'bg-fuchsia-600',
-                text: variant === 'light' ? 'text-fuchsia-700' : 'text-white',
-                border: 'border-fuchsia-200',
-                'hover-border': 'hover:border-fuchsia-500'
+            cyan: {
+                bg: variant === 'light' ? 'bg-cyan-50' : 'bg-cyan-600',
+                text: variant === 'light' ? 'text-cyan-700' : 'text-white',
+                border: 'border-cyan-200',
+                'hover-border': 'hover:border-cyan-500'
             },
-            kahoots: {
+            teal: {
                 bg: variant === 'light' ? 'bg-teal-50' : 'bg-teal-600',
                 text: variant === 'light' ? 'text-teal-700' : 'text-white',
                 border: 'border-teal-200',
@@ -275,7 +275,9 @@ const App: React.FC = () => {
             }
         };
 
-        return selectedSource ? colors[selectedSource][type] : colors.previous[type];
+        return (selectedSource && colors[selectedSource as keyof typeof colors])
+            ? colors[selectedSource as keyof typeof colors][type]
+            : colors.blue[type];
     };
 
     // Keyboard navigation
@@ -355,14 +357,12 @@ const App: React.FC = () => {
     const user = getCurrentUser();
 
     return (
-        <div className="h-[100dvh] bg-slate-50 text-gray-800 font-sans selection:bg-indigo-100 flex flex-col overflow-hidden">
+        <div className="h-[100dvh] bg-slate-50 text-gray-800 font-sans selection:bg-blue-100 flex flex-col overflow-hidden">
             {/* Header */}
             <header className="bg-white shadow-sm shrink-0 z-20 relative">
                 <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-2 cursor-pointer" onClick={() => setAppState('source-select')}>
-                        <div className="bg-indigo-600 p-2 rounded-lg shrink-0">
-                            <BookOpen className="w-5 h-5 text-white" />
-                        </div>
+                        <img src="/logo.png" className="w-9 h-9 md:w-11 md:h-11 rounded-xl shrink-0 object-contain" alt="Logo" />
                         <h1 className="font-bold text-lg md:text-xl text-gray-900 tracking-tight truncate">
                             AntiÉpocaEspecial
                         </h1>
@@ -385,9 +385,9 @@ const App: React.FC = () => {
                                     setStatsRefreshKey(k => k + 1);
                                     setAppState('profile');
                                 }}
-                                className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-2 rounded-lg hover:shadow-md transition-all"
+                                className="flex items-center gap-2 bg-dark-gradient text-white px-3 py-2 rounded-lg hover:shadow-lg transition-all border border-blue-900/50"
                             >
-                                <User className="w-4 h-4" />
+                                <User className="w-4 h-4 text-lime-400" />
                                 <span className="hidden md:inline text-sm font-medium">{user?.name || 'Perfil'}</span>
                             </button>
                         ) : (
@@ -425,14 +425,14 @@ const App: React.FC = () => {
                                             onClick={() => loadSourceData(source)}
                                             disabled={loading}
                                             className={`bg-white p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent 
-                        ${SOURCE_CONFIG[source].color === 'indigo' ? 'hover:border-indigo-500' :
-                                                    SOURCE_CONFIG[source].color === 'fuchsia' ? 'hover:border-fuchsia-500' :
+                        ${SOURCE_CONFIG[source].color === 'blue' ? 'hover:border-blue-500' :
+                                                    SOURCE_CONFIG[source].color === 'cyan' ? 'hover:border-cyan-500' :
                                                         'hover:border-teal-500'} 
                         hover:shadow-xl transition-all duration-300 text-left group disabled:opacity-50`}
                                         >
-                                            <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform
-                        ${SOURCE_CONFIG[source].color === 'indigo' ? 'bg-indigo-50' :
-                                                    SOURCE_CONFIG[source].color === 'fuchsia' ? 'bg-fuchsia-50' :
+                                            <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform
+                        ${SOURCE_CONFIG[source].color === 'blue' ? 'bg-blue-50' :
+                                                    SOURCE_CONFIG[source].color === 'cyan' ? 'bg-cyan-50' :
                                                         'bg-teal-50'}`}
                                             >
                                                 {SOURCE_CONFIG[source].icon}
@@ -481,7 +481,7 @@ const App: React.FC = () => {
                                             <>
                                                 <button
                                                     onClick={() => setShowAuthModal(true)}
-                                                    className={`font-bold hover:underline ${getSourceColorClass('text', 'light')}`}
+                                                    className={`font-bold hover:underline text-glow ${getSourceColorClass('text', 'light')}`}
                                                 >
                                                     Faz login
                                                 </button>

@@ -47,14 +47,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onSuccess, onClose }) => {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-fade-in">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
-                    <h2 className="text-2xl font-bold">
+                <div className="bg-dark-gradient p-7 text-white border-b border-blue-950">
+                    <h2 className="text-2xl font-bold tracking-tight">
                         {isLogin ? 'Bem-vindo de volta!' : 'Criar Conta'}
                     </h2>
-                    <p className="text-indigo-100 mt-1 text-sm">
+                    <p className="text-blue-200/60 mt-2 text-sm">
                         {isLogin
-                            ? 'Entra para aceder às tuas estatísticas'
-                            : 'Regista-te para guardar o teu progresso'}
+                            ? 'Entra para aceder às tuas '
+                            : 'Regista-te para guardar o teu '}
+                        <span className="text-lime-400 font-semibold text-glow">
+                            {isLogin ? 'estatísticas' : 'progresso'}
+                        </span>
                     </p>
                 </div>
 
@@ -76,7 +79,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onSuccess, onClose }) => {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="O teu nome"
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                                 />
                             </div>
                         </div>
@@ -116,14 +119,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onSuccess, onClose }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl font-bold hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                        className="w-full bg-dark-gradient text-white py-3.5 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(30,27,75,0.4)] transition-all disabled:opacity-50 flex items-center justify-center gap-2 border border-blue-900/50"
                     >
                         {loading ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
                         ) : (
                             <>
-                                {isLogin ? 'Entrar' : 'Criar Conta'}
-                                <ArrowRight className="w-5 h-5" />
+                                <span className={isLogin ? "" : "text-white"}>{isLogin ? 'Entrar' : 'Criar Conta'}</span>
+                                <ArrowRight className="w-5 h-5 text-lime-400" />
                             </>
                         )}
                     </button>
@@ -136,7 +139,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onSuccess, onClose }) => {
                         <button
                             type="button"
                             onClick={() => { setIsLogin(!isLogin); setError(null); }}
-                            className="text-indigo-600 font-medium hover:underline"
+                            className="text-blue-600 font-medium hover:underline"
                         >
                             {isLogin ? 'Criar conta' : 'Entrar'}
                         </button>

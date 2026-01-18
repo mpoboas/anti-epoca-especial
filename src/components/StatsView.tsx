@@ -244,8 +244,8 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
 
     const getSourceColor = (source: string) => {
         switch (source) {
-            case 'previous': return 'bg-indigo-100 text-indigo-700';
-            case 'ai': return 'bg-fuchsia-100 text-fuchsia-700';
+            case 'previous': return 'bg-blue-100 text-blue-700';
+            case 'ai': return 'bg-cyan-100 text-cyan-700';
             case 'kahoots': return 'bg-teal-100 text-teal-700';
             default: return 'bg-gray-100 text-gray-700';
         }
@@ -309,14 +309,14 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                 </div>
 
                 {/* Summary Banner */}
-                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl p-5 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="bg-dark-gradient text-white rounded-2xl p-6 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-blue-900/50 glow-border">
                     <div className="flex items-start gap-3">
-                        <Info className="w-5 h-5 mt-0.5 shrink-0 opacity-80" />
-                        <p className="text-sm md:text-base">
-                            Já respondeste a <span className="font-bold">{stats.totalExams}</span> exames.
+                        <Info className="w-5 h-5 mt-0.5 shrink-0 text-lime-400" />
+                        <p className="text-sm md:text-base leading-relaxed">
+                            Já respondeste a <span className="font-bold text-lime-400 text-glow">{stats.totalExams}</span> exames.
                             Das <span className="font-bold">{stats.totalQuestionsInPool}</span> questões disponíveis
-                            respondeste a <span className="font-bold">{stats.uniqueQuestionsSeen}</span>,
-                            ou seja <span className="font-bold text-indigo-200">{stats.percentageComplete}%</span>.
+                            respondeste a <span className="font-bold text-lime-400 text-glow">{stats.uniqueQuestionsSeen}</span>,
+                            ou seja <span className="font-bold text-lime-400 text-glow">{stats.percentageComplete}%</span>.
                         </p>
                     </div>
 
