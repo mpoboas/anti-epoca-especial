@@ -244,8 +244,8 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
 
     const getSourceColor = (source: string) => {
         switch (source) {
-            case 'previous': return 'bg-blue-100 text-blue-700';
-            case 'ai': return 'bg-cyan-100 text-cyan-700';
+            case 'previous': return 'bg-indigo-100 text-indigo-700';
+            case 'ai': return 'bg-fuchsia-100 text-fuchsia-700';
             case 'kahoots': return 'bg-teal-100 text-teal-700';
             default: return 'bg-gray-100 text-gray-700';
         }
@@ -451,7 +451,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                 {stats.scoreHistory.length > 1 && (
                     <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-6">
                         <div className="flex items-center gap-2 mb-4">
-                            <TrendingUp className="w-5 h-5 text-indigo-600" />
+                            <TrendingUp className="w-5 h-5 text-gray-400" />
                             <h3 className="font-bold text-gray-800">Evolução das Notas</h3>
                             <div className="flex items-center gap-4 ml-auto text-xs text-gray-500">
                                 <span className="flex items-center gap-1">
@@ -472,14 +472,14 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="p-5 border-b border-gray-100">
                             <h3 className="font-bold text-gray-800 flex items-center gap-2">
-                                <Clock className="w-5 h-5 text-indigo-600" />
+                                <Clock className="w-5 h-5 text-gray-400" />
                                 Histórico de Exames
                             </h3>
                         </div>
 
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm">
+                                <thead className="bg-dark-gradient text-white text-sm border-b border-blue-900">
                                     <tr>
                                         <th className="px-4 py-3 text-left font-medium">Fonte</th>
                                         <th className="px-4 py-3 text-center font-medium">Nota</th>
