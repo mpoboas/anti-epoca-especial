@@ -13,6 +13,8 @@ import {
     LogOut, ChevronLeft, Loader2, Info, TrendingUp, Clock,
     Library, Bot, Gamepad2, CheckCircle, XCircle, Eye
 } from 'lucide-react';
+import { ResultHeader, NavigationFooter, HorizontalQuestionNav } from '../../components/shared';
+import { QuizCard } from '../../components/QuizCard';
 import {
     Chart as ChartJS,
     ArcElement,
@@ -58,7 +60,7 @@ interface DetailedStats {
     totalQuestionsInPool: number;
     percentageComplete: number;
     examsBySource: { previous: number; ai: number; kahoots: number };
-    scoreHistory: { date: string; score: number }[];
+    scoreHistory: { date: string; score: number; source: string }[];
     examResults: ExamResult[];
 }
 
@@ -145,6 +147,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                     .map(e => ({
                         date: e.created,
                         score: e.score,
+                        source: e.source,
                     }));
 
                 if (isMounted) {
@@ -451,14 +454,17 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                         <div className="flex items-center gap-2 mb-4">
                             <TrendingUp className="w-5 h-5 text-gray-400" />
                             <h3 className="font-bold text-gray-800 dark:text-slate-100">Evolução das Notas</h3>
-                            <div className="flex items-center gap-4 ml-auto text-xs text-gray-500">
-                                <span className="flex items-center gap-1">
-                                    <span className="w-3 h-3 bg-indigo-500 rounded-full"></span> Nota
-                                </span>
-                                <span className="flex items-center gap-1">
-                                    <span className="w-6 h-0.5 bg-gray-400"></span> Tendência
-                                </span>
-                            </div>
+                        </div>
+                        <div className="flex flex-wrap gap-3 mb-4 text-xs text-gray-500 dark:text-slate-400">
+                            <span className="flex items-center gap-1">
+                                <span className="w-3 h-3 bg-indigo-500 rounded-full"></span> Exames Anteriores
+                            </span>
+                            <span className="flex items-center gap-1">
+                                <span className="w-3 h-3 bg-fuchsia-500 rounded-full"></span> IA
+                            </span>
+                            <span className="flex items-center gap-1">
+                                <span className="w-3 h-3 bg-teal-500 rounded-full"></span> Kahoots
+                            </span>
                         </div>
 
                         <LineChart data={stats.scoreHistory} />
@@ -553,7 +559,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
     );
 };
 
-// Exam Detail View Component
+// Exam Detail View Component - Uses shared components
 const ExamDetailView: React.FC<{
     examData: ExamDetailData;
     onBack: () => void;
@@ -564,198 +570,100 @@ const ExamDetailView: React.FC<{
     const { examResult, answers } = examData;
     const [currentQuestion, setCurrentQuestion] = useState(0);
 
-    const getAnswerStyle = (value: string, isSelected: boolean) => {
-        if (value === '++') {
-            return isSelected
-                ? 'bg-green-100 dark:bg-green-900/40 border-green-500 text-green-800 dark:text-green-400'
-                : 'bg-green-50 dark:bg-green-950/20 border-green-300 dark:border-green-800 text-green-700 dark:text-green-500 opacity-75';
-        }
-        if (value === '+') {
-            return isSelected
-                ? 'bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500 text-yellow-800 dark:text-yellow-400'
-                : 'bg-gray-50 dark:bg-slate-900/50 border-gray-200 dark:border-slate-800 text-gray-400 dark:text-slate-600 opacity-50';
-        }
-        if (value === '-') {
-            return isSelected
-                ? 'bg-orange-100 dark:bg-orange-900/40 border-orange-500 text-orange-800 dark:text-orange-400'
-                : 'bg-gray-50 dark:bg-slate-900/50 border-gray-200 dark:border-slate-800 text-gray-400 dark:text-slate-600 opacity-50';
-        }
-        if (value === '--') {
-            return isSelected
-                ? 'bg-red-100 dark:bg-red-900/40 border-red-500 text-red-800 dark:text-red-400'
-                : 'bg-gray-50 dark:bg-slate-900/50 border-gray-200 dark:border-slate-800 text-gray-400 dark:text-slate-600 opacity-50';
-        }
-        return 'bg-gray-50 dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-400 dark:text-slate-500';
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowRight' && currentQuestion < answers.length - 1) {
+                setCurrentQuestion(prev => prev + 1);
+            } else if (e.key === 'ArrowLeft' && currentQuestion > 0) {
+                setCurrentQuestion(prev => prev - 1);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentQuestion, answers.length]);
+
+    const getStatusColor = (index: number) => {
+        const answer = answers[index];
+        const isUnanswered = answer.selected_answer?.text === '(Não respondida)';
+        if (isUnanswered) return 'bg-gray-400 border-gray-500 text-white';
+        if (answer.answer_value === '++') return 'bg-green-500 border-green-600 text-white';
+        if (answer.answer_value === '+') return 'bg-yellow-400 border-yellow-500 text-white';
+        if (answer.answer_value === '-') return 'bg-orange-400 border-orange-500 text-white';
+        return 'bg-red-500 border-red-600 text-white';
     };
 
-    const getValueLabel = (value: string) => {
-        switch (value) {
-            case '++': return 'Correta';
-            case '+': return 'Menos Boa';
-            case '-': return 'Menos Má';
-            case '--': return 'Errada';
-            default: return '';
-        }
-    };
+    const currentAnswer = answers[currentQuestion];
+    const questionData = currentAnswer?.questionData;
 
     return (
-        <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 transition-colors duration-300 animate-fade-in custom-scrollbar">
-            <div className="max-w-4xl mx-auto p-4 md:p-6 pb-20 md:pb-6">
-                {/* Header */}
-                <div className="flex items-center justify-between mb-6">
+        <div className="h-full flex flex-col w-full">
+            {/* Back Button */}
+            <div className="shrink-0 border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <div className="max-w-3xl mx-auto w-full px-4">
                     <button
                         onClick={onBack}
-                        className="flex items-center gap-1 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors"
+                        className="flex items-center gap-1 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors py-2 text-sm"
                     >
-                        <ChevronLeft className="w-5 h-5" />
-                        <span>Voltar às estatísticas</span>
+                        <ChevronLeft className="w-4 h-4" />
+                        Voltar
                     </button>
                 </div>
-
-                {/* Exam Summary */}
-                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 mb-6">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                        <div>
-                            <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium mb-2 ${getSourceColor(examResult.source)}`}>
-                                {getSourceIcon(examResult.source)}
-                                {getSourceLabel(examResult.source)}
-                            </span>
-                            <h2 className="text-xl font-bold text-gray-800 dark:text-white">Revisão do Exame</h2>
-                            <p className="text-sm text-gray-500 dark:text-slate-400">
-                                {new Date(examResult.created).toLocaleDateString('pt-PT', {
-                                    day: '2-digit',
-                                    month: 'long',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                })}
-                            </p>
-                        </div>
-
-                        <div className="flex items-center gap-4">
-                            <div className="text-center">
-                                <p className={`text-3xl font-bold ${examResult.score >= 10 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                                    {examResult.score}
-                                </p>
-                                <p className="text-xs text-gray-500 dark:text-slate-500">Nota</p>
-                            </div>
-                            <div className="text-center">
-                                <p className="text-3xl font-bold text-gray-800 dark:text-white">
-                                    {examResult.correct_answers}/{examResult.total_questions}
-                                </p>
-                                <p className="text-xs text-gray-500 dark:text-slate-500">Corretas</p>
-                            </div>
-                            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${examResult.score >= 10 ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'
-                                }`}>
-                                {examResult.score >= 10 ? (
-                                    <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
-                                ) : (
-                                    <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Question Navigator */}
-                <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-4 mb-6">
-                    <div className="flex flex-wrap gap-2 justify-center">
-                        {answers.map((answer, index) => {
-                            const isUnanswered = answer.selected_answer?.text === '(Não respondida)';
-                            const getButtonColor = () => {
-                                if (isUnanswered) return 'bg-gray-400 text-white';
-                                if (answer.answer_value === '++') return 'bg-green-500 text-white';
-                                if (answer.answer_value === '+') return 'bg-yellow-400 text-white';
-                                if (answer.answer_value === '-') return 'bg-orange-400 text-white';
-                                return 'bg-red-500 text-white';
-                            };
-
-                            return (
-                                <button
-                                    key={answer.id}
-                                    onClick={() => setCurrentQuestion(index)}
-                                    className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${currentQuestion === index ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-slate-900' : ''
-                                        } ${getButtonColor()}`}
-                                >
-                                    {index + 1}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* Current Question */}
-                {answers[currentQuestion] && (
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6">
-                        <div className="mb-4 text-sm text-gray-500 dark:text-slate-400">
-                            Pergunta {currentQuestion + 1} de {answers.length}
-                        </div>
-
-                        {answers[currentQuestion].questionData ? (
-                            <>
-                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-6">
-                                    {answers[currentQuestion].questionData.text}
-                                </h3>
-
-                                <div className="space-y-3">
-                                    {answers[currentQuestion].questionData.answers.map((ans, index) => {
-                                        const isSelected = ans.text === answers[currentQuestion].selected_answer?.text;
-                                        const isCorrect = ans.value === '++';
-
-                                        return (
-                                            <div
-                                                key={index}
-                                                className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between ${getAnswerStyle(ans.value, isSelected)}`}
-                                            >
-                                                <span className="font-medium">{ans.text}</span>
-                                                <div className="flex items-center gap-2">
-                                                    {isSelected && (
-                                                        <span className="text-xs font-bold uppercase tracking-wide">
-                                                            {getValueLabel(ans.value)}
-                                                        </span>
-                                                    )}
-                                                    {isCorrect && !isSelected && (
-                                                        <CheckCircle className="w-5 h-5 text-green-600" />
-                                                    )}
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </>
-                        ) : (
-                            <div className="text-center py-8">
-                                <p className="text-gray-500 mb-2">Dados da pergunta não disponíveis</p>
-                                {answers[currentQuestion].selected_answer && (
-                                    <div className={`inline-block px-4 py-2 rounded-lg ${getAnswerStyle(answers[currentQuestion].answer_value, true)}`}>
-                                        <p className="text-sm">Resposta selecionada:</p>
-                                        <p className="font-medium">{answers[currentQuestion].selected_answer.text}</p>
-                                        <p className="text-xs mt-1">{getValueLabel(answers[currentQuestion].answer_value)}</p>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Navigation */}
-                        <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100 dark:border-slate-800">
-                            <button
-                                onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
-                                disabled={currentQuestion === 0}
-                                className="px-4 py-2 text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg disabled:opacity-40 transition-colors"
-                            >
-                                ← Anterior
-                            </button>
-                            <button
-                                onClick={() => setCurrentQuestion(prev => Math.min(answers.length - 1, prev + 1))}
-                                disabled={currentQuestion === answers.length - 1}
-                                className="px-4 py-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg disabled:opacity-40 transition-colors bg-blue-50 dark:bg-blue-950/40 font-bold"
-                            >
-                                Seguinte →
-                            </button>
-                        </div>
-                    </div>
-                )}
             </div>
+
+            {/* Result Header - Unified with ResultSummary */}
+            <ResultHeader
+                score={examResult.score}
+                correctCount={examResult.correct_answers}
+                totalQuestions={examResult.total_questions}
+                passThreshold={10}
+                source={{
+                    label: getSourceLabel(examResult.source),
+                    icon: getSourceIcon(examResult.source),
+                    colorClass: getSourceColor(examResult.source)
+                }}
+                date={new Date(examResult.created)}
+            />
+
+            {/* Question Navigator - Centered via shared component */}
+            <HorizontalQuestionNav
+                total={answers.length}
+                current={currentQuestion}
+                onSelect={setCurrentQuestion}
+                getStatusColor={getStatusColor}
+            />
+
+            {/* Question Card - Using QuizCard for consistency */}
+            {currentAnswer && (
+                <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
+                    <div className="flex-1 overflow-y-auto py-4 flex flex-col">
+                        <div className="flex-1 flex flex-col justify-center max-w-3xl mx-auto w-full px-4">
+                            {questionData ? (
+                                <QuizCard
+                                    key={questionData.id}
+                                    question={questionData}
+                                    selectedAnswer={currentAnswer.selected_answer}
+                                    onAnswer={() => { }}
+                                    showFeedback={true}
+                                />
+                            ) : (
+                                <div className="h-full flex items-center justify-center text-gray-400 italic">
+                                    Dados da pergunta não disponíveis
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Navigation Footer */}
+                    <NavigationFooter
+                        currentIndex={currentQuestion}
+                        totalCount={answers.length}
+                        onPrevious={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
+                        onNext={() => setCurrentQuestion(prev => Math.min(answers.length - 1, prev + 1))}
+                    />
+                </div>
+            )}
         </div>
     );
 };
@@ -809,21 +717,16 @@ const PieChart: React.FC<{ data: { value: number; color: string; label: string }
     );
 };
 
-// Line Chart Component using Chart.js
-const LineChart: React.FC<{ data: { date: string; score: number }[] }> = ({ data }) => {
+// Line Chart Component using Chart.js with source distinction
+const LineChart: React.FC<{ data: { date: string; score: number; source: string }[] }> = ({ data }) => {
     if (data.length === 0) return null;
 
-    // Calculate trend line
-    const n = data.length;
-    const sumX = data.reduce((sum, _, i) => sum + i, 0);
-    const sumY = data.reduce((sum, d) => sum + d.score, 0);
-    const sumXY = data.reduce((sum, d, i) => sum + i * d.score, 0);
-    const sumX2 = data.reduce((sum, _, i) => sum + i * i, 0);
-    const denominator = n * sumX2 - sumX * sumX;
-    const slope = denominator !== 0 ? (n * sumXY - sumX * sumY) / denominator : 0;
-    const intercept = (sumY - slope * sumX) / n;
-
-    const trendLine = data.map((_, i) => slope * i + intercept);
+    // Source colors
+    const sourceColors: Record<string, string> = {
+        'previous': '#6366f1', // indigo
+        'ai': '#d946ef',       // fuchsia
+        'kahoots': '#14b8a6',  // teal
+    };
 
     const chartData = {
         labels: data.map(d => new Date(d.date).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit' })),
@@ -831,25 +734,26 @@ const LineChart: React.FC<{ data: { date: string; score: number }[] }> = ({ data
             {
                 label: 'Nota',
                 data: data.map(d => d.score),
-                borderColor: '#6366f1',
-                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                borderColor: data.map(d => sourceColors[d.source] || '#6366f1'),
+                backgroundColor: data.map(d => {
+                    const color = sourceColors[d.source] || '#6366f1';
+                    return color + '20'; // Add transparency
+                }),
                 borderWidth: 2,
-                pointBackgroundColor: data.map(d => d.score >= 10 ? '#22c55e' : '#ef4444'),
+                pointBackgroundColor: data.map(d => sourceColors[d.source] || '#6366f1'),
                 pointBorderColor: '#fff',
                 pointBorderWidth: 2,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                fill: true,
-                tension: 0.3,
-            },
-            {
-                label: 'Tendência',
-                data: trendLine,
-                borderColor: '#9ca3af',
-                borderWidth: 1,
-                borderDash: [5, 5],
-                pointRadius: 0,
+                pointRadius: 6,
+                pointHoverRadius: 8,
                 fill: false,
+                tension: 0.3,
+                segment: {
+                    borderColor: (ctx: any) => {
+                        if (!ctx.p0 || !ctx.p1) return '#6366f1';
+                        const source = data[ctx.p0DataIndex]?.source || 'previous';
+                        return sourceColors[source] || '#6366f1';
+                    }
+                }
             }
         ]
     };
@@ -861,8 +765,15 @@ const LineChart: React.FC<{ data: { date: string; score: number }[] }> = ({ data
             legend: { display: false },
             tooltip: {
                 callbacks: {
+                    title: (context: any) => {
+                        const index = context[0]?.dataIndex;
+                        const source = data[index]?.source;
+                        const sourceLabel = source === 'previous' ? 'Exames Anteriores' :
+                            source === 'ai' ? 'IA' :
+                                source === 'kahoots' ? 'Kahoots' : source;
+                        return `${context[0]?.label} - ${sourceLabel}`;
+                    },
                     label: (context: any) => {
-                        if (context.dataset?.label === 'Tendência') return null;
                         return `Nota: ${(context.raw as number).toFixed(1)}/20`;
                     }
                 }

@@ -1,0 +1,23 @@
+{
+    "name": "AntiÉpocaEspecial",
+    "short_name": "AntiÉpoca",
+    "description": "Preparação para exames - TESIM",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#020617",
+    "theme_color": "#0f172a",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "education",
+        "productivity"
+    ],
+    "lang": "pt-PT"
+}

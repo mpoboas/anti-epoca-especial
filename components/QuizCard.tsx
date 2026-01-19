@@ -1,6 +1,6 @@
 import React from 'react';
 import { Question, Answer } from '../types';
-import { CheckCircle2, XCircle, AlertCircle, HelpCircle } from 'lucide-react';
+import { CheckCircle2, XCircle, AlertCircle, HelpCircle, Lightbulb } from 'lucide-react';
 
 interface QuizCardProps {
   question: Question;
@@ -32,7 +32,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({ question, selectedAnswer, on
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg p-5 md:p-8 w-full mx-auto transition-all duration-300 flex flex-col h-auto border dark:border-slate-800">
+    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg p-5 md:p-8 w-full mx-auto transition-all duration-300 flex flex-col h-auto border dark:border-slate-800 question-transition">
       <h2 className="text-lg md:text-2xl font-semibold text-gray-800 dark:text-white mb-6 leading-relaxed">
         {question.text}
       </h2>
@@ -92,6 +92,25 @@ export const QuizCard: React.FC<QuizCardProps> = ({ question, selectedAnswer, on
           );
         })}
       </div>
+
+      {/* Explanation Section - Only shown in feedback mode */}
+      {showFeedback && question.explanation && (
+        <div className="mt-6 p-4 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border border-amber-200 dark:border-amber-800 rounded-xl animate-fade-in">
+          <div className="flex items-start gap-3">
+            <div className="shrink-0 w-8 h-8 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex items-center justify-center">
+              <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            </div>
+            <div>
+              <h4 className="font-bold text-amber-800 dark:text-amber-300 text-sm uppercase tracking-wide mb-1">
+                Explicação
+              </h4>
+              <p className="text-amber-900 dark:text-amber-200 text-sm leading-relaxed">
+                {question.explanation}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

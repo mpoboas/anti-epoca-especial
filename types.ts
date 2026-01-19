@@ -9,6 +9,7 @@ export interface Question {
   id: number | string;
   text: string;
   answers: Answer[];
+  explanation?: string; // Optional explanation for the correct answer
 }
 
 export interface QuizData {

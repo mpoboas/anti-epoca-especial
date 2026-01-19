@@ -25,6 +25,7 @@ export interface Question {
     id: string;
     text: string;
     answers: Answer[];
+    explanation?: string; // Optional explanation for the correct answer
     source: 'previous' | 'ai' | 'kahoots';
     theme?: string;
     course: string;
@@ -373,4 +374,186 @@ export const createQuestions = async (
     }
 
     return { created, errors };
+};
+
+// Leaderboard types and API
+export interface LeaderboardEntry {
+    userId: string;
+    userName: string;
+    averageScore: number;
+    totalExams: number;
+    passRate: number;
+}
+
+export const getLeaderboard = async (
+    courseId: string,
+    source?: string,
+    limit: number = 20
+): Promise<LeaderboardEntry[]> => {
+    let filter = `course = "${courseId}"`;
+    if (source) {
+        filter += ` && source = "${source}"`;
+    }
+
+    try {
+        // Get all exam results with user expansion
+        const examResults = await pb.collection('exam_results').getFullList<ExamResult & { expand?: { user: User } }>({
+            filter,
+            expand: 'user',
+            requestKey: null,
+        });
+
+        // Group by user
+        const userStats = new Map<string, { 
+            userName: string; 
+            scores: number[]; 
+            passed: number;
+        }>();
+
+        for (const result of examResults) {
+            const userId = result.user;
+            const userName = result.expand?.user?.name || 'Anónimo';
+            
+            if (!userStats.has(userId)) {
+                userStats.set(userId, { userName, scores: [], passed: 0 });
+            }
+            
+            const stats = userStats.get(userId)!;
+            stats.scores.push(result.score);
+            if (result.score >= 10) stats.passed++;
+        }
+
+        // Calculate averages and sort
+        const leaderboard: LeaderboardEntry[] = [];
+        
+        userStats.forEach((stats, odiserId) => {
+            const totalExams = stats.scores.length;
+            const averageScore = stats.scores.reduce((a, b) => a + b, 0) / totalExams;
+            
+            leaderboard.push({
+                userId: odiserId,
+                userName: stats.userName,
+                averageScore: Math.round(averageScore * 10) / 10,
+                totalExams,
+                passRate: Math.round((stats.passed / totalExams) * 100),
+            });
+        });
+
+        // Sort by average score (desc), then by total exams (desc)
+        leaderboard.sort((a, b) => {
+            if (b.averageScore !== a.averageScore) {
+                return b.averageScore - a.averageScore;
+            }
+            return b.totalExams - a.totalExams;
+        });
+
+        return leaderboard.slice(0, limit);
+    } catch (e) {
+        console.error('Failed to get leaderboard:', e);
+        return [];
+    }
+};
+
+// Get IDs of questions the user answered wrong (-- value)
+export const getWrongQuestionIds = async (courseId: string, source?: string): Promise<Set<string>> => {
+    const userId = getCurrentUser()?.id;
+    if (!userId) return new Set();
+
+    try {
+        // Get all exam results for this user
+        let filter = `user = "${userId}" && course = "${courseId}"`;
+        if (source) {
+            filter += ` && source = "${source}"`;
+        }
+
+        const examResults = await pb.collection('exam_results').getFullList<ExamResult>({
+            filter,
+            requestKey: null,
+        });
+
+        if (examResults.length === 0) return new Set();
+
+        // Get all wrong answers
+        const wrongIds = new Set<string>();
+        const examIds = examResults.map(e => e.id);
+        const batchSize = 10;
+
+        for (let i = 0; i < examIds.length; i += batchSize) {
+            const batch = examIds.slice(i, i + batchSize);
+            const filterExamIds = batch.map(id => `exam_result = "${id}"`).join(' || ');
+
+            try {
+                const answers = await pb.collection('exam_answers').getFullList<ExamAnswer>({
+                    filter: `(${filterExamIds}) && answer_value = "--"`,
+                    requestKey: null,
+                });
+                answers.forEach(a => wrongIds.add(a.question));
+            } catch (e) {
+                // Ignore errors, continue
+            }
+        }
+
+        return wrongIds;
+    } catch (e) {
+        console.error('Failed to get wrong questions:', e);
+        return new Set();
+    }
+};
+
+// Get filtered random questions based on mode
+export const getFilteredRandomQuestions = async (
+    courseId: string,
+    source: string,
+    count: number = 15,
+    mode: 'all' | 'unseen' | 'wrong' = 'all'
+): Promise<Question[]> => {
+    const allQuestions = await getQuestions(courseId, source);
+    
+    if (allQuestions.length === 0) {
+        return [];
+    }
+    
+    let selected: Question[] = [];
+    
+    if (mode === 'all') {
+        // Pure random selection from all questions
+        const shuffled = shuffleArray(allQuestions);
+        selected = shuffled.slice(0, Math.min(count, shuffled.length));
+    } else if (mode === 'unseen') {
+        // Only unseen questions, fill with random if not enough
+        const seenIds = await getSeenQuestionIds(courseId);
+        const unseenQuestions = allQuestions.filter(q => !seenIds.has(q.id));
+        const seenQuestions = allQuestions.filter(q => seenIds.has(q.id));
+        
+        const shuffledUnseen = shuffleArray(unseenQuestions);
+        selected = shuffledUnseen.slice(0, Math.min(count, shuffledUnseen.length));
+        
+        // Fill with random seen questions if not enough unseen
+        if (selected.length < count && seenQuestions.length > 0) {
+            const shuffledSeen = shuffleArray(seenQuestions);
+            const remaining = count - selected.length;
+            selected = [...selected, ...shuffledSeen.slice(0, remaining)];
+        }
+    } else if (mode === 'wrong') {
+        // Wrong questions first, then fill with random from pool
+        const wrongIds = await getWrongQuestionIds(courseId, source);
+        const wrongQuestions = allQuestions.filter(q => wrongIds.has(q.id));
+        const otherQuestions = allQuestions.filter(q => !wrongIds.has(q.id));
+        
+        const shuffledWrong = shuffleArray(wrongQuestions);
+        selected = shuffledWrong.slice(0, Math.min(count, shuffledWrong.length));
+        
+        // Fill with random other questions if not enough wrong
+        if (selected.length < count && otherQuestions.length > 0) {
+            const shuffledOther = shuffleArray(otherQuestions);
+            const remaining = count - selected.length;
+            selected = [...selected, ...shuffledOther.slice(0, remaining)];
+        }
+    }
+    
+    // Shuffle answers within each question
+    return selected.map(q => ({
+        ...q,
+        answers: shuffleArray([...q.answers])
+    }));
 };

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { UserAnswer, Question } from '../types';
-import { RefreshCw, Home, ArrowRight, ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
+import { RefreshCw, Home } from 'lucide-react';
+import { ResultHeader } from './shared/ResultHeader';
+import { NavigationFooter } from './shared/NavigationFooter';
+import { HorizontalQuestionNav } from './shared/HorizontalQuestionNav';
 import { QuizCard } from './QuizCard';
-import { QuestionNavigator } from './QuestionNavigator';
 
 interface ResultSummaryProps {
     questions: Question[];
@@ -15,20 +17,13 @@ interface ResultSummaryProps {
 export const ResultSummary: React.FC<ResultSummaryProps> = ({ questions, userAnswers, score, onRestart, onHome }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Keyboard navigation for results review
+    // Keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            switch (e.key) {
-                case 'ArrowRight':
-                    if (currentIndex < questions.length - 1) {
-                        setCurrentIndex(prev => prev + 1);
-                    }
-                    break;
-                case 'ArrowLeft':
-                    if (currentIndex > 0) {
-                        setCurrentIndex(prev => prev - 1);
-                    }
-                    break;
+            if (e.key === 'ArrowRight' && currentIndex < questions.length - 1) {
+                setCurrentIndex(prev => prev + 1);
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                setCurrentIndex(prev => prev - 1);
             }
         };
 
@@ -51,44 +46,32 @@ export const ResultSummary: React.FC<ResultSummaryProps> = ({ questions, userAns
         }
     };
 
-    const isPassed = score >= 9.5;
-    const bgColor = isPassed ? 'bg-green-600' : 'bg-red-600';
-    const StatusIcon = isPassed ? CheckCircle2 : XCircle;
-
+    const correctCount = userAnswers.filter(ua => ua.selectedAnswer.value === '++').length;
     const currentQuestion = questions[currentIndex];
     const currentUserAnswer = userAnswers.find(ua => ua.questionId === currentQuestion.id);
 
     return (
-        <div className="max-w-3xl mx-auto w-full h-full flex flex-col animate-fade-in relative transition-colors duration-300">
-            {/* Compact Score Header */}
-            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-md overflow-hidden shrink-0 mb-3 md:mb-4 z-10 border dark:border-slate-800">
-                <div className={`${bgColor} p-3 md:p-4 flex items-center justify-between text-white transition-colors`}>
-                    <div className="flex items-center gap-3">
-                        <StatusIcon className="w-6 h-6 md:w-8 md:h-8 opacity-90" />
-                        <div className="flex flex-col">
-                            <h2 className="text-lg md:text-xl font-bold leading-tight">
-                                {isPassed ? "Aprovado" : "Reprovado"}
-                            </h2>
-                            <span className="text-[10px] md:text-xs opacity-80 uppercase tracking-wider font-semibold">Resultado Final</span>
-                        </div>
-                    </div>
-                    <div className="text-right">
-                        <span className="text-3xl md:text-4xl font-extrabold tracking-tighter">{score.toFixed(1)}</span>
-                        <span className="text-xs md:text-sm opacity-80 font-medium ml-1">/ 20</span>
-                    </div>
-                </div>
+        <div className="h-full flex flex-col w-full">
+            {/* Result Header */}
+            <ResultHeader
+                score={score}
+                correctCount={correctCount}
+                totalQuestions={questions.length}
+            />
 
-                <div className="p-2 md:p-3 flex gap-3 bg-gray-50 dark:bg-slate-800 border-t border-gray-100 dark:border-slate-700">
+            {/* Action Buttons */}
+            <div className="shrink-0 bg-gray-100 dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700">
+                <div className="max-w-3xl mx-auto flex gap-2 p-3 px-4">
                     <button
                         onClick={onHome}
-                        className="flex-1 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-700 dark:text-slate-200 text-sm font-bold py-2 md:py-2 px-3 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm"
+                        className="flex-1 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-700 dark:text-slate-200 text-sm font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
                     >
                         <Home className="w-4 h-4" />
                         Menu
                     </button>
                     <button
                         onClick={onRestart}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 md:py-2 px-3 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
                     >
                         <RefreshCw className="w-4 h-4" />
                         Novo Exame
@@ -96,62 +79,33 @@ export const ResultSummary: React.FC<ResultSummaryProps> = ({ questions, userAns
                 </div>
             </div>
 
-            {/* Review Section */}
-            <div className="flex-1 flex flex-col min-h-0 bg-slate-100/50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden relative">
-                <div className="bg-white dark:bg-slate-900 p-2 md:p-3 border-b border-gray-200 dark:border-slate-800 shrink-0 z-10">
-                    <h3 className="text-xs md:text-sm font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-2">Rever Respostas</h3>
-                    <QuestionNavigator
-                        total={questions.length}
-                        current={currentIndex}
-                        onSelect={setCurrentIndex}
-                        getStatusColor={getStatusColor}
-                    />
-                </div>
+            {/* Question Navigator - Centered on current */}
+            <HorizontalQuestionNav
+                total={questions.length}
+                current={currentIndex}
+                onSelect={setCurrentIndex}
+                getStatusColor={getStatusColor}
+            />
 
-                {/* Scrollable area - padding bottom added to clear fixed footer */}
-                <div className="flex-1 overflow-y-auto p-2 pb-24 md:p-4 md:pb-4 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto py-4 flex flex-col">
+                <div className="flex-1 flex flex-col justify-center max-w-3xl mx-auto w-full px-4">
                     <QuizCard
+                        key={currentQuestion.id}
                         question={currentQuestion}
                         selectedAnswer={currentUserAnswer?.selectedAnswer}
                         onAnswer={() => { }}
                         showFeedback={true}
                     />
                 </div>
-
-                {/* Fixed Navigation Buttons - Mobile: Fixed Bottom, Desktop: Relative */}
-                <div className="fixed bottom-0 left-0 right-0 p-3 bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] dark:shadow-blue-900/10 z-50 md:relative md:bg-transparent md:border-t md:shadow-none md:p-4">
-                    <div className="flex justify-between items-center gap-3 md:gap-4 max-w-3xl mx-auto md:w-full">
-                        <button
-                            onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
-                            disabled={currentIndex === 0}
-                            className="flex-1 flex items-center justify-center px-4 py-3 md:py-2 text-gray-600 dark:text-slate-300 bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-700 hover:shadow-sm rounded-xl disabled:opacity-30 disabled:hover:bg-transparent font-medium transition-colors"
-                        >
-                            <ArrowLeft className="w-5 h-5 md:mr-2" />
-                            <span className="hidden md:inline">Anterior</span>
-                            <span className="md:hidden">Ant.</span>
-                        </button>
-
-                        <div className="text-xs font-medium text-gray-400 whitespace-nowrap min-w-[50px] text-center hidden md:block">
-                            {currentIndex + 1} / {questions.length}
-                        </div>
-
-                        {/* Mobile counter indicator */}
-                        <div className="text-xs font-bold text-gray-500 dark:text-slate-400 md:hidden bg-gray-100 dark:bg-slate-800 px-2 py-1 rounded">
-                            {currentIndex + 1}/{questions.length}
-                        </div>
-
-                        <button
-                            onClick={() => setCurrentIndex(prev => Math.min(questions.length - 1, prev + 1))}
-                            disabled={currentIndex === questions.length - 1}
-                            className="flex-1 flex items-center justify-center px-4 py-3 md:py-2 text-gray-600 dark:text-slate-300 bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-700 hover:shadow-sm rounded-xl disabled:opacity-30 disabled:hover:bg-transparent font-medium transition-colors"
-                        >
-                            <span className="hidden md:inline">Seguinte</span>
-                            <span className="md:hidden">Seg.</span>
-                            <ArrowRight className="w-5 h-5 md:ml-2" />
-                        </button>
-                    </div>
-                </div>
             </div>
+
+            {/* Navigation Footer */}
+            <NavigationFooter
+                currentIndex={currentIndex}
+                totalCount={questions.length}
+                onPrevious={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
+                onNext={() => setCurrentIndex(prev => Math.min(questions.length - 1, prev + 1))}
+            />
         </div>
     );
 };
