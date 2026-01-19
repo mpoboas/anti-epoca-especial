@@ -1,170 +1,183 @@
-import React, { useEffect, useState } from 'react';
-import { Trophy, Medal, Crown, ChevronLeft, Loader2, User } from 'lucide-react';
-import { getLeaderboard, LeaderboardEntry, getCurrentUser } from '../src/lib/pocketbase';
+import React, { useState, useEffect } from 'react';
+import { Trophy, Medal, Crown, User, ArrowLeft, Loader2, TrendingUp, Target, Award } from 'lucide-react';
+import { getLeaderboard, LeaderboardEntry, Course } from '../src/lib/pocketbase';
 
 interface LeaderboardProps {
-    courseId: string;
-    source?: string;
-    onClose: () => void;
+    course: Course | null;
+    onBack: () => void;
 }
 
-export const Leaderboard: React.FC<LeaderboardProps> = ({ courseId, source, onClose }) => {
+export const Leaderboard: React.FC<LeaderboardProps> = ({ course, onBack }) => {
     const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const currentUser = getCurrentUser();
 
     useEffect(() => {
-        const fetchLeaderboard = async () => {
+        const loadLeaderboard = async () => {
             try {
-                setLoading(true);
-                const data = await getLeaderboard(courseId, source, 20);
+                const data = await getLeaderboard(course?.id || '');
                 setEntries(data);
             } catch (err) {
-                console.error(err);
-                setError('Erro ao carregar ranking');
+                console.error('Error loading leaderboard:', err);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchLeaderboard();
-    }, [courseId, source]);
+        loadLeaderboard();
+    }, [course?.id]);
 
-    const getRankIcon = (rank: number) => {
-        switch (rank) {
-            case 1:
-                return <Crown className="w-6 h-6 text-yellow-500" />;
-            case 2:
-                return <Medal className="w-6 h-6 text-gray-400" />;
-            case 3:
-                return <Medal className="w-6 h-6 text-amber-600" />;
-            default:
-                return <span className="w-6 h-6 flex items-center justify-center text-gray-500 font-bold">{rank}</span>;
+    const topThree = entries.slice(0, 3);
+    const theRest = entries.slice(3);
+
+    const getPodiumStyle = (index: number) => {
+        switch (index) {
+            case 0: return {
+                container: "order-2 -mt-8",
+                box: "h-40 bg-gradient-to-b from-yellow-400 to-yellow-600 shadow-yellow-500/20",
+                icon: <Crown className="w-8 h-8 text-yellow-400 mb-2" />,
+                medal: <Medal className="w-10 h-10 text-yellow-500 drop-shadow-md" />,
+                ring: "ring-yellow-400"
+            };
+            case 1: return {
+                container: "order-1",
+                box: "h-32 bg-gradient-to-b from-slate-300 to-slate-500 shadow-slate-400/20",
+                icon: <Medal className="w-6 h-6 text-slate-300 mb-2 invisible" />,
+                medal: <Medal className="w-8 h-8 text-slate-300 drop-shadow-md" />,
+                ring: "ring-slate-300"
+            };
+            case 2: return {
+                container: "order-3",
+                box: "h-28 bg-gradient-to-b from-orange-400 to-orange-600 shadow-orange-500/20",
+                icon: <Medal className="w-6 h-6 text-orange-400 mb-2 invisible" />,
+                medal: <Medal className="w-8 h-8 text-orange-400 drop-shadow-md" />,
+                ring: "ring-orange-400"
+            };
+            default: return null;
         }
     };
 
-    const getRankBg = (rank: number, isCurrentUser: boolean) => {
-        if (isCurrentUser) return 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800';
-        switch (rank) {
-            case 1:
-                return 'bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 border-yellow-200 dark:border-yellow-800';
-            case 2:
-                return 'bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-900/20 dark:to-slate-900/20 border-gray-200 dark:border-gray-700';
-            case 3:
-                return 'bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-amber-200 dark:border-amber-800';
-            default:
-                return 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800';
-        }
-    };
+    if (loading) {
+        return (
+            <div className="flex-1 flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+            </div>
+        );
+    }
 
     return (
-        <div className="flex-1 overflow-hidden flex flex-col animate-fade-in">
+        <div className="flex-1 flex flex-col w-full h-full overflow-hidden bg-gray-50 dark:bg-slate-950">
             {/* Header */}
-            <div className="shrink-0 px-4 py-6 text-center">
-                <div className="flex items-center justify-center gap-3 mb-2">
-                    <Trophy className="w-8 h-8 text-yellow-500" />
-                    <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white">
-                        Ranking
+            <div className="shrink-0 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 p-4">
+                <div className="max-w-3xl mx-auto flex items-center justify-between">
+                    <button
+                        onClick={onBack}
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-xl transition-colors text-gray-500 dark:text-slate-400"
+                    >
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <h1 className="text-xl font-bold dark:text-white flex items-center gap-2">
+                        <Trophy className="w-6 h-6 text-yellow-500" />
+                        {course ? `Ranking ${course.title}` : 'Ranking Global'}
                     </h1>
+                    <div className="w-10" /> {/* Spacer */}
                 </div>
-                <p className="text-gray-500 dark:text-slate-400 text-sm">
-                    Top estudantes por nota média
-                </p>
             </div>
 
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto px-4 pb-24 md:pb-8 custom-scrollbar">
-                {loading ? (
-                    <div className="flex items-center justify-center py-12">
-                        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                    </div>
-                ) : error ? (
-                    <div className="text-center py-12 text-red-500">{error}</div>
-                ) : entries.length === 0 ? (
-                    <div className="text-center py-12 text-gray-500 dark:text-slate-400">
-                        <Trophy className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                        <p>Ainda não há dados de ranking.</p>
-                        <p className="text-sm mt-2">Sê o primeiro a completar um exame!</p>
-                    </div>
-                ) : (
-                    <div className="space-y-3 max-w-xl mx-auto">
-                        {entries.map((entry, idx) => {
-                            const isCurrentUser = currentUser?.id === entry.userId;
-                            const rank = idx + 1;
+            <div className="flex-1 overflow-y-auto">
+                <div className="max-w-3xl mx-auto px-4 py-8">
+                    {/* Podium Area */}
+                    {topThree.length > 0 && (
+                        <div className="flex items-end justify-center gap-2 md:gap-4 mb-12 py-10">
+                            {[1, 0, 2].map((idx) => {
+                                const entry = topThree[idx];
+                                if (!entry) return <div key={idx} className="flex-1" />;
+                                const style = getPodiumStyle(idx)!;
 
-                            return (
+                                return (
+                                    <div key={entry.userId} className={`flex-1 flex flex-col items-center max-w-[120px] ${style.container}`}>
+                                        <div className="relative mb-3">
+                                            {style.icon}
+                                            <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full border-4 ${style.ring} overflow-hidden bg-white dark:bg-slate-800 shadow-xl flex items-center justify-center`}>
+                                                <User className="w-10 h-10 md:w-12 md:h-12 text-gray-300" />
+                                            </div>
+                                            <div className="absolute -bottom-2 -right-1">
+                                                {style.medal}
+                                            </div>
+                                        </div>
+                                        <div className="text-center mb-4">
+                                            <p className="font-bold dark:text-white truncate w-full px-1">{entry.userName}</p>
+                                            <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                                                {entry.averageScore.toFixed(1)}
+                                            </p>
+                                        </div>
+                                        <div className={`w-full rounded-t-2xl ${style.box} flex flex-col items-center justify-center text-white/90 shadow-lg`}>
+                                            <p className="text-sm font-bold uppercase tracking-wider opacity-75">RANK</p>
+                                            <p className="text-3xl font-black">{idx + 1}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+
+                    {/* Stats List */}
+                    <div className="space-y-3">
+                        <h2 className="text-lg font-bold dark:text-white flex items-center gap-2 mb-4 px-1">
+                            <TrendingUp className="w-5 h-5 text-blue-500" />
+                            Top de Alunos
+                        </h2>
+
+                        {entries.length === 0 ? (
+                            <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border border-gray-100 dark:border-slate-800">
+                                <Award className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                                <p className="text-gray-500 dark:text-slate-400 font-medium">Ainda não há dados suficientes para o ranking.</p>
+                            </div>
+                        ) : (
+                            entries.map((entry, index) => (
                                 <div
                                     key={entry.userId}
-                                    className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${getRankBg(rank, isCurrentUser)} ${isCurrentUser ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-slate-950' : ''
-                                        }`}
+                                    className={`flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 ${index < 3
+                                        ? 'bg-white dark:bg-slate-900 border-2 border-transparent'
+                                        : 'bg-white/50 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800'
+                                        } hover:translate-x-1`}
                                 >
-                                    {/* Rank */}
-                                    <div className="shrink-0">
-                                        {getRankIcon(rank)}
+                                    <div className="w-10 flex justify-center font-black text-xl text-gray-400 dark:text-slate-600">
+                                        {index + 1}
                                     </div>
 
-                                    {/* Avatar */}
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${rank === 1 ? 'bg-yellow-100 dark:bg-yellow-900/30' :
-                                            rank === 2 ? 'bg-gray-100 dark:bg-gray-800' :
-                                                rank === 3 ? 'bg-amber-100 dark:bg-amber-900/30' :
-                                                    'bg-gray-100 dark:bg-slate-800'
-                                        }`}>
-                                        <User className={`w-5 h-5 ${rank === 1 ? 'text-yellow-600' :
-                                                rank === 2 ? 'text-gray-500' :
-                                                    rank === 3 ? 'text-amber-600' :
-                                                        'text-gray-400 dark:text-slate-500'
-                                            }`} />
+                                    <div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+                                        <User className="w-6 h-6 text-gray-400" />
                                     </div>
 
-                                    {/* Name & Stats */}
                                     <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-2">
-                                            <span className={`font-bold truncate ${isCurrentUser ? 'text-blue-700 dark:text-blue-400' : 'text-gray-900 dark:text-white'
-                                                }`}>
-                                                {entry.userName}
-                                            </span>
-                                            {isCurrentUser && (
-                                                <span className="text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full font-medium">
-                                                    Tu
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">
-                                            {entry.totalExams} exame{entry.totalExams !== 1 ? 's' : ''} •
-                                            {entry.passRate}% aprovação
-                                        </div>
+                                        <p className="font-bold dark:text-white truncate">{entry.userName}</p>
+                                        <p className="text-xs text-gray-500 dark:text-slate-400 flex items-center gap-1">
+                                            <Target className="w-3 h-3" />
+                                            {entry.totalExams} exames finalizados
+                                        </p>
                                     </div>
 
-                                    {/* Score */}
                                     <div className="text-right shrink-0">
-                                        <div className={`text-xl font-extrabold ${entry.averageScore >= 16 ? 'text-green-600 dark:text-green-400' :
-                                                entry.averageScore >= 10 ? 'text-blue-600 dark:text-blue-400' :
-                                                    'text-red-600 dark:text-red-400'
-                                            }`}>
+                                        <p className="text-xl font-black text-blue-600 dark:text-blue-400 leading-tight">
                                             {entry.averageScore.toFixed(1)}
-                                        </div>
-                                        <div className="text-[10px] text-gray-400 dark:text-slate-500 uppercase tracking-wide">
-                                            média
+                                        </p>
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-slate-500">
+                                            Média
+                                        </p>
+                                    </div>
+
+                                    <div className="w-12 text-right">
+                                        <div className={`inline-flex px-2 py-1 rounded-lg text-[10px] font-bold ${entry.passRate >= 80 ? 'bg-green-100 text-green-700 dark:bg-green-900/30' :
+                                            entry.passRate >= 50 ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30' :
+                                                'bg-red-100 text-red-700 dark:bg-red-900/30'
+                                            }`}>
+                                            {entry.passRate}%
                                         </div>
                                     </div>
                                 </div>
-                            );
-                        })}
+                            ))
+                        )}
                     </div>
-                )}
-            </div>
-
-            {/* Back button */}
-            <div className="fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 md:relative md:bg-transparent md:border-0 z-50">
-                <div className="max-w-xl mx-auto">
-                    <button
-                        onClick={onClose}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-300 rounded-xl font-medium transition-colors"
-                    >
-                        <ChevronLeft className="w-5 h-5" />
-                        Voltar
-                    </button>
                 </div>
             </div>
         </div>

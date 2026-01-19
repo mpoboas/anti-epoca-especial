@@ -390,9 +390,10 @@ export const getLeaderboard = async (
     source?: string,
     limit: number = 20
 ): Promise<LeaderboardEntry[]> => {
-    let filter = `course = "${courseId}"`;
+    let filter = courseId ? `course = "${courseId}"` : '';
     if (source) {
-        filter += ` && source = "${source}"`;
+        if (filter) filter += ' && ';
+        filter += `source = "${source}"`;
     }
 
     try {

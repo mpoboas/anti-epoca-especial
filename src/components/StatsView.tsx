@@ -86,19 +86,29 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
             }
 
             try {
-                const filter = `user = "${user.id}" && course = "${course.id}"`;
+                let filter = `user = "${user.id}"`;
+                if (course) {
+                    filter += ` && course = "${course.id}"`;
+                }
 
-                const examResults = await pb.collection('exam_results').getFullList<ExamResult>({
+                const examResults = await pb.collection('exam_results').getFullList<ExamResult & { expand?: { course: Course } }>({
                     filter,
                     sort: '-created',
+                    expand: 'course',
                 });
 
                 if (!isMounted) return;
 
-                const totalQuestionsInPool =
-                    await getQuestionCount(course.id, 'previous') +
-                    await getQuestionCount(course.id, 'ai') +
-                    await getQuestionCount(course.id, 'kahoots');
+                let totalQuestionsInPool = 0;
+                if (course) {
+                    totalQuestionsInPool =
+                        await getQuestionCount(course.id, 'previous') +
+                        await getQuestionCount(course.id, 'ai') +
+                        await getQuestionCount(course.id, 'kahoots');
+                } else {
+                    // Global view: maybe just sum of all questions across all courses?
+                    // For now, let's keep it 0 or omit it
+                }
 
                 if (!isMounted) return;
 
@@ -182,7 +192,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
         return () => {
             isMounted = false;
         };
-    }, [course?.id, user?.id]);
+    }, [course, user?.id]);
 
     const loadExamDetails = async (examResult: ExamResult) => {
         setLoadingExam(true);
@@ -314,10 +324,14 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                     <div className="flex items-start gap-3">
                         <Info className="w-5 h-5 mt-0.5 shrink-0 text-lime-400" />
                         <p className="text-sm md:text-base leading-relaxed">
-                            Já respondeste a <span className="font-bold text-lime-400 text-glow">{stats.totalExams}</span> exames.
-                            Das <span className="font-bold">{stats.totalQuestionsInPool}</span> questões disponíveis
-                            respondeste a <span className="font-bold text-lime-400 text-glow">{stats.uniqueQuestionsSeen}</span>,
-                            ou seja <span className="font-bold text-lime-400 text-glow">{stats.percentageComplete}%</span>.
+                            Já respondeste a <span className="font-bold text-lime-400 text-glow">{stats.totalExams}</span> exames{course ? ` na cadeira ${course.title}` : ''}.
+                            {stats.totalQuestionsInPool > 0 && (
+                                <>
+                                    {" "}Das <span className="font-bold">{stats.totalQuestionsInPool}</span> questões disponíveis
+                                    respondeste a <span className="font-bold text-lime-400 text-glow">{stats.uniqueQuestionsSeen}</span>,
+                                    ou seja <span className="font-bold text-lime-400 text-glow">{stats.percentageComplete}%</span>.
+                                </>
+                            )}
                         </p>
                     </div>
 
@@ -485,6 +499,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                             <table className="w-full">
                                 <thead className="bg-dark-gradient text-white text-sm border-b border-blue-900">
                                     <tr>
+                                        {course ? null : <th className="px-4 py-3 text-left font-medium">Cadeira</th>}
                                         <th className="px-4 py-3 text-left font-medium">Fonte</th>
                                         <th className="px-4 py-3 text-center font-medium">Nota</th>
                                         <th className="px-4 py-3 text-center font-medium">Data</th>
@@ -493,11 +508,16 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {stats.examResults.slice(0, 10).map((exam, index) => (
+                                    {stats.examResults.slice(0, 50).map((exam, index) => (
                                         <tr
                                             key={exam.id}
                                             className={`border-b border-gray-50 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors ${index % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-gray-50/50 dark:bg-slate-800/40'}`}
                                         >
+                                            {course ? null : (
+                                                <td className="px-4 py-4 text-sm font-bold text-gray-700 dark:text-slate-300">
+                                                    {(exam as any).expand?.course?.title || 'N/A'}
+                                                </td>
+                                            )}
                                             <td className="px-4 py-3">
                                                 <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium ${getSourceColor(exam.source)}`}>
                                                     {getSourceIcon(exam.source)}

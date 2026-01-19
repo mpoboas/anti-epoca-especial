@@ -8,6 +8,7 @@ import { StatsView } from './src/components/StatsView';
 import { AdminPanel } from './src/components/AdminPanel';
 import { Confetti } from './components/Confetti';
 import { QuestionFilter, FilterMode } from './components/QuestionFilter';
+import { Leaderboard } from './components/Leaderboard';
 import {
     pb,
     isLoggedIn,
@@ -27,7 +28,7 @@ import {
 import {
     Loader2, BookOpen, ArrowRight, ArrowLeft, CheckCircle,
     Bot, AlertTriangle, Library, ChevronLeft, Gamepad2, User, LogIn,
-    Moon, Sun, Wrench
+    Moon, Sun, Wrench, Trophy
 } from 'lucide-react';
 
 const EXAM_QUESTION_COUNT = 15;
@@ -86,7 +87,7 @@ const App: React.FC = () => {
     const [filterMode, setFilterMode] = useState<FilterMode>('all');
 
     // App State
-    const [appState, setAppState] = useState<'loading' | 'source-select' | 'menu' | 'exam' | 'results' | 'profile' | 'admin'>('loading');
+    const [appState, setAppState] = useState<'loading' | 'course-select' | 'source-select' | 'menu' | 'exam' | 'results' | 'profile' | 'admin' | 'leaderboard'>('loading');
     const [statsRefreshKey, setStatsRefreshKey] = useState(0);
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const saved = localStorage.getItem('theme');
@@ -133,13 +134,7 @@ const App: React.FC = () => {
             try {
                 const coursesData = await getCourses();
                 setCourses(coursesData);
-
-                // Auto-select first course (TESIM)
-                if (coursesData.length > 0) {
-                    setSelectedCourse(coursesData[0]);
-                }
-
-                setAppState('source-select');
+                setAppState('course-select');
             } catch (err) {
                 console.error(err);
                 setError('Não foi possível carregar os cursos. Verifica a conexão.');
@@ -426,7 +421,14 @@ const App: React.FC = () => {
             {/* Header */}
             <header className="bg-white dark:bg-slate-900 shadow-sm shrink-0 z-20 relative border-b dark:border-slate-800">
                 <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => setAppState('source-select')}>
+                    <div
+                        className="flex items-center gap-2 cursor-pointer"
+                        onClick={() => {
+                            setAppState('course-select');
+                            setSelectedCourse(null);
+                            setSelectedSource(null);
+                        }}
+                    >
                         <img src="/logo.png" className="w-9 h-9 md:w-11 md:h-11 rounded-xl shrink-0 object-contain" alt="Logo" />
                         <h1 className="font-bold text-lg md:text-xl text-gray-900 dark:text-white tracking-tight truncate">
                             AntiÉpocaEspecial
@@ -442,6 +444,16 @@ const App: React.FC = () => {
                                 {SOURCE_CONFIG[selectedSource].name}
                             </span>
                         )}
+
+                        {/* Leaderboard Button */}
+                        <button
+                            onClick={() => setAppState('leaderboard')}
+                            className="p-2 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
+                            aria-label="Leaderboard"
+                            title="Ranking de Alunos"
+                        >
+                            <Trophy className="w-5 h-5" />
+                        </button>
 
                         {/* Theme Toggle */}
                         <button
@@ -493,12 +505,59 @@ const App: React.FC = () => {
             <main className="flex-1 flex flex-col overflow-hidden w-full relative min-h-0">
                 <div className="flex-1 flex flex-col w-full min-h-0">
 
-                    {/* Source Selection */}
-                    {appState === 'source-select' && (
+                    {/* Course Selection */}
+                    {appState === 'course-select' && (
                         <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 page-transition custom-scrollbar">
                             <div className="flex flex-col items-center justify-center min-h-full max-w-5xl mx-auto">
                                 <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-2 tracking-tight text-center">
-                                    Selecionar Fonte
+                                    Selecionar Cadeira
+                                </h1>
+                                <p className="text-gray-500 dark:text-slate-400 mb-8 md:mb-12 text-center text-sm md:text-base">
+                                    Escolhe a disciplina para estudar
+                                </p>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
+                                    {courses.map(course => (
+                                        <button
+                                            key={course.id}
+                                            onClick={() => {
+                                                setSelectedCourse(course);
+                                                setAppState('source-select');
+                                            }}
+                                            className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-2 border-transparent hover:border-blue-500 hover:shadow-xl transition-all duration-300 text-left group"
+                                        >
+                                            <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                                <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                                            </div>
+                                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                                {course.title}
+                                            </h3>
+                                            <p className="text-gray-500 dark:text-slate-400">
+                                                {course.description || 'Cadeira disponível para estudo.'}
+                                            </p>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Source Selection */}
+                    {appState === 'source-select' && selectedCourse && (
+                        <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 page-transition custom-scrollbar">
+                            <div className="flex flex-col items-center justify-center min-h-full max-w-5xl mx-auto">
+                                <button
+                                    onClick={() => {
+                                        setSelectedCourse(null);
+                                        setAppState('course-select');
+                                    }}
+                                    className="mb-8 flex items-center gap-1 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors self-start"
+                                >
+                                    <ChevronLeft className="w-4 h-4" />
+                                    Mudar de Cadeira
+                                </button>
+                                <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mb-2 tracking-tight text-center">
+                                    {selectedCourse.title}
                                 </h1>
                                 <p className="text-gray-500 dark:text-slate-400 mb-8 md:mb-12 text-center text-sm md:text-base">
                                     Escolhe a origem das perguntas
@@ -546,227 +605,249 @@ const App: React.FC = () => {
                     )}
 
                     {/* Menu */}
-                    {appState === 'menu' && selectedSource && (
-                        <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 page-transition custom-scrollbar">
-                            <div className="flex flex-col items-center justify-center min-h-full max-w-2xl mx-auto text-center">
-                                <div className="mb-8 p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden w-full">
-                                    <h2 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Progresso do Estudo</h2>
+                    {
+                        appState === 'menu' && selectedSource && (
+                            <div className="flex-1 overflow-y-auto px-4 py-6 md:py-10 page-transition custom-scrollbar">
+                                <div className="flex flex-col items-center justify-center min-h-full max-w-2xl mx-auto text-center">
+                                    <div className="mb-8 p-6 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden w-full">
+                                        <h2 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Progresso do Estudo</h2>
 
-                                    <div className="w-full max-w-[250px] h-2 bg-gray-200 dark:bg-slate-800 rounded-full mx-auto mt-4 overflow-hidden">
-                                        <div
-                                            className={`h-full transition-all duration-1000 ${getSourceColorClass('bg')}`}
-                                            style={{ width: `${questionCount > 0 ? ((questionCount - questionsLeft) / questionCount) * 100 : 0}%` }}
-                                        />
-                                    </div>
-                                    <p className="mt-2 text-sm text-gray-500 dark:text-slate-400 font-medium">
-                                        {isAuthenticated ? (
-                                            questionsLeft > 0
-                                                ? `${questionsLeft} perguntas por descobrir (${questionCount} total)`
-                                                : "Todas as perguntas vistas!"
-                                        ) : (
-                                            <>
-                                                <button
-                                                    onClick={() => setShowAuthModal(true)}
-                                                    className={`font-bold hover:underline text-glow ${getSourceColorClass('text', 'light')}`}
-                                                >
-                                                    Faz login
-                                                </button>
-                                                {' '}para guardares o teu progresso
-                                            </>
+                                        <div className="w-full max-w-[250px] h-2 bg-gray-200 dark:bg-slate-800 rounded-full mx-auto mt-4 overflow-hidden">
+                                            <div
+                                                className={`h-full transition-all duration-1000 ${getSourceColorClass('bg')}`}
+                                                style={{ width: `${questionCount > 0 ? ((questionCount - questionsLeft) / questionCount) * 100 : 0}%` }}
+                                            />
+                                        </div>
+                                        <p className="mt-2 text-sm text-gray-500 dark:text-slate-400 font-medium">
+                                            {isAuthenticated ? (
+                                                questionsLeft > 0
+                                                    ? `${questionsLeft} perguntas por descobrir (${questionCount} total)`
+                                                    : "Todas as perguntas vistas!"
+                                            ) : (
+                                                <>
+                                                    <button
+                                                        onClick={() => setShowAuthModal(true)}
+                                                        className={`font-bold hover:underline text-glow ${getSourceColorClass('text', 'light')}`}
+                                                    >
+                                                        Faz login
+                                                    </button>
+                                                    {' '}para guardares o teu progresso
+                                                </>
+                                            )}
+                                        </p>
+
+                                        {stats && (
+                                            <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-gray-50 dark:bg-slate-800 text-xs font-medium text-gray-600 dark:text-slate-400">
+                                                Nota Média: {stats.averageScore.toFixed(1)} / 20
+                                            </div>
                                         )}
+                                    </div>
+
+                                    {/* Question Filter */}
+                                    {isAuthenticated && (
+                                        <div className="mb-8 w-full max-w-md">
+                                            <QuestionFilter
+                                                currentFilter={filterMode}
+                                                onFilterChange={setFilterMode}
+                                                colorClass={getSourceColorClass('bg')}
+                                                disabled={loading}
+                                            />
+                                        </div>
+                                    )}
+
+                                    <p className="text-base md:text-lg text-gray-600 dark:text-slate-400 mb-8 md:mb-10 leading-relaxed max-w-lg mx-auto">
+                                        Serás testado em {EXAM_QUESTION_COUNT} perguntas do conjunto <strong>{SOURCE_CONFIG[selectedSource].name}</strong>.
                                     </p>
 
-                                    {stats && (
-                                        <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-gray-50 dark:bg-slate-800 text-xs font-medium text-gray-600 dark:text-slate-400">
-                                            Nota Média: {stats.averageScore.toFixed(1)} / 20
-                                        </div>
-                                    )}
-                                </div>
+                                    <button
+                                        onClick={startExam}
+                                        disabled={loading || questionCount === 0}
+                                        className={`w-full md:w-auto group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 rounded-xl md:rounded-full hover:shadow-lg transform active:scale-95 hover:-translate-y-1 disabled:opacity-50
+                    ${getSourceColorClass('bg')} hover:opacity-90`}
+                                    >
+                                        {loading ? (
+                                            <Loader2 className="w-5 h-5 animate-spin" />
+                                        ) : (
+                                            <>
+                                                <span>Iniciar Exame</span>
+                                                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                                            </>
+                                        )}
+                                    </button>
 
-                                {/* Question Filter */}
-                                {isAuthenticated && (
-                                    <div className="mb-8 w-full max-w-md">
-                                        <QuestionFilter
-                                            currentFilter={filterMode}
-                                            onFilterChange={setFilterMode}
-                                            colorClass={getSourceColorClass('bg')}
-                                            disabled={loading}
+                                    <button
+                                        onClick={() => setAppState('source-select')}
+                                        className="mt-8 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 text-sm font-medium flex items-center gap-1 transition-colors p-2"
+                                    >
+                                        <ChevronLeft className="w-4 h-4" />
+                                        Alterar Fonte
+                                    </button>
+
+                                    <div className="mt-12 text-sm text-gray-400 dark:text-slate-500 hidden md:block">
+                                        <p>Dica: Usa as setas para navegar e 1-4 para responder.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+
+                    {
+                        appState === 'exam' && examQuestions.length > 0 && (
+                            <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative">
+                                {/* Question Navigator - Centered */}
+                                <HorizontalQuestionNav
+                                    total={examQuestions.length}
+                                    current={currentQuestionIndex}
+                                    onSelect={setCurrentQuestionIndex}
+                                    getStatusColor={getExamStatusColor}
+                                />
+
+                                <div className="flex-1 overflow-y-auto py-4 flex flex-col">
+                                    <div className="flex-1 flex flex-col justify-center max-w-3xl mx-auto w-full px-4">
+                                        <QuizCard
+                                            key={examQuestions[currentQuestionIndex].id}
+                                            question={examQuestions[currentQuestionIndex]}
+                                            selectedAnswer={userAnswers.find(ua => ua.questionId === examQuestions[currentQuestionIndex].id)?.selectedAnswer}
+                                            onAnswer={handleAnswer}
+                                            showFeedback={false}
                                         />
                                     </div>
-                                )}
-
-                                <p className="text-base md:text-lg text-gray-600 dark:text-slate-400 mb-8 md:mb-10 leading-relaxed max-w-lg mx-auto">
-                                    Serás testado em {EXAM_QUESTION_COUNT} perguntas do conjunto <strong>{SOURCE_CONFIG[selectedSource].name}</strong>.
-                                </p>
-
-                                <button
-                                    onClick={startExam}
-                                    disabled={loading || questionCount === 0}
-                                    className={`w-full md:w-auto group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 rounded-xl md:rounded-full hover:shadow-lg transform active:scale-95 hover:-translate-y-1 disabled:opacity-50
-                    ${getSourceColorClass('bg')} hover:opacity-90`}
-                                >
-                                    {loading ? (
-                                        <Loader2 className="w-5 h-5 animate-spin" />
-                                    ) : (
-                                        <>
-                                            <span>Iniciar Exame</span>
-                                            <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-                                        </>
-                                    )}
-                                </button>
-
-                                <button
-                                    onClick={() => setAppState('source-select')}
-                                    className="mt-8 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 text-sm font-medium flex items-center gap-1 transition-colors p-2"
-                                >
-                                    <ChevronLeft className="w-4 h-4" />
-                                    Alterar Fonte
-                                </button>
-
-                                <div className="mt-12 text-sm text-gray-400 dark:text-slate-500 hidden md:block">
-                                    <p>Dica: Usa as setas para navegar e 1-4 para responder.</p>
                                 </div>
-                            </div>
-                        </div>
-                    )}
 
-                    {appState === 'exam' && examQuestions.length > 0 && (
-                        <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative">
-                            {/* Question Navigator - Centered */}
-                            <HorizontalQuestionNav
-                                total={examQuestions.length}
-                                current={currentQuestionIndex}
-                                onSelect={setCurrentQuestionIndex}
-                                getStatusColor={getExamStatusColor}
-                            />
-
-                            <div className="flex-1 overflow-y-auto py-4 flex flex-col">
-                                <div className="flex-1 flex flex-col justify-center max-w-3xl mx-auto w-full px-4">
-                                    <QuizCard
-                                        key={examQuestions[currentQuestionIndex].id}
-                                        question={examQuestions[currentQuestionIndex]}
-                                        selectedAnswer={userAnswers.find(ua => ua.questionId === examQuestions[currentQuestionIndex].id)?.selectedAnswer}
-                                        onAnswer={handleAnswer}
-                                        showFeedback={false}
+                                {/* Navigation Footer */}
+                                <div className="shrink-0 flex flex-col">
+                                    {currentQuestionIndex === examQuestions.length - 1 && (
+                                        <div className="px-4 pb-2 max-w-3xl mx-auto w-full">
+                                            <button
+                                                onClick={() => setShowSubmitConfirm(true)}
+                                                className="w-full flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 shadow-lg font-bold transition-all transform active:scale-95"
+                                            >
+                                                Submeter Exame
+                                                <CheckCircle className="w-5 h-5 ml-2" />
+                                            </button>
+                                        </div>
+                                    )}
+                                    <NavigationFooter
+                                        currentIndex={currentQuestionIndex}
+                                        totalCount={examQuestions.length}
+                                        onPrevious={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
+                                        onNext={() => setCurrentQuestionIndex(prev => Math.min(examQuestions.length - 1, prev + 1))}
                                     />
                                 </div>
-                            </div>
 
-                            {/* Navigation Footer */}
-                            <div className="shrink-0 flex flex-col">
-                                {currentQuestionIndex === examQuestions.length - 1 && (
-                                    <div className="px-4 pb-2 max-w-3xl mx-auto w-full">
-                                        <button
-                                            onClick={() => setShowSubmitConfirm(true)}
-                                            className="w-full flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 shadow-lg font-bold transition-all transform active:scale-95"
-                                        >
-                                            Submeter Exame
-                                            <CheckCircle className="w-5 h-5 ml-2" />
-                                        </button>
+                                {/* Submit Confirmation Modal */}
+                                {showSubmitConfirm && (
+                                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+                                        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-800 p-6 w-full max-w-md animate-in zoom-in-95 duration-200">
+                                            <div className="flex items-center gap-3 mb-4 text-amber-600">
+                                                <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center shrink-0">
+                                                    <AlertTriangle className="w-7 h-7" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-xl font-bold dark:text-white">Submeter Exame?</h3>
+                                                    <p className="text-sm text-gray-500 dark:text-slate-400">Verifica se respondeste a tudo.</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-3">
+                                                <div className="p-4 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-100 dark:border-slate-800">
+                                                    <div className="flex justify-between items-center text-sm mb-1">
+                                                        <span className="text-gray-500 dark:text-slate-400">Perguntas Respondidas:</span>
+                                                        <span className="font-bold dark:text-white">{userAnswers.length}/{examQuestions.length}</span>
+                                                    </div>
+                                                    <div className="w-full h-2 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                                        <div
+                                                            className="h-full bg-green-500 transition-all duration-500"
+                                                            style={{ width: `${(userAnswers.length / examQuestions.length) * 100}%` }}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <button
+                                                        onClick={() => setShowSubmitConfirm(false)}
+                                                        className="px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors"
+                                                    >
+                                                        Cancelar
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            setShowSubmitConfirm(false);
+                                                            finishExam();
+                                                        }}
+                                                        className="px-4 py-3 rounded-xl bg-green-600 text-white font-bold hover:bg-green-700 shadow-lg shadow-green-600/20 transition-all active:scale-95"
+                                                    >
+                                                        Submeter
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
-                                <NavigationFooter
-                                    currentIndex={currentQuestionIndex}
-                                    totalCount={examQuestions.length}
-                                    onPrevious={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
-                                    onNext={() => setCurrentQuestionIndex(prev => Math.min(examQuestions.length - 1, prev + 1))}
-                                />
                             </div>
-
-                            {/* Submit Confirmation Modal */}
-                            {showSubmitConfirm && (
-                                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-                                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-800 p-6 w-full max-w-md animate-in zoom-in-95 duration-200">
-                                        <div className="flex items-center gap-3 mb-4 text-amber-600">
-                                            <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center shrink-0">
-                                                <AlertTriangle className="w-7 h-7" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-xl font-bold dark:text-white">Submeter Exame?</h3>
-                                                <p className="text-sm text-gray-500 dark:text-slate-400">Verifica se respondeste a tudo.</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <div className="p-4 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-100 dark:border-slate-800">
-                                                <div className="flex justify-between items-center text-sm mb-1">
-                                                    <span className="text-gray-500 dark:text-slate-400">Perguntas Respondidas:</span>
-                                                    <span className="font-bold dark:text-white">{userAnswers.length}/{examQuestions.length}</span>
-                                                </div>
-                                                <div className="w-full h-2 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                                                    <div
-                                                        className="h-full bg-green-500 transition-all duration-500"
-                                                        style={{ width: `${(userAnswers.length / examQuestions.length) * 100}%` }}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <button
-                                                    onClick={() => setShowSubmitConfirm(false)}
-                                                    className="px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors"
-                                                >
-                                                    Cancelar
-                                                </button>
-                                                <button
-                                                    onClick={() => {
-                                                        setShowSubmitConfirm(false);
-                                                        finishExam();
-                                                    }}
-                                                    className="px-4 py-3 rounded-xl bg-green-600 text-white font-bold hover:bg-green-700 shadow-lg shadow-green-600/20 transition-all active:scale-95"
-                                                >
-                                                    Submeter
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
+                        )
+                    }
 
                     {/* Results */}
-                    {appState === 'results' && (
-                        <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative page-transition">
-                            <ResultSummary
-                                questions={examQuestions}
-                                userAnswers={userAnswers}
-                                score={examScore}
-                                onRestart={startExam}
-                                onHome={() => setAppState('source-select')}
-                            />
-                        </div>
-                    )}
+                    {
+                        appState === 'results' && (
+                            <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative page-transition">
+                                <ResultSummary
+                                    questions={examQuestions}
+                                    userAnswers={userAnswers}
+                                    score={examScore}
+                                    onRestart={startExam}
+                                    onHome={() => setAppState('course-select')}
+                                />
+                            </div>
+                        )
+                    }
 
+                    {/* Stats/Profile */}
                     {/* Stats/Profile */}
                     {appState === 'profile' && (
                         <StatsView
                             key={statsRefreshKey}
                             course={selectedCourse}
-                            onClose={() => setAppState(selectedSource ? 'menu' : 'source-select')}
+                            onClose={() => setAppState(selectedSource ? 'menu' : (selectedCourse ? 'source-select' : 'course-select'))}
                         />
+                    )}
+
+                    {/* Leaderboard View */}
+                    {/* Leaderboard View */}
+                    {appState === 'leaderboard' && (
+                        <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative page-transition">
+                            <Leaderboard
+                                course={selectedCourse}
+                                onBack={() => setAppState(selectedSource ? 'menu' : (selectedCourse ? 'source-select' : 'course-select'))}
+                            />
+                        </div>
                     )}
 
                     {/* Admin Panel */}
-                    {appState === 'admin' && (
-                        <AdminPanel
-                            courses={courses}
-                            onClose={() => setAppState('source-select')}
-                        />
-                    )}
-                </div>
-            </main>
+                    {
+                        appState === 'admin' && (
+                            <AdminPanel
+                                courses={courses}
+                                onClose={() => setAppState('source-select')}
+                            />
+                        )
+                    }
+                </div >
+            </main >
 
             {/* Auth Modal */}
-            {showAuthModal && (
-                <AuthModal
-                    onSuccess={() => {
-                        setShowAuthModal(false);
-                        setIsAuthenticated(true);
-                    }}
-                    onClose={() => setShowAuthModal(false)}
-                />
-            )}
+            {
+                showAuthModal && (
+                    <AuthModal
+                        onSuccess={() => {
+                            setShowAuthModal(false);
+                            setIsAuthenticated(true);
+                        }}
+                        onClose={() => setShowAuthModal(false)}
+                    />
+                )
+            }
 
             {/* Styles */}
             <style>{`
@@ -788,7 +869,7 @@ const App: React.FC = () => {
           border-radius: 20px;
         }
       `}</style>
-        </div>
+        </div >
     );
 };
 
