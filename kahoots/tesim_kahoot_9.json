@@ -1,0 +1,404 @@
+{
+    "kahoot_info": {
+        "course": "Tecnologias e Sistemas Multimédia",
+        "theme": "DRM & Watermark + Alternative Displays"
+    },
+    "questions": [
+        {
+            "id": 1,
+            "text": "Os DRM são particularmente relevantes por...",
+            "answers": [
+                {
+                    "text": "as cópias digitais serem perfeitas",
+                    "value": "--"
+                },
+                {
+                    "text": "ser fácil distribuir cópias digitais",
+                    "value": "--"
+                },
+                {
+                    "text": "ser simples editar cópias digitais",
+                    "value": "--"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "++"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "text": "O foco dos sistemas DRM é em evitar cópias por...",
+            "answers": [
+                {
+                    "text": "utilizadores domésticos comuns",
+                    "value": "++"
+                },
+                {
+                    "text": "piratas informáticos altamente organizados",
+                    "value": "--"
+                },
+                {
+                    "text": "todas as pessoas em geral",
+                    "value": "--"
+                },
+                {
+                    "text": "utilizadores de sistemas analógicos",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "Tipicamente os sistemas DRM permitem...",
+            "answers": [
+                {
+                    "text": "identificar obras & garantir uso correto",
+                    "value": "++"
+                },
+                {
+                    "text": "identificar obras",
+                    "value": "--"
+                },
+                {
+                    "text": "garantir uso correto",
+                    "value": "--"
+                },
+                {
+                    "text": "evitar cópias",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "A 2ª geração de sistemas DRM tem como grande novidade permitir...",
+            "answers": [
+                {
+                    "text": "encriptação",
+                    "value": "--"
+                },
+                {
+                    "text": "distribuição de direitos a vários níveis",
+                    "value": "++"
+                },
+                {
+                    "text": "usar marcas de água",
+                    "value": "--"
+                },
+                {
+                    "text": "evitar cópias não autorizadas",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "As Rigths Expression Languages permitem explicitar...",
+            "answers": [
+                {
+                    "text": "direitos",
+                    "value": "--"
+                },
+                {
+                    "text": "atribuições",
+                    "value": "--"
+                },
+                {
+                    "text": "associações",
+                    "value": "--"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "++"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "As marcas de água digitais permitem, basicamente,...",
+            "answers": [
+                {
+                    "text": "encriptar conteúdos",
+                    "value": "--"
+                },
+                {
+                    "text": "associar informação \"escondida\" aos conteúdos",
+                    "value": "++"
+                },
+                {
+                    "text": "blindar conteúdos quanto a acesso",
+                    "value": "--"
+                },
+                {
+                    "text": "transmitir informação emocional",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "Para usar marcas de água para evitar cópias é importante que...",
+            "answers": [
+                {
+                    "text": "a maioria dos dispositivos a use",
+                    "value": "++"
+                },
+                {
+                    "text": "possa ser incluída na legendagem",
+                    "value": "--"
+                },
+                {
+                    "text": "permita informação adicional detalhada",
+                    "value": "--"
+                },
+                {
+                    "text": "seja complicada ler a marca de água",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "text": "Um sistema de marca de água como o Cinavia permite, por exemplo,...",
+            "answers": [
+                {
+                    "text": "identificar sala de cinema onde foi gravado o vídeo",
+                    "value": "++"
+                },
+                {
+                    "text": "cobrar automaticamente por reprodução não-autorizada",
+                    "value": "--"
+                },
+                {
+                    "text": "garantir pagamento direto ao autor da obra",
+                    "value": "--"
+                },
+                {
+                    "text": "legendagem automática de conteúdos",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "text": "A medida-base da robustez a ataques de uma marca de água é que o conteúdo deixe de",
+            "answers": [
+                {
+                    "text": "ter valor comercial",
+                    "value": "++"
+                },
+                {
+                    "text": "ser visível",
+                    "value": "--"
+                },
+                {
+                    "text": "ser copiável",
+                    "value": "--"
+                },
+                {
+                    "text": "ser encriptado",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "text": "O sistema de marca de água pode ser usado em...",
+            "answers": [
+                {
+                    "text": "áudio",
+                    "value": "--"
+                },
+                {
+                    "text": "texto impresso",
+                    "value": "--"
+                },
+                {
+                    "text": "código programação",
+                    "value": "--"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "++"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "text": "Os ecrãs \"electronic ink\" têm como grande vantagem...",
+            "answers": [
+                {
+                    "text": "não precisarem de energia quando a imagem está fixa",
+                    "value": "--"
+                },
+                {
+                    "text": "permitirem a utilização da luz natural",
+                    "value": "--"
+                },
+                {
+                    "text": "permitirem muito boa qualidade em tons de cinzento",
+                    "value": "--"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "++"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "text": "Uma das grandes limitações do eletronic ink é...",
+            "answers": [
+                {
+                    "text": "suporte de cor limitado",
+                    "value": "--"
+                },
+                {
+                    "text": "frame rate muito baixa",
+                    "value": "--"
+                },
+                {
+                    "text": "efeitos estranhos ao atualizar a página",
+                    "value": "--"
+                },
+                {
+                    "text": "todos os outros",
+                    "value": "++"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "text": "Uma das vantagens dos ecrãs OLEDs é...",
+            "answers": [
+                {
+                    "text": "poderem integrar ecrãs transparentes",
+                    "value": "++"
+                },
+                {
+                    "text": "permitirem ecrãs coloridos",
+                    "value": "--"
+                },
+                {
+                    "text": "consumo muito baixo quando todos os pixéis estão ligados",
+                    "value": "--"
+                },
+                {
+                    "text": "luminosidade homogénea mesmo após uso prolongado",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "text": "Uma limitação da maioria dos micro-projetores disponíveis comercialmente é...",
+            "answers": [
+                {
+                    "text": "luminosidade limitada",
+                    "value": "++"
+                },
+                {
+                    "text": "não suportarem HD",
+                    "value": "--"
+                },
+                {
+                    "text": "problemas de focagem",
+                    "value": "--"
+                },
+                {
+                    "text": "problemas de aquecimento",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "text": "Para um utilizador final, um HUD melhora...",
+            "answers": [
+                {
+                    "text": "a sua atenção na tarefa",
+                    "value": "++"
+                },
+                {
+                    "text": "o grau de entretenimento",
+                    "value": "--"
+                },
+                {
+                    "text": "a facilidade de interação",
+                    "value": "--"
+                },
+                {
+                    "text": "a qualidade sonora do sistema",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "text": "Para um sistema HMD poder suportar AR/VR precisa de um...",
+            "answers": [
+                {
+                    "text": "sistema tracking",
+                    "value": "++"
+                },
+                {
+                    "text": "sistema OLED",
+                    "value": "--"
+                },
+                {
+                    "text": "sistema wireless",
+                    "value": "--"
+                },
+                {
+                    "text": "processador Al",
+                    "value": "--"
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "text": "Uma das vantagens do HoloLens é...",
+            "answers": [
+                {
+                    "text": "ser um sistema integrado",
+                    "value": "--"
+                },
+                {
+                    "text": "ter tracking autónomo",
+                    "value": "--"
+                },
+                {
+                    "text": "permitir AR",
+                    "value": "--"
+                },
+                {
+                    "text": "todas as outras",
+                    "value": "++"
+                }
+            ]
+        },
+        {
+            "id": 18,
+            "text": "Um dos problemas de ecrãs 3D volumétricos em geral",
+            "answers": [
+                {
+                    "text": "o grande fluxo de dados gerado",
+                    "value": "++"
+                },
+                {
+                    "text": "problemas de paralaxe",
+                    "value": "--"
+                },
+                {
+                    "text": "limitações devido a campos magnéticos",
+                    "value": "--"
+                },
+                {
+                    "text": "não permitirem múltiplos utilizadores",
+                    "value": "--"
+                }
+            ]
+        }
+    ]
+}

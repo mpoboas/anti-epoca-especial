@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Course, Answer, QuestionInput, getCourses, createQuestions } from '../lib/pocketbase';
 import {
     X, Upload, AlertTriangle, CheckCircle, Loader2, ChevronLeft,
-    Library, Bot, Gamepad2, FileJson, Eye, Database
+    Library, Bot, Gamepad2, FileJson, Eye, Database, Tag
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -21,6 +21,7 @@ interface ValidationResult {
     valid: boolean;
     questions: ParsedQuestion[];
     errors: string[];
+    detectedTheme?: string;
 }
 
 const SOURCE_CONFIG = {
@@ -40,26 +41,33 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
     const [isValidated, setIsValidated] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [uploadResult, setUploadResult] = useState<{ created: number; errors: string[] } | null>(null);
+    const [detectedTheme, setDetectedTheme] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const validateJSON = (content: string): ValidationResult => {
         const errors: string[] = [];
         let questions: ParsedQuestion[] = [];
+        let detectedTheme: string | undefined;
 
         try {
             const data = JSON.parse(content);
+
+            // Check for theme in kahoot_info
+            if (data.kahoot_info?.theme) {
+                detectedTheme = data.kahoot_info.theme;
+            }
 
             // Check for questions array (can be at root or inside 'questions' key)
             const questionsArray = Array.isArray(data) ? data : data.questions;
 
             if (!Array.isArray(questionsArray)) {
                 errors.push('O ficheiro deve conter um array "questions" ou ser um array de perguntas.');
-                return { valid: false, questions: [], errors };
+                return { valid: false, questions: [], errors, detectedTheme };
             }
 
             if (questionsArray.length === 0) {
                 errors.push('O array de perguntas está vazio.');
-                return { valid: false, questions: [], errors };
+                return { valid: false, questions: [], errors, detectedTheme };
             }
 
             questionsArray.forEach((q: any, index: number) => {
@@ -99,7 +107,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
                 }));
             }
 
-            return { valid: errors.length === 0, questions, errors };
+            return { valid: errors.length === 0, questions, errors, detectedTheme };
         } catch (e: any) {
             errors.push(`Erro ao ler JSON: ${e.message}`);
             return { valid: false, questions: [], errors };
@@ -115,12 +123,14 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
         setParsedQuestions([]);
         setValidationErrors([]);
         setUploadResult(null);
+        setDetectedTheme(null);
 
         const content = await selectedFile.text();
         const result = validateJSON(content);
 
         setParsedQuestions(result.questions);
         setValidationErrors(result.errors);
+        setDetectedTheme(result.detectedTheme || null);
         setIsValidated(result.valid);
     };
 
@@ -134,6 +144,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
             const questionsToCreate: QuestionInput[] = parsedQuestions.map(q => ({
                 text: q.text,
                 answers: q.answers as Answer[],
+                ...(detectedTheme && { theme: detectedTheme }),
             }));
 
             const result = await createQuestions(selectedCourse, selectedSource, questionsToCreate);
@@ -291,6 +302,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
                                 <CheckCircle className="w-5 h-5" />
                                 {parsedQuestions.length} perguntas válidas prontas para importar
                             </div>
+                            {detectedTheme && (
+                                <div className="flex items-center gap-2 mt-2 text-sm text-green-600 dark:text-green-500">
+                                    <Tag className="w-4 h-4" />
+                                    <span>Tema detetado: <strong>{detectedTheme}</strong></span>
+                                </div>
+                            )}
                         </div>
                     )}
 

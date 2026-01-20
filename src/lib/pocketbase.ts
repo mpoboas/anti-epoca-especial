@@ -348,6 +348,7 @@ export const getUserStats = async (courseId: string, source?: string): Promise<U
 export interface QuestionInput {
     text: string;
     answers: Answer[];
+    theme?: string;
 }
 
 export const createQuestions = async (
@@ -366,6 +367,7 @@ export const createQuestions = async (
                 answers: q.answers,
                 source,
                 course: courseId,
+                ...(q.theme && { theme: q.theme }),
             }, { requestKey: null });
             created++;
         } catch (e: any) {
@@ -415,20 +417,20 @@ export const getLeaderboard = async (
         });
 
         // Group by user
-        const userStats = new Map<string, { 
-            userName: string; 
-            scores: number[]; 
+        const userStats = new Map<string, {
+            userName: string;
+            scores: number[];
             passed: number;
         }>();
 
         for (const result of examResults) {
             const userId = result.user;
             const userName = result.expand?.user?.name || 'Anónimo';
-            
+
             if (!userStats.has(userId)) {
                 userStats.set(userId, { userName, scores: [], passed: 0 });
             }
-            
+
             const stats = userStats.get(userId)!;
             stats.scores.push(result.score);
             if (result.score >= 10) stats.passed++;
@@ -436,11 +438,11 @@ export const getLeaderboard = async (
 
         // Calculate averages and sort
         const leaderboard: LeaderboardEntry[] = [];
-        
+
         userStats.forEach((stats, odiserId) => {
             const totalExams = stats.scores.length;
             const averageScore = stats.scores.reduce((a, b) => a + b, 0) / totalExams;
-            
+
             leaderboard.push({
                 userId: odiserId,
                 userName: stats.userName,
@@ -524,13 +526,13 @@ export const getFilteredRandomQuestions = async (
     if (theme) {
         allQuestions = allQuestions.filter(q => q.theme === theme);
     }
-    
+
     if (allQuestions.length === 0) {
         return [];
     }
-    
+
     let selected: Question[] = [];
-    
+
     if (mode === 'all' || mode === 'theme') {
         // Pure random selection from all questions (already filtered by theme if applicable)
         const shuffled = shuffleArray(allQuestions);
@@ -540,10 +542,10 @@ export const getFilteredRandomQuestions = async (
         const seenIds = await getSeenQuestionIds(courseId);
         const unseenQuestions = allQuestions.filter(q => !seenIds.has(q.id));
         const seenQuestions = allQuestions.filter(q => seenIds.has(q.id));
-        
+
         const shuffledUnseen = shuffleArray(unseenQuestions);
         selected = shuffledUnseen.slice(0, Math.min(count, shuffledUnseen.length));
-        
+
         // Fill with random seen questions if not enough unseen
         if (selected.length < count && seenQuestions.length > 0) {
             const shuffledSeen = shuffleArray(seenQuestions);
@@ -555,10 +557,10 @@ export const getFilteredRandomQuestions = async (
         const wrongIds = await getWrongQuestionIds(courseId, source);
         const wrongQuestions = allQuestions.filter(q => wrongIds.has(q.id));
         const otherQuestions = allQuestions.filter(q => !wrongIds.has(q.id));
-        
+
         const shuffledWrong = shuffleArray(wrongQuestions);
         selected = shuffledWrong.slice(0, Math.min(count, shuffledWrong.length));
-        
+
         // Fill with random other questions if not enough wrong
         if (selected.length < count && otherQuestions.length > 0) {
             const shuffledOther = shuffleArray(otherQuestions);
@@ -566,7 +568,7 @@ export const getFilteredRandomQuestions = async (
             selected = [...selected, ...shuffledOther.slice(0, remaining)];
         }
     }
-    
+
     // Shuffle answers within each question
     return selected.map(q => ({
         ...q,
