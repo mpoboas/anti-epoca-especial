@@ -20,6 +20,7 @@ import {
     getQuestionCount,
     saveExamResult,
     getUserStats,
+    getThemes,
     Course,
     Question,
     Answer,
@@ -85,6 +86,8 @@ const App: React.FC = () => {
 
     // Filter state
     const [filterMode, setFilterMode] = useState<FilterMode>('all');
+    const [themes, setThemes] = useState<string[]>([]);
+    const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
 
     // App State
     const [appState, setAppState] = useState<'loading' | 'course-select' | 'source-select' | 'menu' | 'exam' | 'results' | 'profile' | 'admin' | 'leaderboard'>('loading');
@@ -162,6 +165,16 @@ const App: React.FC = () => {
 
             setSelectedSource(source);
             setFilterMode('all'); // Reset filter
+            setSelectedTheme(null); // Reset theme
+
+            // Load themes if kahoots
+            if (source === 'kahoots') {
+                const themesData = await getThemes(selectedCourse.id, source);
+                setThemes(themesData);
+            } else {
+                setThemes([]);
+            }
+
             setAppState('menu');
         } catch (err) {
             console.error(err);
@@ -181,7 +194,8 @@ const App: React.FC = () => {
                 selectedCourse.id,
                 selectedSource,
                 EXAM_QUESTION_COUNT,
-                filterMode
+                filterMode,
+                filterMode === 'theme' ? (selectedTheme || undefined) : undefined
             );
 
             if (questions.length === 0) {
@@ -420,61 +434,64 @@ const App: React.FC = () => {
 
             {/* Header */}
             <header className="bg-white dark:bg-slate-900 shadow-sm shrink-0 z-20 relative border-b dark:border-slate-800">
-                <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+                <div className="max-w-5xl mx-auto px-3 md:px-4 py-2.5 md:py-4 flex items-center justify-between">
                     <div
-                        className="flex items-center gap-2 cursor-pointer"
+                        className="flex items-center gap-2 cursor-pointer transition-transform active:scale-95"
                         onClick={() => {
                             setAppState('course-select');
                             setSelectedCourse(null);
                             setSelectedSource(null);
+                            setSelectedTheme(null);
                         }}
                     >
-                        <img src="/logo.png" className="w-9 h-9 md:w-11 md:h-11 rounded-xl shrink-0 object-contain" alt="Logo" />
-                        <h1 className="font-bold text-lg md:text-xl text-gray-900 dark:text-white tracking-tight truncate">
-                            AntiÉpocaEspecial
+                        <img src="/logo.png" className="w-8 h-8 md:w-11 md:h-11 rounded-lg md:rounded-xl shrink-0 object-contain" alt="Logo" />
+                        <h1 className="font-bold text-lg md:text-xl text-gray-900 dark:text-white tracking-tight hidden sm:block">
+                            AntiÉpoca<span className="text-lime-500 dark:text-lime-400">Especial</span>
                         </h1>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1.5 md:gap-3">
                         {/* Source Badge */}
                         {appState !== 'source-select' && selectedSource && (
-                            <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wide border truncate max-w-[100px] md:max-w-none
-                ${getSourceColorClass('bg', 'light')} ${getSourceColorClass('text', 'light')} ${getSourceColorClass('border')}
-              `}>
+                            <span className={`px-2 py-0.5 md:py-1 rounded text-[10px] md:text-xs font-bold uppercase tracking-wide border truncate max-w-[70px] sm:max-w-none
+                                ${getSourceColorClass('bg', 'light')} ${getSourceColorClass('text', 'light')} ${getSourceColorClass('border')}
+                            `}>
                                 {SOURCE_CONFIG[selectedSource].name}
                             </span>
                         )}
 
-                        {/* Leaderboard Button */}
-                        <button
-                            onClick={() => setAppState('leaderboard')}
-                            className="p-2 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
-                            aria-label="Leaderboard"
-                            title="Ranking de Alunos"
-                        >
-                            <Trophy className="w-5 h-5" />
-                        </button>
-
-                        {/* Theme Toggle */}
-                        <button
-                            onClick={() => setIsDarkMode(!isDarkMode)}
-                            className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                            aria-label="Toggle dark mode"
-                        >
-                            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                        </button>
-
-                        {/* Admin Button */}
-                        {isAuthenticated && isAdmin() && (
+                        <div className="flex items-center gap-1 md:gap-2 bg-gray-50 dark:bg-slate-800/50 p-1 rounded-xl">
+                            {/* Leaderboard Button */}
                             <button
-                                onClick={() => setAppState('admin')}
-                                className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors"
-                                aria-label="Admin panel"
-                                title="Painel de Administração"
+                                onClick={() => setAppState('leaderboard')}
+                                className="p-2 rounded-lg text-yellow-600 dark:text-yellow-400 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-colors"
+                                aria-label="Leaderboard"
+                                title="Ranking de Alunos"
                             >
-                                <Wrench className="w-5 h-5" />
+                                <Trophy className="w-5 h-5" />
                             </button>
-                        )}
+
+                            {/* Theme Toggle */}
+                            <button
+                                onClick={() => setIsDarkMode(!isDarkMode)}
+                                className="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                aria-label="Toggle dark mode"
+                            >
+                                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                            </button>
+
+                            {/* Admin Button */}
+                            {isAuthenticated && isAdmin() && (
+                                <button
+                                    onClick={() => setAppState('admin')}
+                                    className="p-2 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
+                                    aria-label="Admin panel"
+                                    title="Painel de Administração"
+                                >
+                                    <Wrench className="w-5 h-5" />
+                                </button>
+                            )}
+                        </div>
 
                         {/* Profile/Login Button */}
                         {isAuthenticated ? (
@@ -483,18 +500,18 @@ const App: React.FC = () => {
                                     setStatsRefreshKey(k => k + 1);
                                     setAppState('profile');
                                 }}
-                                className="flex items-center gap-2 bg-dark-gradient text-white px-3 py-2 rounded-lg hover:shadow-lg transition-all border border-blue-900/50"
+                                className="flex items-center gap-2 bg-dark-gradient text-white p-2 md:px-3 md:py-2.5 rounded-xl hover:shadow-md transition-all border border-blue-900/30 shadow-sm active:scale-95"
                             >
-                                <User className="w-4 h-4 text-lime-400" />
-                                <span className="hidden md:inline text-sm font-medium">{user?.name || 'Perfil'}</span>
+                                <User className="w-5 h-5 text-lime-400 shrink-0" />
+                                <span className="hidden md:inline text-sm font-bold tracking-tight">{user?.name || 'Perfil'}</span>
                             </button>
                         ) : (
                             <button
                                 onClick={() => setShowAuthModal(true)}
-                                className="flex items-center gap-2 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-300 px-3 py-2 rounded-lg transition-all"
+                                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white p-1.5 md:px-4 md:py-2 rounded-xl transition-all shadow-md active:scale-95"
                             >
                                 <LogIn className="w-4 h-4" />
-                                <span className="hidden md:inline text-sm font-medium">Entrar</span>
+                                <span className="hidden md:inline text-sm font-bold tracking-tight">Entrar</span>
                             </button>
                         )}
                     </div>
@@ -516,7 +533,10 @@ const App: React.FC = () => {
                                     Escolhe a disciplina para estudar
                                 </p>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
+                                <div className={`w-full ${courses.length < 3
+                                    ? 'flex flex-col md:flex-row flex-wrap items-center justify-center gap-6'
+                                    : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl'
+                                    }`}>
                                     {courses.map(course => (
                                         <button
                                             key={course.id}
@@ -524,7 +544,7 @@ const App: React.FC = () => {
                                                 setSelectedCourse(course);
                                                 setAppState('source-select');
                                             }}
-                                            className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-2 border-transparent hover:border-blue-500 hover:shadow-xl transition-all duration-300 text-left group"
+                                            className={`bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-2 border-transparent hover:border-blue-500 hover:shadow-xl transition-all duration-300 text-left group ${courses.length < 3 ? 'w-full max-w-sm' : ''}`}
                                         >
                                             <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                                                 <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
@@ -549,6 +569,8 @@ const App: React.FC = () => {
                                 <button
                                     onClick={() => {
                                         setSelectedCourse(null);
+                                        setSelectedSource(null);
+                                        setSelectedTheme(null);
                                         setAppState('course-select');
                                     }}
                                     className="mb-8 flex items-center gap-1 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors self-start"
@@ -651,6 +673,9 @@ const App: React.FC = () => {
                                                 onFilterChange={setFilterMode}
                                                 colorClass={getSourceColorClass('bg')}
                                                 disabled={loading}
+                                                themes={themes}
+                                                selectedTheme={selectedTheme}
+                                                onThemeChange={setSelectedTheme}
                                             />
                                         </div>
                                     )}
@@ -676,7 +701,11 @@ const App: React.FC = () => {
                                     </button>
 
                                     <button
-                                        onClick={() => setAppState('source-select')}
+                                        onClick={() => {
+                                            setSelectedSource(null);
+                                            setSelectedTheme(null);
+                                            setAppState('source-select');
+                                        }}
                                         className="mt-8 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 text-sm font-medium flex items-center gap-1 transition-colors p-2"
                                     >
                                         <ChevronLeft className="w-4 h-4" />
@@ -808,7 +837,7 @@ const App: React.FC = () => {
                     {appState === 'profile' && (
                         <StatsView
                             key={statsRefreshKey}
-                            course={selectedCourse}
+                            courses={courses}
                             onClose={() => setAppState(selectedSource ? 'menu' : (selectedCourse ? 'source-select' : 'course-select'))}
                         />
                     )}
@@ -818,7 +847,7 @@ const App: React.FC = () => {
                     {appState === 'leaderboard' && (
                         <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative page-transition">
                             <Leaderboard
-                                course={selectedCourse}
+                                courses={courses}
                                 onBack={() => setAppState(selectedSource ? 'menu' : (selectedCourse ? 'source-select' : 'course-select'))}
                             />
                         </div>

@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Trophy, Medal, Crown, User, ArrowLeft, Loader2, TrendingUp, Target, Award } from 'lucide-react';
+import { Trophy, Medal, Crown, User, ArrowLeft, Loader2, TrendingUp, Target, Award, Globe } from 'lucide-react';
 import { getLeaderboard, LeaderboardEntry, Course } from '../src/lib/pocketbase';
+import { ContextSelector } from './shared';
 
 interface LeaderboardProps {
-    course: Course | null;
+    courses: Course[];
     onBack: () => void;
 }
 
-export const Leaderboard: React.FC<LeaderboardProps> = ({ course, onBack }) => {
+export const Leaderboard: React.FC<LeaderboardProps> = ({ courses, onBack }) => {
     const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
     const [loading, setLoading] = useState(true);
+    const [activeCourse, setActiveCourse] = useState<Course | null>(null);
 
     useEffect(() => {
         const loadLeaderboard = async () => {
+            setLoading(true);
             try {
-                const data = await getLeaderboard(course?.id || '');
+                const data = await getLeaderboard(activeCourse?.id || '');
                 setEntries(data);
             } catch (err) {
                 console.error('Error loading leaderboard:', err);
@@ -24,7 +27,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ course, onBack }) => {
         };
 
         loadLeaderboard();
-    }, [course?.id]);
+    }, [activeCourse?.id]);
 
     const topThree = entries.slice(0, 3);
     const theRest = entries.slice(3);
@@ -77,20 +80,29 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ course, onBack }) => {
                     </button>
                     <h1 className="text-xl font-bold dark:text-white flex items-center gap-2">
                         <Trophy className="w-6 h-6 text-yellow-500" />
-                        {course ? `Ranking ${course.title}` : 'Ranking Global'}
+                        {activeCourse ? `Ranking ${activeCourse.title}` : 'Ranking Global'}
                     </h1>
                     <div className="w-10" /> {/* Spacer */}
                 </div>
             </div>
 
             <div className="flex-1 overflow-y-auto">
-                <div className="max-w-3xl mx-auto px-4 py-8">
+                {/* Course/Global Selector */}
+                <div className="max-w-2xl mx-auto px-4 pt-6">
+                    <ContextSelector
+                        courses={courses}
+                        selectedCourseId={activeCourse?.id || null}
+                        onSelect={setActiveCourse}
+                    />
+                </div>
+
+                <div className="max-w-2xl mx-auto px-4 pb-8">
                     {/* Podium Area */}
                     {topThree.length > 0 && (
                         <div className="flex items-end justify-center gap-2 md:gap-4 mb-12 py-10">
                             {[1, 0, 2].map((idx) => {
                                 const entry = topThree[idx];
-                                if (!entry) return <div key={idx} className="flex-1" />;
+                                if (!entry) return <div key={`empty-${idx}`} className="flex-1 max-w-[120px]" />;
                                 const style = getPodiumStyle(idx)!;
 
                                 return (
@@ -105,14 +117,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ course, onBack }) => {
                                             </div>
                                         </div>
                                         <div className="text-center mb-4">
-                                            <p className="font-bold dark:text-white truncate w-full px-1">{entry.userName}</p>
-                                            <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                                            <p className="font-bold dark:text-white truncate w-full px-1 text-sm">{entry.userName}</p>
+                                            <p className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
                                                 {entry.averageScore.toFixed(1)}
                                             </p>
                                         </div>
                                         <div className={`w-full rounded-t-2xl ${style.box} flex flex-col items-center justify-center text-white/90 shadow-lg`}>
-                                            <p className="text-sm font-bold uppercase tracking-wider opacity-75">RANK</p>
-                                            <p className="text-3xl font-black">{idx + 1}</p>
+                                            <p className="text-[10px] font-bold uppercase tracking-wider opacity-75">RANK</p>
+                                            <p className="text-2xl md:text-3xl font-black">{idx + 1}</p>
                                         </div>
                                     </div>
                                 );
@@ -121,7 +133,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ course, onBack }) => {
                     )}
 
                     {/* Stats List */}
-                    <div className="space-y-3">
+                    <div className="space-y-3 max-w-xl mx-auto">
                         <h2 className="text-lg font-bold dark:text-white flex items-center gap-2 mb-4 px-1">
                             <TrendingUp className="w-5 h-5 text-blue-500" />
                             Top de Alunos

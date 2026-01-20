@@ -376,6 +376,16 @@ export const createQuestions = async (
     return { created, errors };
 };
 
+// Get all unique themes for a course and source
+export const getThemes = async (courseId: string, source: string): Promise<string[]> => {
+    const questions = await getQuestions(courseId, source);
+    const themes = new Set<string>();
+    questions.forEach(q => {
+        if (q.theme) themes.add(q.theme);
+    });
+    return Array.from(themes).sort();
+};
+
 // Leaderboard types and API
 export interface LeaderboardEntry {
     userId: string;
@@ -506,9 +516,14 @@ export const getFilteredRandomQuestions = async (
     courseId: string,
     source: string,
     count: number = 15,
-    mode: 'all' | 'unseen' | 'wrong' = 'all'
+    mode: 'all' | 'unseen' | 'wrong' | 'theme' = 'all',
+    theme?: string
 ): Promise<Question[]> => {
-    const allQuestions = await getQuestions(courseId, source);
+    let allQuestions = await getQuestions(courseId, source);
+
+    if (theme) {
+        allQuestions = allQuestions.filter(q => q.theme === theme);
+    }
     
     if (allQuestions.length === 0) {
         return [];
@@ -516,8 +531,8 @@ export const getFilteredRandomQuestions = async (
     
     let selected: Question[] = [];
     
-    if (mode === 'all') {
-        // Pure random selection from all questions
+    if (mode === 'all' || mode === 'theme') {
+        // Pure random selection from all questions (already filtered by theme if applicable)
         const shuffled = shuffleArray(allQuestions);
         selected = shuffled.slice(0, Math.min(count, shuffled.length));
     } else if (mode === 'unseen') {

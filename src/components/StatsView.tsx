@@ -11,9 +11,9 @@ import {
 } from '../lib/pocketbase';
 import {
     LogOut, ChevronLeft, Loader2, Info, TrendingUp, Clock,
-    Library, Bot, Gamepad2, CheckCircle, XCircle, Eye
+    Library, Bot, Gamepad2, CheckCircle, XCircle, Eye, Globe
 } from 'lucide-react';
-import { ResultHeader, NavigationFooter, HorizontalQuestionNav } from '../../components/shared';
+import { ResultHeader, NavigationFooter, HorizontalQuestionNav, ContextSelector } from '../../components/shared';
 import { QuizCard } from '../../components/QuizCard';
 import {
     Chart as ChartJS,
@@ -43,7 +43,7 @@ ChartJS.register(
 );
 
 interface StatsViewProps {
-    course: Course | null;
+    courses: Course[];
     onClose: () => void;
 }
 
@@ -69,45 +69,54 @@ interface ExamDetailData {
     answers: (ExamAnswer & { questionData?: Question })[];
 }
 
-export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
+export const StatsView: React.FC<StatsViewProps> = ({ courses, onClose }) => {
     const [stats, setStats] = useState<DetailedStats | null>(null);
     const [loading, setLoading] = useState(true);
+    const [activeCourse, setActiveCourse] = useState<Course | null>(null);
     const [selectedExam, setSelectedExam] = useState<ExamDetailData | null>(null);
     const [loadingExam, setLoadingExam] = useState(false);
+    const [sourceFilter, setSourceFilter] = useState<'all' | 'previous' | 'ai' | 'kahoots'>('all');
     const user = getCurrentUser();
 
     useEffect(() => {
         let isMounted = true;
 
         const loadStats = async () => {
-            if (!course || !user) {
+            if (!user) {
                 if (isMounted) setLoading(false);
                 return;
             }
 
+            setLoading(true);
             try {
                 let filter = `user = "${user.id}"`;
-                if (course) {
-                    filter += ` && course = "${course.id}"`;
+                if (activeCourse) {
+                    filter += ` && course = "${activeCourse.id}"`;
                 }
 
                 const examResults = await pb.collection('exam_results').getFullList<ExamResult & { expand?: { course: Course } }>({
                     filter,
                     sort: '-created',
                     expand: 'course',
+                    requestKey: null,
                 });
 
                 if (!isMounted) return;
 
                 let totalQuestionsInPool = 0;
-                if (course) {
+                if (activeCourse) {
                     totalQuestionsInPool =
-                        await getQuestionCount(course.id, 'previous') +
-                        await getQuestionCount(course.id, 'ai') +
-                        await getQuestionCount(course.id, 'kahoots');
+                        await getQuestionCount(activeCourse.id, 'previous') +
+                        await getQuestionCount(activeCourse.id, 'ai') +
+                        await getQuestionCount(activeCourse.id, 'kahoots');
                 } else {
-                    // Global view: maybe just sum of all questions across all courses?
-                    // For now, let's keep it 0 or omit it
+                    // Global view: sum of all questions across all courses
+                    for (const c of courses) {
+                        const count = await getQuestionCount(c.id, 'previous') +
+                            await getQuestionCount(c.id, 'ai') +
+                            await getQuestionCount(c.id, 'kahoots');
+                        totalQuestionsInPool += count;
+                    }
                 }
 
                 if (!isMounted) return;
@@ -192,7 +201,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
         return () => {
             isMounted = false;
         };
-    }, [course, user?.id]);
+    }, [activeCourse, user?.id, courses]);
 
     const loadExamDetails = async (examResult: ExamResult) => {
         setLoadingExam(true);
@@ -319,45 +328,55 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                     </div>
                 </div>
 
-                {/* Summary Banner */}
-                <div className="bg-dark-gradient text-white rounded-2xl p-6 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-blue-900/50 glow-border">
-                    <div className="flex items-start gap-3">
-                        <Info className="w-5 h-5 mt-0.5 shrink-0 text-lime-400" />
-                        <p className="text-sm md:text-base leading-relaxed">
-                            Já respondeste a <span className="font-bold text-lime-400 text-glow">{stats.totalExams}</span> exames{course ? ` na cadeira ${course.title}` : ''}.
-                            {stats.totalQuestionsInPool > 0 && (
-                                <>
-                                    {" "}Das <span className="font-bold">{stats.totalQuestionsInPool}</span> questões disponíveis
-                                    respondeste a <span className="font-bold text-lime-400 text-glow">{stats.uniqueQuestionsSeen}</span>,
-                                    ou seja <span className="font-bold text-lime-400 text-glow">{stats.percentageComplete}%</span>.
-                                </>
-                            )}
-                        </p>
-                    </div>
+                {/* Course/Global Selector */}
+                <ContextSelector
+                    courses={courses}
+                    selectedCourseId={activeCourse?.id || null}
+                    onSelect={setActiveCourse}
+                />
 
-                    {/* Score Gauge */}
-                    <div className="shrink-0 flex flex-col items-center bg-white/10 rounded-xl p-3">
-                        <div className="relative w-24 h-14">
-                            <svg viewBox="0 0 100 50" className="w-full h-full">
-                                <path
-                                    d="M 10 50 A 40 40 0 0 1 90 50"
-                                    fill="none"
-                                    stroke="rgba(255,255,255,0.3)"
-                                    strokeWidth="8"
-                                    strokeLinecap="round"
-                                />
-                                <path
-                                    d="M 10 50 A 40 40 0 0 1 90 50"
-                                    fill="none"
-                                    stroke={stats.averageScoreOutOf100 >= 50 ? '#86efac' : '#fca5a5'}
-                                    strokeWidth="8"
-                                    strokeLinecap="round"
-                                    strokeDasharray={`${(stats.averageScoreOutOf100 / 100) * 126} 126`}
-                                />
-                            </svg>
+                {/* Summary Banner */}
+                <div className="bg-dark-gradient text-white rounded-2xl p-4 md:p-6 mb-6 border border-blue-900/50 glow-border">
+                    <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4">
+                        <div className="flex items-start gap-3 flex-1">
+                            <Info className="w-5 h-5 mt-0.5 shrink-0 text-lime-400 hidden md:block" />
+                            <p className="text-sm md:text-base leading-relaxed">
+                                Já respondeste a <span className="font-bold text-lime-400 text-glow">{stats.totalExams}</span> exames{activeCourse ? ` na cadeira ${activeCourse.title}` : ' no total'}.
+                                {stats.totalQuestionsInPool > 0 && (
+                                    <>
+                                        {" "}Das <span className="font-bold">{stats.totalQuestionsInPool}</span> questões disponíveis
+                                        respondeste a <span className="font-bold text-lime-400 text-glow">{stats.uniqueQuestionsSeen}</span>,
+                                        ou seja <span className="font-bold text-lime-400 text-glow">{stats.percentageComplete}%</span>.
+                                    </>
+                                )}
+                            </p>
                         </div>
-                        <div className="text-center -mt-1">
-                            <p className="text-xl font-bold">{stats.averageScore}<span className="text-sm font-normal opacity-80">/20</span></p>
+
+                        {/* Score Gauge */}
+                        <div className="shrink-0 flex items-center gap-4 md:gap-0 md:flex-col bg-white/10 rounded-xl p-3 self-center md:self-auto">
+                            <div className="relative w-20 h-12 md:w-24 md:h-14">
+                                <svg viewBox="0 0 100 50" className="w-full h-full">
+                                    <path
+                                        d="M 10 50 A 40 40 0 0 1 90 50"
+                                        fill="none"
+                                        stroke="rgba(255,255,255,0.3)"
+                                        strokeWidth="8"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 10 50 A 40 40 0 0 1 90 50"
+                                        fill="none"
+                                        stroke={stats.averageScoreOutOf100 >= 50 ? '#86efac' : '#fca5a5'}
+                                        strokeWidth="8"
+                                        strokeLinecap="round"
+                                        strokeDasharray={`${(stats.averageScoreOutOf100 / 100) * 126} 126`}
+                                    />
+                                </svg>
+                            </div>
+                            <div className="text-center md:-mt-1">
+                                <p className="text-lg md:text-xl font-bold">{stats.averageScore}<span className="text-xs md:text-sm font-normal opacity-80">/20</span></p>
+                                <p className="text-[10px] uppercase tracking-wide opacity-60 md:hidden">Média</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -463,25 +482,64 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                 </div>
 
                 {/* Score Evolution Chart */}
-                {stats.scoreHistory.length > 1 && (
+                {stats.scoreHistory.length > 0 && (
                     <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-slate-800 mb-6">
-                        <div className="flex items-center gap-2 mb-4">
-                            <TrendingUp className="w-5 h-5 text-gray-400" />
-                            <h3 className="font-bold text-gray-800 dark:text-slate-100">Evolução das Notas</h3>
-                        </div>
-                        <div className="flex flex-wrap gap-3 mb-4 text-xs text-gray-500 dark:text-slate-400">
-                            <span className="flex items-center gap-1">
-                                <span className="w-3 h-3 bg-indigo-500 rounded-full"></span> Exames Anteriores
-                            </span>
-                            <span className="flex items-center gap-1">
-                                <span className="w-3 h-3 bg-fuchsia-500 rounded-full"></span> IA
-                            </span>
-                            <span className="flex items-center gap-1">
-                                <span className="w-3 h-3 bg-teal-500 rounded-full"></span> Kahoots
-                            </span>
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <div className="flex items-center gap-2">
+                                <TrendingUp className="w-5 h-5 text-gray-400" />
+                                <h3 className="font-bold text-gray-800 dark:text-slate-100">Evolução das Notas</h3>
+                            </div>
+
+                            <div className="flex gap-1 bg-gray-50 dark:bg-slate-800/50 p-1 rounded-xl overflow-x-auto no-scrollbar">
+                                {[
+                                    { id: 'all', label: 'Global', icon: <Globe className="w-3.5 h-3.5" />, color: 'blue' },
+                                    { id: 'previous', label: 'Exames', icon: <Library className="w-3.5 h-3.5" />, color: 'indigo' },
+                                    { id: 'ai', label: 'IA', icon: <Bot className="w-3.5 h-3.5" />, color: 'fuchsia' },
+                                    { id: 'kahoots', label: 'Kahoots', icon: <Gamepad2 className="w-3.5 h-3.5" />, color: 'teal' }
+                                ].map(f => {
+                                    const isActive = sourceFilter === f.id;
+                                    const colorClasses: Record<string, string> = {
+                                        blue: 'text-blue-600 dark:text-blue-400',
+                                        indigo: 'text-indigo-600 dark:text-indigo-400',
+                                        fuchsia: 'text-fuchsia-600 dark:text-fuchsia-400',
+                                        teal: 'text-teal-600 dark:text-teal-400',
+                                    };
+
+                                    return (
+                                        <button
+                                            key={f.id}
+                                            onClick={() => setSourceFilter(f.id as any)}
+                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${isActive
+                                                ? `bg-white dark:bg-slate-900 ${colorClasses[f.color]} shadow-sm border border-gray-100 dark:border-slate-700`
+                                                : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200'
+                                                }`}
+                                        >
+                                            {f.icon}
+                                            {f.label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
                         </div>
 
-                        <LineChart data={stats.scoreHistory} />
+                        <div className="h-[250px] md:h-[300px] flex flex-col justify-center">
+                            {(() => {
+                                const filteredData = sourceFilter === 'all'
+                                    ? stats.scoreHistory
+                                    : stats.scoreHistory.filter(d => d.source === sourceFilter);
+
+                                if (filteredData.length === 0) {
+                                    return (
+                                        <div className="flex flex-col items-center justify-center h-full text-gray-400 dark:text-slate-600 bg-gray-50/30 dark:bg-slate-800/20 rounded-xl border border-dashed border-gray-200 dark:border-slate-800 transition-all animate-in fade-in zoom-in-95 duration-300">
+                                            <TrendingUp className="w-8 h-8 mb-2 opacity-20" />
+                                            <p className="text-sm font-medium">Ainda não tens exames suficientes com esta origem</p>
+                                        </div>
+                                    );
+                                }
+
+                                return <LineChart data={filteredData} />;
+                            })()}
+                        </div>
                     </div>
                 )}
 
@@ -499,7 +557,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                             <table className="w-full">
                                 <thead className="bg-dark-gradient text-white text-sm border-b border-blue-900">
                                     <tr>
-                                        {course ? null : <th className="px-4 py-3 text-left font-medium">Cadeira</th>}
+                                        {activeCourse ? null : <th className="px-4 py-3 text-left font-medium">Cadeira</th>}
                                         <th className="px-4 py-3 text-left font-medium">Fonte</th>
                                         <th className="px-4 py-3 text-center font-medium">Nota</th>
                                         <th className="px-4 py-3 text-center font-medium">Data</th>
@@ -513,7 +571,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ course, onClose }) => {
                                             key={exam.id}
                                             className={`border-b border-gray-50 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors ${index % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-gray-50/50 dark:bg-slate-800/40'}`}
                                         >
-                                            {course ? null : (
+                                            {activeCourse ? null : (
                                                 <td className="px-4 py-4 text-sm font-bold text-gray-700 dark:text-slate-300">
                                                     {(exam as any).expand?.course?.title || 'N/A'}
                                                 </td>
@@ -748,6 +806,31 @@ const LineChart: React.FC<{ data: { date: string; score: number; source: string 
         'kahoots': '#14b8a6',  // teal
     };
 
+    // Generate trend line data using linear regression
+    const generateTrendLine = () => {
+        const n = data.length;
+        if (n < 2) return null;
+
+        let sumX = 0;
+        let sumY = 0;
+        let sumXY = 0;
+        let sumX2 = 0;
+
+        for (let i = 0; i < n; i++) {
+            sumX += i;
+            sumY += data[i].score;
+            sumXY += i * data[i].score;
+            sumX2 += i * i;
+        }
+
+        const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+        const intercept = (sumY - slope * sumX) / n;
+
+        return data.map((_, i) => slope * i + intercept);
+    };
+
+    const trendLineData = generateTrendLine();
+
     const chartData = {
         labels: data.map(d => new Date(d.date).toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit' })),
         datasets: [
@@ -774,7 +857,18 @@ const LineChart: React.FC<{ data: { date: string; score: number; source: string 
                         return sourceColors[source] || '#6366f1';
                     }
                 }
-            }
+            },
+            ...(trendLineData ? [{
+                label: 'Tendência',
+                data: trendLineData,
+                borderColor: '#94a3b8',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                pointRadius: 0,
+                fill: false,
+                tension: 0,
+                order: 2
+            }] : [])
         ]
     };
 
@@ -824,7 +918,7 @@ const LineChart: React.FC<{ data: { date: string; score: number; source: string 
     };
 
     return (
-        <div className="h-48">
+        <div className="w-full h-full">
             <Line data={chartData} options={options} />
         </div>
     );
