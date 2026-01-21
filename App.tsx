@@ -110,6 +110,9 @@ const App: React.FC = () => {
     // Confirmation state
     const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
 
+    // Track current answer index for arrow key navigation
+    const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(0);
+
     // Check auth on mount
     useEffect(() => {
         setIsAuthenticated(isLoggedIn());
@@ -349,6 +352,35 @@ const App: React.FC = () => {
         return selectedSource ? colors[selectedSource][type] : colors.previous[type];
     };
 
+    // Prevent accidental page reload during exam
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (appState === 'exam' && userAnswers.length > 0) {
+                e.preventDefault();
+                e.returnValue = 'Tens um exame em progresso. Tens a certeza que queres sair?';
+                return e.returnValue;
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [appState, userAnswers.length]);
+
+    // Reset answer index when question changes
+    useEffect(() => {
+        // Find index of currently selected answer, or default to 0
+        const currentQ = examQuestions[currentQuestionIndex];
+        if (currentQ) {
+            const selectedAns = userAnswers.find(ua => ua.questionId === currentQ.id)?.selectedAnswer;
+            if (selectedAns) {
+                const idx = currentQ.answers.findIndex(a => a.text === selectedAns.text);
+                setCurrentAnswerIndex(idx >= 0 ? idx : 0);
+            } else {
+                setCurrentAnswerIndex(0);
+            }
+        }
+    }, [currentQuestionIndex, examQuestions]);
+
     // Keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -357,9 +389,22 @@ const App: React.FC = () => {
             const currentQ = examQuestions[currentQuestionIndex];
             if (!currentQ) return;
 
+            const answersCount = currentQ.answers.length;
+
+            // Handle confirmation modal
+            if (showSubmitConfirm) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    setShowSubmitConfirm(false);
+                    finishExam();
+                } else if (e.key === 'Escape') {
+                    setShowSubmitConfirm(false);
+                }
+                return;
+            }
+
             switch (e.key) {
                 case 'ArrowRight':
-                case 'Enter':
                     if (currentQuestionIndex < examQuestions.length - 1) {
                         setCurrentQuestionIndex(prev => prev + 1);
                     }
@@ -369,32 +414,78 @@ const App: React.FC = () => {
                         setCurrentQuestionIndex(prev => prev - 1);
                     }
                     break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    {
+                        const nextIndex = (currentAnswerIndex + 1) % answersCount;
+                        setCurrentAnswerIndex(nextIndex);
+                        if (currentQ.answers[nextIndex]) {
+                            handleAnswer(currentQ.answers[nextIndex]);
+                        }
+                    }
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    {
+                        const nextIndex = currentAnswerIndex - 1 < 0 ? answersCount - 1 : currentAnswerIndex - 1;
+                        setCurrentAnswerIndex(nextIndex);
+                        if (currentQ.answers[nextIndex]) {
+                            handleAnswer(currentQ.answers[nextIndex]);
+                        }
+                    }
+                    break;
+                case 'Enter':
+                    e.preventDefault();
+                    // If on last question, open submit modal
+                    if (currentQuestionIndex === examQuestions.length - 1) {
+                        setShowSubmitConfirm(true);
+                    }
+                    // Otherwise, go to next question
+                    else if (currentQuestionIndex < examQuestions.length - 1) {
+                        setCurrentQuestionIndex(prev => prev + 1);
+                    }
+                    break;
+                case 'Escape':
+                    // Do nothing special
+                    break;
                 case '1':
                 case 'a':
                 case 'A':
-                    if (currentQ.answers[0]) handleAnswer(currentQ.answers[0]);
+                    if (currentQ.answers[0]) {
+                        setCurrentAnswerIndex(0);
+                        handleAnswer(currentQ.answers[0]);
+                    }
                     break;
                 case '2':
                 case 'b':
                 case 'B':
-                    if (currentQ.answers[1]) handleAnswer(currentQ.answers[1]);
+                    if (currentQ.answers[1]) {
+                        setCurrentAnswerIndex(1);
+                        handleAnswer(currentQ.answers[1]);
+                    }
                     break;
                 case '3':
                 case 'c':
                 case 'C':
-                    if (currentQ.answers[2]) handleAnswer(currentQ.answers[2]);
+                    if (currentQ.answers[2]) {
+                        setCurrentAnswerIndex(2);
+                        handleAnswer(currentQ.answers[2]);
+                    }
                     break;
                 case '4':
                 case 'd':
                 case 'D':
-                    if (currentQ.answers[3]) handleAnswer(currentQ.answers[3]);
+                    if (currentQ.answers[3]) {
+                        setCurrentAnswerIndex(3);
+                        handleAnswer(currentQ.answers[3]);
+                    }
                     break;
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [appState, currentQuestionIndex, examQuestions]);
+    }, [appState, currentQuestionIndex, examQuestions, showSubmitConfirm, currentAnswerIndex]);
 
     if (appState === 'loading' || (loading && appState === 'source-select')) {
         return (
@@ -713,7 +804,7 @@ const App: React.FC = () => {
                                     </button>
 
                                     <div className="mt-12 text-sm text-gray-400 dark:text-slate-500 hidden md:block">
-                                        <p>Dica: Usa as setas para navegar e 1-4 para responder.</p>
+                                        <p>Dica: Usa ←→ para navegar, ↑↓ para selecionar resposta, Enter para confirmar, e 1-4 para resposta rápida.</p>
                                     </div>
                                 </div>
                             </div>

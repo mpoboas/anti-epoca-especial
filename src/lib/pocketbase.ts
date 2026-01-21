@@ -409,12 +409,34 @@ export const getLeaderboard = async (
     }
 
     try {
-        // Get all exam results with user expansion
-        const examResults = await pb.collection('exam_results').getFullList<ExamResult & { expand?: { user: User } }>({
-            filter,
-            expand: 'user',
+        // Get all exam results
+        const examResults = await pb.collection('exam_results').getFullList<ExamResult>({
+            filter: filter || undefined,
             requestKey: null,
         });
+
+
+        // Get unique user IDs
+        const userIds = [...new Set(examResults.map(r => r.user))];
+
+        // Fetch all user names in a single request
+        const userNames = new Map<string, string>();
+        
+        if (userIds.length > 0) {
+            try {
+                // Build filter for all users
+                const userFilter = userIds.map(id => `id = "${id}"`).join(' || ');
+                
+                const users = await pb.collection('users').getFullList<User>({
+                    filter: userFilter,
+                    fields: 'id,name',
+                    requestKey: null,
+                });
+                users.forEach(u => userNames.set(u.id, u.name || 'Anónimo'));
+            } catch (e) {
+                // If we can't fetch users, try to get names from expanded data or use Anónimo
+            }
+        }
 
         // Group by user
         const userStats = new Map<string, {
@@ -425,7 +447,7 @@ export const getLeaderboard = async (
 
         for (const result of examResults) {
             const userId = result.user;
-            const userName = result.expand?.user?.name || 'Anónimo';
+            const userName = userNames.get(userId) || 'Anónimo';
 
             if (!userStats.has(userId)) {
                 userStats.set(userId, { userName, scores: [], passed: 0 });
