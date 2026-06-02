@@ -32,6 +32,13 @@ const SOURCE_CONFIG = {
 
 const VALID_VALUES = ['++', '+', '-', '--'];
 
+const normalizeAnswerValue = (value: unknown): string => {
+    if (typeof value !== 'string') return '';
+    if (value === 'correct') return '++';
+    if (value === 'incorrect') return '--';
+    return value;
+};
+
 export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
     const [selectedCourse, setSelectedCourse] = useState<string>('');
     const [selectedSource, setSelectedSource] = useState<SourceType>('previous');
@@ -86,13 +93,15 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
                 } else {
                     let hasCorrect = false;
                     q.answers.forEach((a: any, aIndex: number) => {
+                        const normalizedValue = normalizeAnswerValue(a.value);
+
                         if (!a.text || typeof a.text !== 'string' || a.text.trim() === '') {
                             errors.push(`Pergunta ${qNum}, Resposta ${aIndex + 1}: Campo "text" em falta ou vazio.`);
                         }
-                        if (!a.value || !VALID_VALUES.includes(a.value)) {
-                            errors.push(`Pergunta ${qNum}, Resposta ${aIndex + 1}: Campo "value" deve ser um de: ++, +, -, --`);
+                        if (!normalizedValue || !VALID_VALUES.includes(normalizedValue)) {
+                            errors.push(`Pergunta ${qNum}, Resposta ${aIndex + 1}: Campo "value" deve ser um de: ++, +, -, --, correct, incorrect`);
                         }
-                        if (a.value === '++') hasCorrect = true;
+                        if (normalizedValue === '++') hasCorrect = true;
                     });
                     if (!hasCorrect) {
                         errors.push(`Pergunta ${qNum}: Nenhuma resposta marcada como correta (++).`);
@@ -103,7 +112,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, courses }) => {
             if (errors.length === 0) {
                 questions = questionsArray.map((q: any) => ({
                     text: q.text,
-                    answers: q.answers.map((a: any) => ({ text: a.text, value: a.value })),
+                    answers: q.answers.map((a: any) => ({
+                        text: a.text,
+                        value: normalizeAnswerValue(a.value),
+                    })),
                 }));
             }
 

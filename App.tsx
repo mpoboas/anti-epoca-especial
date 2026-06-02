@@ -63,11 +63,45 @@ const SOURCE_CONFIG = {
 } as const;
 
 type SourceType = keyof typeof SOURCE_CONFIG;
+type SourceAvailability = Record<SourceType, number>;
 
 interface UserAnswer {
     questionId: string;
     selectedAnswer: Answer;
 }
+
+const COURSE_COLOR_PALETTE = [
+    {
+        iconBg: 'bg-blue-50 dark:bg-blue-900/30',
+        iconText: 'text-blue-600 dark:text-blue-400',
+        hoverBorder: 'hover:border-blue-500 dark:hover:border-blue-400',
+    },
+    {
+        iconBg: 'bg-indigo-50 dark:bg-indigo-900/30',
+        iconText: 'text-indigo-600 dark:text-indigo-400',
+        hoverBorder: 'hover:border-indigo-500 dark:hover:border-indigo-400',
+    },
+    {
+        iconBg: 'bg-teal-50 dark:bg-teal-900/30',
+        iconText: 'text-teal-600 dark:text-teal-400',
+        hoverBorder: 'hover:border-teal-500 dark:hover:border-teal-400',
+    },
+    {
+        iconBg: 'bg-fuchsia-50 dark:bg-fuchsia-900/30',
+        iconText: 'text-fuchsia-600 dark:text-fuchsia-400',
+        hoverBorder: 'hover:border-fuchsia-500 dark:hover:border-fuchsia-400',
+    },
+    {
+        iconBg: 'bg-emerald-50 dark:bg-emerald-900/30',
+        iconText: 'text-emerald-600 dark:text-emerald-400',
+        hoverBorder: 'hover:border-emerald-500 dark:hover:border-emerald-400',
+    },
+    {
+        iconBg: 'bg-amber-50 dark:bg-amber-900/30',
+        iconText: 'text-amber-600 dark:text-amber-400',
+        hoverBorder: 'hover:border-amber-500 dark:hover:border-amber-400',
+    },
+];
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -83,6 +117,12 @@ const App: React.FC = () => {
     const [selectedSource, setSelectedSource] = useState<SourceType | null>(null);
     const [questionCount, setQuestionCount] = useState(0);
     const [stats, setStats] = useState<UserStats | null>(null);
+    const [sourceAvailability, setSourceAvailability] = useState<SourceAvailability>({
+        previous: 0,
+        ai: 0,
+        kahoots: 0,
+    });
+    const [loadingSourceAvailability, setLoadingSourceAvailability] = useState(false);
 
     // Filter state
     const [filterMode, setFilterMode] = useState<FilterMode>('all');
@@ -186,6 +226,35 @@ const App: React.FC = () => {
             setLoading(false);
         }
     };
+
+    // Load available question counts per source for selected course
+    useEffect(() => {
+        const loadAvailability = async () => {
+            if (appState !== 'source-select' || !selectedCourse) return;
+
+            setLoadingSourceAvailability(true);
+            try {
+                const sources = Object.keys(SOURCE_CONFIG) as SourceType[];
+                const counts = await Promise.all(
+                    sources.map(source => getQuestionCount(selectedCourse.id, source))
+                );
+
+                const availability = sources.reduce((acc, source, index) => {
+                    acc[source] = counts[index];
+                    return acc;
+                }, {} as SourceAvailability);
+
+                setSourceAvailability(availability);
+            } catch (err) {
+                console.error('Failed to load source availability:', err);
+                setSourceAvailability({ previous: 0, ai: 0, kahoots: 0 });
+            } finally {
+                setLoadingSourceAvailability(false);
+            }
+        };
+
+        loadAvailability();
+    }, [appState, selectedCourse]);
 
     // Start exam
     const startExam = async () => {
@@ -517,6 +586,10 @@ const App: React.FC = () => {
 
     const questionsLeft = stats ? Math.max(0, stats.totalQuestionsInPool - stats.uniqueQuestionsSeen) : questionCount;
     const user = getCurrentUser();
+    const getCourseTheme = (course: Course) => {
+        const hash = [...course.id].reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        return COURSE_COLOR_PALETTE[hash % COURSE_COLOR_PALETTE.length];
+    };
 
     return (
         <div className="h-[100dvh] bg-slate-50 dark:bg-slate-950 text-gray-800 dark:text-slate-200 font-sans selection:bg-blue-100 dark:selection:bg-blue-900 flex flex-col overflow-hidden transition-colors duration-300">
@@ -629,24 +702,29 @@ const App: React.FC = () => {
                                     : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl'
                                     }`}>
                                     {courses.map(course => (
-                                        <button
-                                            key={course.id}
-                                            onClick={() => {
-                                                setSelectedCourse(course);
-                                                setAppState('source-select');
-                                            }}
-                                            className={`bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-2 border-transparent hover:border-blue-500 hover:shadow-xl transition-all duration-300 text-left group ${courses.length < 3 ? 'w-full max-w-sm' : ''}`}
-                                        >
-                                            <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                                <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-                                            </div>
-                                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                                                {course.title}
-                                            </h3>
-                                            <p className="text-gray-500 dark:text-slate-400">
-                                                {course.description || 'Cadeira disponível para estudo.'}
-                                            </p>
-                                        </button>
+                                        (() => {
+                                            const courseTheme = getCourseTheme(course);
+                                            return (
+                                                <button
+                                                    key={course.id}
+                                                    onClick={() => {
+                                                        setSelectedCourse(course);
+                                                        setAppState('source-select');
+                                                    }}
+                                                    className={`bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-2 border-transparent ${courseTheme.hoverBorder} hover:shadow-xl transition-all duration-300 text-left group ${courses.length < 3 ? 'w-full max-w-sm' : ''}`}
+                                                >
+                                                    <div className={`w-16 h-16 rounded-2xl ${courseTheme.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                                                        <BookOpen className={`w-8 h-8 ${courseTheme.iconText}`} />
+                                                    </div>
+                                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                                        {course.title}
+                                                    </h3>
+                                                    <p className="text-gray-500 dark:text-slate-400">
+                                                        {course.description || 'Cadeira disponível para estudo.'}
+                                                    </p>
+                                                </button>
+                                            );
+                                        })()
                                     ))}
                                 </div>
                             </div>
@@ -678,39 +756,58 @@ const App: React.FC = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-5xl">
                                     {(Object.keys(SOURCE_CONFIG) as SourceType[]).map(source => (
-                                        <button
-                                            key={source}
-                                            onClick={() => loadSourceData(source)}
-                                            disabled={loading}
-                                            className={`bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent 
+                                        (() => {
+                                            const questionTotal = sourceAvailability[source] ?? 0;
+                                            const isUnavailable = !loadingSourceAvailability && questionTotal === 0;
+
+                                            return (
+                                                <button
+                                                    key={source}
+                                                    onClick={() => {
+                                                        if (!isUnavailable) {
+                                                            loadSourceData(source);
+                                                        }
+                                                    }}
+                                                    disabled={loading || loadingSourceAvailability || isUnavailable}
+                                                    className={`bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-sm border-2 border-transparent 
                         ${SOURCE_CONFIG[source].color === 'indigo' ? 'hover:border-indigo-500' :
                                                     SOURCE_CONFIG[source].color === 'fuchsia' ? 'hover:border-fuchsia-500' :
-                                                        'hover:border-teal-500'} 
-                        hover:shadow-xl dark:shadow-blue-900/10 transition-all duration-300 text-left group disabled:opacity-50`}
-                                        >
-                                            <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform
+                                                        'hover:border-teal-500'}
+                        hover:shadow-xl dark:shadow-blue-900/10 transition-all duration-300 text-left group
+                        ${isUnavailable ? 'opacity-45 grayscale cursor-not-allowed hover:shadow-sm' : ''}
+                        ${loadingSourceAvailability ? 'opacity-70' : ''}`}
+                                                >
+                                                    <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform
                         ${SOURCE_CONFIG[source].color === 'indigo' ? 'bg-indigo-50 dark:bg-indigo-950/50' :
                                                     SOURCE_CONFIG[source].color === 'fuchsia' ? 'bg-fuchsia-50 dark:bg-fuchsia-950/50' :
                                                         'bg-teal-50 dark:bg-teal-950/50'}`}
-                                            >
-                                                {SOURCE_CONFIG[source].icon}
-                                            </div>
-                                            <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">
-                                                {SOURCE_CONFIG[source].name}
-                                            </h3>
-                                            <p className="text-sm md:text-base text-gray-500 dark:text-slate-400 mb-4">
-                                                {SOURCE_CONFIG[source].description}
-                                            </p>
+                                                    >
+                                                        {SOURCE_CONFIG[source].icon}
+                                                    </div>
+                                                    <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                                        {SOURCE_CONFIG[source].name}
+                                                    </h3>
+                                                    <p className="text-sm md:text-base text-gray-500 dark:text-slate-400 mb-4">
+                                                        {SOURCE_CONFIG[source].description}
+                                                    </p>
 
-                                            {SOURCE_CONFIG[source].warning && (
-                                                <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 flex items-start gap-3 mt-2">
-                                                    <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                                                    <span className="text-xs text-amber-800 dark:text-amber-300 font-medium leading-tight">
-                                                        {SOURCE_CONFIG[source].warning}
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </button>
+                                                    {!loadingSourceAvailability && (
+                                                        <p className={`text-xs font-semibold mb-2 ${isUnavailable ? 'text-gray-500 dark:text-slate-500' : 'text-gray-600 dark:text-slate-300'}`}>
+                                                            {isUnavailable ? 'Sem exames disponíveis' : `${questionTotal} perguntas disponíveis`}
+                                                        </p>
+                                                    )}
+
+                                                    {SOURCE_CONFIG[source].warning && !isUnavailable && (
+                                                        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 flex items-start gap-3 mt-2">
+                                                            <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0" />
+                                                            <span className="text-xs text-amber-800 dark:text-amber-300 font-medium leading-tight">
+                                                                {SOURCE_CONFIG[source].warning}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </button>
+                                            );
+                                        })()
                                     ))}
                                 </div>
                             </div>
